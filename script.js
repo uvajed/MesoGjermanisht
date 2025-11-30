@@ -1,67 +1,355 @@
 // Mëso Gjermanisht - Interactive Learning Platform
+// New UI/UX Structure with Dashboard, Learn, Games, Dictionary
+
 document.addEventListener('DOMContentLoaded', function() {
-    initializeTabs();
-    initializeSectionNavigation();
-    initializeQuizzes();
+    initializeMainNavigation();
+    initializeLevelSelectors();
+    initializeContentTabs();
     initializeTopicCards();
+    initializeDashboard();
+    initializeGamesHub();
     initializeDictionary();
-    updateProgress();
+    loadProgress();
 });
 
-// Tab Navigation
-function initializeTabs() {
-    const tabButtons = document.querySelectorAll('.tab-btn');
+// ============================================
+// MAIN NAVIGATION (Home, Learn, Games, Dictionary)
+// ============================================
+function initializeMainNavigation() {
+    const navBtns = document.querySelectorAll('.main-nav-btn');
+    const pageContents = document.querySelectorAll('.page-content');
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const page = btn.dataset.page;
+
+            // Update nav buttons
+            navBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update page content
+            pageContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === page) content.classList.add('active');
+            });
+
+            // Update theme based on page
+            updatePageTheme(page);
+        });
+    });
+}
+
+function updatePageTheme(page) {
+    if (page === 'home') {
+        document.body.setAttribute('data-theme', 'home');
+    } else if (page === 'learn') {
+        const activeLevel = document.querySelector('#learn .level-btn.active');
+        if (activeLevel) {
+            document.body.setAttribute('data-theme', activeLevel.dataset.level);
+        }
+    } else if (page === 'games') {
+        const activeLevel = document.querySelector('.game-level-btn.active');
+        if (activeLevel) {
+            document.body.setAttribute('data-theme', activeLevel.dataset.level);
+        }
+    } else if (page === 'dictionary') {
+        document.body.setAttribute('data-theme', 'dictionary');
+    }
+}
+
+// ============================================
+// LEVEL SELECTORS (in Learn and Games sections)
+// ============================================
+function initializeLevelSelectors() {
+    // Learn section level selector
+    const learnLevelBtns = document.querySelectorAll('#learn .level-btn');
     const levelContents = document.querySelectorAll('.level-content');
 
-    // Set initial theme based on active tab
-    const activeTab = document.querySelector('.tab-btn.active');
-    if (activeTab) {
-        document.body.setAttribute('data-theme', activeTab.dataset.level);
-    }
+    learnLevelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const level = btn.dataset.level;
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const level = button.dataset.level;
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+            // Update buttons
+            learnLevelBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update level content
             levelContents.forEach(content => {
                 content.classList.remove('active');
-                if (content.id === level) content.classList.add('active');
+                if (content.id === `learn-${level}`) content.classList.add('active');
             });
-            // Update page theme based on selected level
+
+            // Reset content tabs to first tab
+            resetContentTabs(level);
+
+            // Update theme
             document.body.setAttribute('data-theme', level);
-            resetSectionNavigation(level);
+        });
+    });
+
+    // Games section level selector
+    const gameLevelBtns = document.querySelectorAll('.game-level-btn');
+
+    gameLevelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const level = btn.dataset.level;
+
+            // Update buttons
+            gameLevelBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Update current game level
+            currentGameLevel = level;
+
+            // Update theme
+            document.body.setAttribute('data-theme', level);
         });
     });
 }
 
-// Section Navigation
-function initializeSectionNavigation() {
-    document.querySelectorAll('.section-nav').forEach(nav => {
-        nav.querySelectorAll('.section-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const sectionId = button.dataset.section;
-                const parentLevel = nav.closest('.level-content');
-                nav.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                parentLevel.querySelectorAll('.section-content').forEach(section => {
+// ============================================
+// CONTENT TABS (Vocabulary, Grammar, Examples)
+// ============================================
+function initializeContentTabs() {
+    const contentTabs = document.querySelectorAll('.content-tab');
+
+    contentTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const contentType = tab.dataset.content;
+            const activeLevel = document.querySelector('#learn .level-btn.active');
+            const level = activeLevel ? activeLevel.dataset.level : 'a1';
+
+            // Update tabs
+            contentTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Update content sections
+            const levelContent = document.getElementById(`learn-${level}`);
+            if (levelContent) {
+                levelContent.querySelectorAll('.content-section').forEach(section => {
                     section.classList.remove('active');
-                    if (section.id === sectionId) section.classList.add('active');
+                    if (section.id === `${contentType}-${level}`) {
+                        section.classList.add('active');
+                    }
                 });
-            });
+            }
         });
     });
 }
 
-function resetSectionNavigation(level) {
-    const levelContent = document.getElementById(level);
+function resetContentTabs(level) {
+    // Reset to vocabulary tab
+    const contentTabs = document.querySelectorAll('.content-tab');
+    contentTabs.forEach((tab, i) => tab.classList.toggle('active', i === 0));
+
+    // Reset content sections
+    const levelContent = document.getElementById(`learn-${level}`);
     if (levelContent) {
-        levelContent.querySelectorAll('.section-btn').forEach((btn, i) => btn.classList.toggle('active', i === 0));
-        levelContent.querySelectorAll('.section-content').forEach((section, i) => section.classList.toggle('active', i === 0));
+        levelContent.querySelectorAll('.content-section').forEach((section, i) => {
+            section.classList.toggle('active', i === 0);
+        });
     }
 }
 
-// Topic Cards & Modal
+// ============================================
+// DASHBOARD
+// ============================================
+const dailyWords = [
+    { de: 'Willkommen', sq: 'Mirëseardhje', example: 'Willkommen in Deutschland!' },
+    { de: 'Freundschaft', sq: 'Miqësi', example: 'Freundschaft ist wichtig.' },
+    { de: 'Glücklich', sq: 'I/E lumtur', example: 'Ich bin sehr glücklich.' },
+    { de: 'Lernen', sq: 'Mësoj', example: 'Ich lerne jeden Tag Deutsch.' },
+    { de: 'Verstehen', sq: 'Kuptoj', example: 'Ich verstehe dich gut.' },
+    { de: 'Sprechen', sq: 'Flas', example: 'Kannst du Deutsch sprechen?' },
+    { de: 'Arbeiten', sq: 'Punoj', example: 'Ich arbeite gern.' },
+    { de: 'Reisen', sq: 'Udhëtoj', example: 'Ich reise nach Berlin.' },
+    { de: 'Zusammen', sq: 'Së bashku', example: 'Wir lernen zusammen.' },
+    { de: 'Wunderbar', sq: 'I mrekullueshëm', example: 'Das Wetter ist wunderbar!' }
+];
+
+function initializeDashboard() {
+    // Set initial daily word
+    setDailyWord();
+
+    // New word button
+    const newWordBtn = document.getElementById('new-word-btn');
+    if (newWordBtn) {
+        newWordBtn.addEventListener('click', () => {
+            setDailyWord(true);
+        });
+    }
+
+    // Quick action buttons
+    const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+    quickActionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const action = btn.dataset.action;
+            handleQuickAction(action);
+        });
+    });
+
+    // Featured games
+    const featuredGames = document.querySelectorAll('.featured-game');
+    featuredGames.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const game = btn.dataset.game;
+            const level = btn.dataset.level;
+
+            // Navigate to games page
+            navigateToPage('games');
+
+            // Set level and start game
+            setTimeout(() => {
+                setGameLevel(level);
+                startGame(game);
+            }, 100);
+        });
+    });
+}
+
+function setDailyWord(random = false) {
+    let word;
+    if (random) {
+        word = dailyWords[Math.floor(Math.random() * dailyWords.length)];
+    } else {
+        // Use date-based selection for consistency throughout the day
+        const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+        word = dailyWords[dayOfYear % dailyWords.length];
+    }
+
+    const deEl = document.getElementById('daily-word-de');
+    const sqEl = document.getElementById('daily-word-sq');
+    const exEl = document.getElementById('daily-word-example');
+
+    if (deEl) deEl.textContent = word.de;
+    if (sqEl) sqEl.textContent = word.sq;
+    if (exEl) exEl.textContent = `"${word.example}"`;
+}
+
+function handleQuickAction(action) {
+    switch(action) {
+        case 'learn-a1':
+            navigateToPage('learn');
+            setTimeout(() => {
+                const a1Btn = document.querySelector('#learn .level-btn[data-level="a1"]');
+                if (a1Btn) a1Btn.click();
+            }, 100);
+            break;
+        case 'play-game':
+            navigateToPage('games');
+            break;
+        case 'dictionary':
+            navigateToPage('dictionary');
+            setTimeout(() => {
+                document.getElementById('dictionary-input')?.focus();
+            }, 100);
+            break;
+        case 'random-topic':
+            navigateToPage('learn');
+            setTimeout(() => {
+                const levels = ['a1', 'a2', 'b1'];
+                const randomLevel = levels[Math.floor(Math.random() * levels.length)];
+                const levelBtn = document.querySelector(`#learn .level-btn[data-level="${randomLevel}"]`);
+                if (levelBtn) levelBtn.click();
+
+                // Click random topic
+                setTimeout(() => {
+                    const topics = document.querySelectorAll(`#learn-${randomLevel} .topic-card`);
+                    if (topics.length > 0) {
+                        const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+                        randomTopic.click();
+                    }
+                }, 200);
+            }, 100);
+            break;
+    }
+}
+
+function navigateToPage(page) {
+    const navBtn = document.querySelector(`.main-nav-btn[data-page="${page}"]`);
+    if (navBtn) navBtn.click();
+}
+
+// ============================================
+// GAMES HUB
+// ============================================
+let currentGameLevel = 'a1';
+
+function initializeGamesHub() {
+    // Game card click handlers
+    const gameCards = document.querySelectorAll('.game-card-large');
+    gameCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const game = card.dataset.game;
+            startGame(game);
+        });
+    });
+
+    // Back to games hub button
+    const backBtn = document.getElementById('back-to-games-hub');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            hideAllGames();
+            document.getElementById('games-hub').style.display = 'block';
+            document.getElementById('game-play-area').style.display = 'none';
+        });
+    }
+}
+
+function setGameLevel(level) {
+    currentGameLevel = level;
+    const levelBtns = document.querySelectorAll('.game-level-btn');
+    levelBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.level === level);
+    });
+    document.body.setAttribute('data-theme', level);
+}
+
+function startGame(game) {
+    // Hide games hub, show play area
+    document.getElementById('games-hub').style.display = 'none';
+    document.getElementById('game-play-area').style.display = 'block';
+
+    // Hide all game areas
+    hideAllGames();
+
+    // Show and initialize selected game
+    const gameElement = document.getElementById(`${game}-game`);
+    if (gameElement) {
+        gameElement.style.display = 'block';
+
+        switch(game) {
+            case 'quiz':
+                initQuizGame();
+                break;
+            case 'matching':
+                initMatchingGame();
+                break;
+            case 'memory':
+                initMemoryGame();
+                break;
+            case 'fillblank':
+                initFillBlankGame();
+                break;
+            case 'hangman':
+                initHangmanGame();
+                break;
+            case 'scramble':
+                initScrambleGame();
+                break;
+        }
+    }
+}
+
+function hideAllGames() {
+    document.querySelectorAll('.game-area').forEach(area => {
+        area.style.display = 'none';
+    });
+}
+
+// ============================================
+// TOPIC CARDS & MODAL
+// ============================================
 function initializeTopicCards() {
     document.querySelectorAll('.topic-card').forEach(card => {
         card.addEventListener('click', (e) => {
@@ -69,11 +357,22 @@ function initializeTopicCards() {
             openModal(card.dataset.topic);
         });
     });
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    document.getElementById('modal-overlay').addEventListener('click', (e) => {
-        if (e.target.id === 'modal-overlay') closeModal();
+
+    const closeBtn = document.getElementById('modal-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    const overlay = document.getElementById('modal-overlay');
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') closeModal();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
     });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 }
 
 function openModal(topicId) {
@@ -83,9 +382,13 @@ function openModal(topicId) {
     document.getElementById('modal-content').innerHTML = content.html;
     document.getElementById('modal-overlay').classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Re-attach event listeners for related links
     document.querySelectorAll('.related-link').forEach(link => {
         link.addEventListener('click', () => openModal(link.dataset.topic));
     });
+
+    // Practice exercise answers
     document.querySelectorAll('.practice-exercise .answer').forEach(answer => {
         answer.addEventListener('click', () => answer.classList.toggle('revealed'));
     });
@@ -96,7 +399,806 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
-// Topic Content Data
+// ============================================
+// DICTIONARY
+// ============================================
+function initializeDictionary() {
+    const input = document.getElementById('dictionary-input');
+    const searchBtn = document.getElementById('dictionary-search-btn');
+    const resultsDiv = document.getElementById('dictionary-results');
+    const directionBtns = document.querySelectorAll('.direction-btn');
+
+    let currentDirection = 'de-sq';
+
+    // Direction toggle
+    directionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            directionBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentDirection = btn.dataset.direction;
+            if (input) {
+                input.placeholder = currentDirection === 'de-sq'
+                    ? 'Shkruaj fjalën në gjermanisht...'
+                    : 'Shkruaj fjalën në shqip...';
+            }
+        });
+    });
+
+    // Search function
+    function performSearch() {
+        const term = input?.value.trim();
+        if (!term) return;
+
+        const dictUrl = currentDirection === 'de-sq'
+            ? `https://de-sq.dict.cc/?s=${encodeURIComponent(term)}`
+            : `https://sq-de.dict.cc/?s=${encodeURIComponent(term)}`;
+
+        const glosbeUrl = currentDirection === 'de-sq'
+            ? `https://glosbe.com/de/sq/${encodeURIComponent(term)}`
+            : `https://glosbe.com/sq/de/${encodeURIComponent(term)}`;
+
+        if (resultsDiv) {
+            resultsDiv.innerHTML = `
+                <div class="dictionary-external-link">
+                    <div class="search-term-display">"${term}"</div>
+                    <h3>Kërko në fjalorët e jashtëm:</h3>
+                    <p>Për shkak të kufizimeve teknike, rezultatet hapen në një dritare të re.</p>
+                    <div class="dict-buttons">
+                        <a href="${dictUrl}" target="_blank" rel="noopener" class="dict-link-btn">
+                            <span>📖</span> Hap në dict.cc
+                        </a>
+                        <a href="${glosbeUrl}" target="_blank" rel="noopener" class="dict-link-btn" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                            <span>🌐</span> Hap në Glosbe
+                        </a>
+                    </div>
+                    <div class="recent-searches" style="margin-top: 30px;">
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Këshillë: Mbaj Ctrl (ose Cmd) kur klikoni për ta hapur në sfondi.</p>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Event listeners
+    if (searchBtn) searchBtn.addEventListener('click', performSearch);
+    if (input) {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+    }
+}
+
+// ============================================
+// PROGRESS TRACKING
+// ============================================
+function loadProgress() {
+    const progress = JSON.parse(localStorage.getItem('mesoProgress') || '{}');
+
+    // Update progress bars on dashboard
+    ['a1', 'a2', 'b1'].forEach(level => {
+        const progressBar = document.getElementById(`progress-${level}`);
+        if (progressBar && progress[level]) {
+            progressBar.style.width = `${progress[level]}%`;
+        }
+    });
+}
+
+function saveProgress(level, percentage) {
+    const progress = JSON.parse(localStorage.getItem('mesoProgress') || '{}');
+    progress[level] = percentage;
+    localStorage.setItem('mesoProgress', JSON.stringify(progress));
+    loadProgress();
+}
+
+// ============================================
+// QUIZ GAME
+// ============================================
+const quizData = {
+    a1: [
+        { question: "Si thuhet 'Mirëmëngjes'?", options: ["Guten Abend", "Guten Morgen", "Guten Tag", "Gute Nacht"], correct: 1, explanation: "'Guten Morgen'" },
+        { question: "Nyja për femërorë?", options: ["der", "die", "das", "den"], correct: 1, explanation: "'die'" },
+        { question: "'sein' për 'ich'?", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'ich bin'" },
+        { question: "Numri 7?", options: ["sechs", "sieben", "acht", "neun"], correct: 1, explanation: "'sieben'" },
+        { question: "'die Mutter' =?", options: ["babai", "motra", "nëna", "gjyshja"], correct: 2, explanation: "nëna" },
+        { question: "'blu' =?", options: ["rot", "grün", "blau", "gelb"], correct: 2, explanation: "'blau'" },
+        { question: "'Ich ___ Student.'", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'bin'" },
+        { question: "'Mirupafshim' =?", options: ["Hallo", "Tschüss", "Danke", "Bitte"], correct: 1, explanation: "'Tschüss'" },
+        { question: "Nyja për 'Kind'?", options: ["der", "die", "das", "den"], correct: 2, explanation: "'das'" },
+        { question: "'haben' për 'du'?", options: ["habe", "hast", "hat", "haben"], correct: 1, explanation: "'hast'" }
+    ],
+    a2: [
+        { question: "Akkusativ 'der Mann'?", options: ["der", "den", "dem", "des"], correct: 1, explanation: "'den'" },
+        { question: "'Ich ___ Deutsch ___.'", options: ["bin gelernt", "habe gelernt", "habe gelearnt", "bin gelarnt"], correct: 1, explanation: "'habe gelernt'" },
+        { question: "'mund' =?", options: ["müssen", "können", "sollen", "wollen"], correct: 1, explanation: "'können'" },
+        { question: "'treni' =?", options: ["Auto", "Bus", "Zug", "Flugzeug"], correct: 2, explanation: "'der Zug'" },
+        { question: "'Ich gebe ___ Frau...' (Dat)", options: ["die", "der", "den", "dem"], correct: 1, explanation: "'der'" },
+        { question: "Perfekt 'fahren'?", options: ["habe gefahrt", "bin gefahren", "habe gefahren", "bin gefahrt"], correct: 1, explanation: "'bin gefahren'" },
+        { question: "'müssen' =?", options: ["mund", "dua", "duhet", "lejohet"], correct: 2, explanation: "'duhet'" },
+        { question: "'mëngjesi' =?", options: ["Mittagessen", "Abendessen", "Frühstück", "Mahlzeit"], correct: 2, explanation: "'Frühstück'" },
+        { question: "Saktë?", options: ["ein Kaffee", "einen Kaffee", "einer Kaffee", "einem Kaffee"], correct: 1, explanation: "'einen Kaffee'" },
+        { question: "'mjeku' =?", options: ["Lehrer", "Arzt", "Kellner", "Koch"], correct: 1, explanation: "'der Arzt'" }
+    ],
+    b1: [
+        { question: "Genitiv 'der Mann'?", options: ["dem", "den", "des Mannes", "der"], correct: 2, explanation: "'des Mannes'" },
+        { question: "Passiv =?", options: ["haben+PII", "werden+PII", "sein+PII", "werden+Inf"], correct: 1, explanation: "'werden+PII'" },
+        { question: "Konj.II 'sein' ich?", options: ["bin", "sei", "wäre", "würde"], correct: 2, explanation: "'wäre'" },
+        { question: "'Der Mann, ___ dort steht'", options: ["das", "die", "der", "den"], correct: 2, explanation: "'der'" },
+        { question: "Shkak =?", options: ["obwohl", "weil", "wenn", "damit"], correct: 1, explanation: "'weil'" },
+        { question: "'Wenn ich Zeit ___'", options: ["habe", "hätte", "hatte", "haben"], correct: 1, explanation: "'hätte'" },
+        { question: "'Klimawandel' =?", options: ["mjedisi", "ndryshime klimatike", "qëndrueshmëri", "papunësi"], correct: 1, explanation: "ndryshime klimatike" },
+        { question: "Cila Passiv?", options: ["Ich koche", "Essen wird gekocht", "Ich habe gekocht", "Essen ist gut"], correct: 1, explanation: "'wird gekocht'" },
+        { question: "'Meiner Meinung ___'", options: ["zu", "für", "nach", "von"], correct: 2, explanation: "'nach'" },
+        { question: "Konj.II 'können' Sie?", options: ["können", "konnten", "könnten", "gekonnt"], correct: 2, explanation: "'könnten'" }
+    ]
+};
+
+let quizState = { currentQuestion: 0, score: 0, answered: false };
+
+function initQuizGame() {
+    quizState = { currentQuestion: 0, score: 0, answered: false };
+    loadQuizQuestion();
+
+    const nextBtn = document.getElementById('game-next-btn');
+    const restartBtn = document.getElementById('game-restart-btn');
+
+    if (nextBtn) {
+        nextBtn.onclick = () => {
+            quizState.currentQuestion++;
+            loadQuizQuestion();
+        };
+    }
+
+    if (restartBtn) {
+        restartBtn.onclick = () => {
+            quizState = { currentQuestion: 0, score: 0, answered: false };
+            restartBtn.style.display = 'none';
+            loadQuizQuestion();
+        };
+    }
+}
+
+function loadQuizQuestion() {
+    const data = quizData[currentGameLevel];
+
+    if (quizState.currentQuestion >= data.length) {
+        showQuizResults();
+        return;
+    }
+
+    const q = data[quizState.currentQuestion];
+
+    document.getElementById('game-question').textContent = q.question;
+    document.getElementById('game-question-num').textContent = quizState.currentQuestion + 1;
+    document.getElementById('game-score').textContent = quizState.score;
+
+    const optsContainer = document.getElementById('game-options');
+    optsContainer.innerHTML = '';
+
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleQuizAnswer(i));
+        optsContainer.appendChild(btn);
+    });
+
+    quizState.answered = false;
+
+    const feedback = document.getElementById('game-feedback');
+    feedback.className = 'quiz-feedback';
+    feedback.textContent = '';
+
+    document.getElementById('game-next-btn').style.display = 'none';
+    document.getElementById('game-results').style.display = 'none';
+    document.querySelector('#quiz-game .quiz-question-container').style.display = 'block';
+}
+
+function handleQuizAnswer(idx) {
+    if (quizState.answered) return;
+    quizState.answered = true;
+
+    const data = quizData[currentGameLevel];
+    const q = data[quizState.currentQuestion];
+    const opts = document.querySelectorAll('#game-options .quiz-option');
+
+    opts.forEach(o => o.classList.add('disabled'));
+    opts[q.correct].classList.add('correct');
+
+    const feedback = document.getElementById('game-feedback');
+
+    if (idx === q.correct) {
+        quizState.score++;
+        document.getElementById('game-score').textContent = quizState.score;
+        feedback.textContent = `✅ Saktë! ${q.explanation}`;
+        feedback.className = 'quiz-feedback show correct';
+    } else {
+        opts[idx].classList.add('wrong');
+        feedback.textContent = `❌ Gabim! ${q.explanation}`;
+        feedback.className = 'quiz-feedback show wrong';
+    }
+
+    document.getElementById('game-next-btn').style.display = 'inline-block';
+}
+
+function showQuizResults() {
+    const data = quizData[currentGameLevel];
+    const pct = Math.round((quizState.score / data.length) * 100);
+
+    document.querySelector('#quiz-game .quiz-question-container').style.display = 'none';
+    document.getElementById('game-feedback').className = 'quiz-feedback';
+    document.getElementById('game-next-btn').style.display = 'none';
+    document.getElementById('game-results').style.display = 'block';
+    document.getElementById('game-final-score').textContent = pct;
+
+    let message;
+    if (pct >= 80) message = '🎉 Shkëlqyeshëm!';
+    else if (pct >= 60) message = '👍 Mirë!';
+    else if (pct >= 40) message = '📚 Praktiko!';
+    else message = '💪 Mëso përsëri!';
+
+    document.getElementById('game-results-message').textContent = message;
+    document.getElementById('game-restart-btn').style.display = 'inline-block';
+
+    // Save progress
+    saveProgress(currentGameLevel, Math.max(pct, JSON.parse(localStorage.getItem('mesoProgress') || '{}')[currentGameLevel] || 0));
+}
+
+// ============================================
+// GAME VOCABULARY DATA
+// ============================================
+const gameVocab = {
+    a1: [
+        { de: 'Hallo', sq: 'Përshëndetje' },
+        { de: 'Guten Morgen', sq: 'Mirëmëngjes' },
+        { de: 'Danke', sq: 'Faleminderit' },
+        { de: 'Bitte', sq: 'Ju lutem' },
+        { de: 'Ja', sq: 'Po' },
+        { de: 'Nein', sq: 'Jo' },
+        { de: 'Eins', sq: 'Një' },
+        { de: 'Zwei', sq: 'Dy' },
+        { de: 'Drei', sq: 'Tre' },
+        { de: 'Rot', sq: 'E kuqe' },
+        { de: 'Blau', sq: 'Blu' },
+        { de: 'Grün', sq: 'E gjelbër' },
+        { de: 'Mutter', sq: 'Nëna' },
+        { de: 'Vater', sq: 'Babai' },
+        { de: 'Wasser', sq: 'Ujë' },
+        { de: 'Brot', sq: 'Bukë' }
+    ],
+    a2: [
+        { de: 'Arzt', sq: 'Mjek' },
+        { de: 'Lehrer', sq: 'Mësues' },
+        { de: 'Zug', sq: 'Tren' },
+        { de: 'Flugzeug', sq: 'Aeroplan' },
+        { de: 'Frühstück', sq: 'Mëngjes' },
+        { de: 'Mittagessen', sq: 'Drekë' },
+        { de: 'Kopf', sq: 'Kokë' },
+        { de: 'Hand', sq: 'Dorë' },
+        { de: 'Sonne', sq: 'Diell' },
+        { de: 'Regen', sq: 'Shi' },
+        { de: 'Hemd', sq: 'Këmishë' },
+        { de: 'Hose', sq: 'Pantallona' },
+        { de: 'Schule', sq: 'Shkollë' },
+        { de: 'Arbeit', sq: 'Punë' },
+        { de: 'Geld', sq: 'Para' },
+        { de: 'Zeit', sq: 'Kohë' }
+    ],
+    b1: [
+        { de: 'Meinung', sq: 'Mendim' },
+        { de: 'Umwelt', sq: 'Mjedis' },
+        { de: 'Gesellschaft', sq: 'Shoqëri' },
+        { de: 'Erfahrung', sq: 'Përvojë' },
+        { de: 'Entscheidung', sq: 'Vendim' },
+        { de: 'Verantwortung', sq: 'Përgjegjësi' },
+        { de: 'Entwicklung', sq: 'Zhvillim' },
+        { de: 'Vorschlag', sq: 'Propozim' },
+        { de: 'Zusammenhang', sq: 'Lidhje' },
+        { de: 'Unterschied', sq: 'Dallim' },
+        { de: 'Vergleich', sq: 'Krahasim' },
+        { de: 'Bedeutung', sq: 'Kuptim' },
+        { de: 'Lösung', sq: 'Zgjidhje' },
+        { de: 'Vorteil', sq: 'Përparësi' },
+        { de: 'Nachteil', sq: 'Disavantazh' },
+        { de: 'Ziel', sq: 'Qëllim' }
+    ]
+};
+
+// ============================================
+// MATCHING GAME
+// ============================================
+let matchingState = { pairs: [], selected: null, matched: 0, startTime: 0 };
+let matchingTimer = null;
+
+function initMatchingGame() {
+    const vocab = [...gameVocab[currentGameLevel]].sort(() => Math.random() - 0.5).slice(0, 8);
+    matchingState = {
+        pairs: vocab,
+        selected: null,
+        matched: 0,
+        startTime: Date.now()
+    };
+
+    const leftCol = document.getElementById('match-left');
+    const rightCol = document.getElementById('match-right');
+
+    if (!leftCol || !rightCol) return;
+
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+
+    const leftItems = vocab.map((v, i) => ({ text: v.de, idx: i, type: 'de' })).sort(() => Math.random() - 0.5);
+    const rightItems = vocab.map((v, i) => ({ text: v.sq, idx: i, type: 'sq' })).sort(() => Math.random() - 0.5);
+
+    leftItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'match-item';
+        div.textContent = item.text;
+        div.dataset.idx = item.idx;
+        div.dataset.type = item.type;
+        div.addEventListener('click', () => handleMatchClick(div));
+        leftCol.appendChild(div);
+    });
+
+    rightItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'match-item';
+        div.textContent = item.text;
+        div.dataset.idx = item.idx;
+        div.dataset.type = item.type;
+        div.addEventListener('click', () => handleMatchClick(div));
+        rightCol.appendChild(div);
+    });
+
+    document.getElementById('match-score').textContent = '0';
+    document.getElementById('match-result').style.display = 'none';
+
+    // Start timer
+    if (matchingTimer) clearInterval(matchingTimer);
+    matchingTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - matchingState.startTime) / 1000);
+        document.getElementById('match-time').textContent = elapsed;
+    }, 1000);
+}
+
+function handleMatchClick(div) {
+    if (div.classList.contains('matched')) return;
+
+    if (!matchingState.selected) {
+        matchingState.selected = div;
+        div.classList.add('selected');
+    } else {
+        if (matchingState.selected === div) {
+            div.classList.remove('selected');
+            matchingState.selected = null;
+            return;
+        }
+
+        // Check if match
+        const idx1 = parseInt(matchingState.selected.dataset.idx);
+        const idx2 = parseInt(div.dataset.idx);
+        const type1 = matchingState.selected.dataset.type;
+        const type2 = div.dataset.type;
+
+        if (idx1 === idx2 && type1 !== type2) {
+            // Correct match
+            matchingState.selected.classList.remove('selected');
+            matchingState.selected.classList.add('matched');
+            div.classList.add('matched');
+            matchingState.matched++;
+            document.getElementById('match-score').textContent = matchingState.matched;
+
+            if (matchingState.matched === 8) {
+                clearInterval(matchingTimer);
+                const time = Math.floor((Date.now() - matchingState.startTime) / 1000);
+                document.getElementById('match-result').innerHTML = `<h4>🎉 Bravo!</h4><p>I përfundove të gjitha çiftet në ${time} sekonda!</p><button class="quiz-btn" onclick="initMatchingGame()">🔄 Luaj Përsëri</button>`;
+                document.getElementById('match-result').style.display = 'block';
+            }
+        } else {
+            // Wrong match
+            matchingState.selected.classList.add('wrong');
+            div.classList.add('wrong');
+
+            setTimeout(() => {
+                matchingState.selected.classList.remove('selected', 'wrong');
+                div.classList.remove('wrong');
+                matchingState.selected = null;
+            }, 500);
+            return;
+        }
+
+        matchingState.selected = null;
+    }
+}
+
+// ============================================
+// MEMORY GAME
+// ============================================
+let memoryState = { cards: [], flipped: [], matched: 0, moves: 0, canFlip: true };
+
+function initMemoryGame() {
+    const vocab = [...gameVocab[currentGameLevel]].sort(() => Math.random() - 0.5).slice(0, 6);
+
+    // Create pairs (German and Albanian)
+    const cards = [];
+    vocab.forEach((v, i) => {
+        cards.push({ id: i, text: v.de, pairId: i, type: 'de' });
+        cards.push({ id: i, text: v.sq, pairId: i, type: 'sq' });
+    });
+
+    // Shuffle cards
+    cards.sort(() => Math.random() - 0.5);
+
+    memoryState = { cards, flipped: [], matched: 0, moves: 0, canFlip: true };
+
+    const grid = document.getElementById('memory-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    cards.forEach((card, i) => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'memory-card';
+        cardEl.dataset.index = i;
+        cardEl.innerHTML = `
+            <div class="memory-card-inner">
+                <div class="memory-card-front">?</div>
+                <div class="memory-card-back">${card.text}</div>
+            </div>
+        `;
+        cardEl.addEventListener('click', () => handleMemoryClick(i));
+        grid.appendChild(cardEl);
+    });
+
+    document.getElementById('memory-moves').textContent = '0';
+    document.getElementById('memory-pairs').textContent = '0';
+    document.getElementById('memory-result').style.display = 'none';
+}
+
+function handleMemoryClick(index) {
+    if (!memoryState.canFlip) return;
+
+    const cardEl = document.querySelector(`.memory-card[data-index="${index}"]`);
+    if (!cardEl || cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+
+    cardEl.classList.add('flipped');
+    memoryState.flipped.push(index);
+
+    if (memoryState.flipped.length === 2) {
+        memoryState.moves++;
+        document.getElementById('memory-moves').textContent = memoryState.moves;
+        memoryState.canFlip = false;
+
+        const [first, second] = memoryState.flipped;
+        const card1 = memoryState.cards[first];
+        const card2 = memoryState.cards[second];
+
+        if (card1.pairId === card2.pairId && card1.type !== card2.type) {
+            // Match!
+            document.querySelector(`.memory-card[data-index="${first}"]`).classList.add('matched');
+            document.querySelector(`.memory-card[data-index="${second}"]`).classList.add('matched');
+            memoryState.matched++;
+            document.getElementById('memory-pairs').textContent = memoryState.matched;
+            memoryState.flipped = [];
+            memoryState.canFlip = true;
+
+            if (memoryState.matched === 6) {
+                document.getElementById('memory-result').innerHTML = `<h4>🎉 Bravo!</h4><p>I gjete të gjitha çiftet me ${memoryState.moves} lëvizje!</p><button class="quiz-btn" onclick="initMemoryGame()">🔄 Luaj Përsëri</button>`;
+                document.getElementById('memory-result').style.display = 'block';
+            }
+        } else {
+            // No match
+            setTimeout(() => {
+                document.querySelector(`.memory-card[data-index="${first}"]`).classList.remove('flipped');
+                document.querySelector(`.memory-card[data-index="${second}"]`).classList.remove('flipped');
+                memoryState.flipped = [];
+                memoryState.canFlip = true;
+            }, 1000);
+        }
+    }
+}
+
+// ============================================
+// FILL IN THE BLANK GAME
+// ============================================
+const fillBlankData = {
+    a1: [
+        { sentence: 'Ich ___ Student.', answer: 'bin', hint: 'folja "sein" për ich' },
+        { sentence: 'Er ___ Lehrer.', answer: 'ist', hint: 'folja "sein" për er' },
+        { sentence: 'Wir ___ aus Albanien.', answer: 'sind', hint: 'folja "sein" për wir' },
+        { sentence: 'Du ___ ein Buch.', answer: 'hast', hint: 'folja "haben" për du' },
+        { sentence: 'Ich ___ Wasser.', answer: 'trinke', hint: 'folja "trinken" për ich' },
+        { sentence: 'Sie ___ Deutsch.', answer: 'spricht', hint: 'folja "sprechen" për sie' },
+        { sentence: 'Das ist ___ Buch.', answer: 'ein', hint: 'nyja e pacaktuar' },
+        { sentence: '___ Frau ist nett.', answer: 'Die', hint: 'nyja për femërore' }
+    ],
+    a2: [
+        { sentence: 'Ich habe das Buch ___.', answer: 'gelesen', hint: 'Partizip II i "lesen"' },
+        { sentence: 'Er ist nach Berlin ___.', answer: 'gefahren', hint: 'Partizip II i "fahren"' },
+        { sentence: 'Ich ___ Deutsch lernen.', answer: 'möchte', hint: 'folje modale - dëshirë' },
+        { sentence: 'Du ___ das machen.', answer: 'musst', hint: 'folje modale - detyrë' },
+        { sentence: 'Ich gebe ___ Frau das Buch.', answer: 'der', hint: 'Dativ femërore' },
+        { sentence: 'Ich sehe ___ Mann.', answer: 'den', hint: 'Akkusativ mashkullore' },
+        { sentence: 'Ich lerne, ___ ich eine Prüfung habe.', answer: 'weil', hint: 'lidhëz shkaku' },
+        { sentence: 'Ich weiß, ___ er kommt.', answer: 'dass', hint: 'lidhëz deklarative' }
+    ],
+    b1: [
+        { sentence: 'Das Buch ___ Mannes ist interessant.', answer: 'des', hint: 'Genitiv mashkullore' },
+        { sentence: 'Wenn ich reich ___, würde ich reisen.', answer: 'wäre', hint: 'Konjunktiv II i "sein"' },
+        { sentence: 'Das Essen ___ gekocht.', answer: 'wird', hint: 'Passiv - "werden"' },
+        { sentence: 'Der Mann, ___ dort steht, ist mein Vater.', answer: 'der', hint: 'Përemër relativ' },
+        { sentence: 'Meiner Meinung ___ ist das richtig.', answer: 'nach', hint: 'parafjalë për opinion' },
+        { sentence: 'Er sagte, er ___ krank.', answer: 'sei', hint: 'Konjunktiv I' },
+        { sentence: 'Obwohl es regnet, ___ ich spazieren.', answer: 'gehe', hint: 'folja në fjali kryesore' },
+        { sentence: 'Je mehr ich lerne, ___ besser verstehe ich.', answer: 'desto', hint: 'je... desto' }
+    ]
+};
+
+let fillState = { current: 0, score: 0, questions: [] };
+
+function initFillBlankGame() {
+    fillState = {
+        current: 0,
+        score: 0,
+        questions: [...fillBlankData[currentGameLevel]].sort(() => Math.random() - 0.5)
+    };
+
+    loadFillQuestion();
+
+    const submitBtn = document.getElementById('fill-submit');
+    const input = document.getElementById('fill-input');
+
+    if (submitBtn) {
+        submitBtn.onclick = checkFillAnswer;
+    }
+
+    if (input) {
+        input.onkeypress = (e) => {
+            if (e.key === 'Enter') checkFillAnswer();
+        };
+    }
+}
+
+function loadFillQuestion() {
+    if (fillState.current >= fillState.questions.length) {
+        showFillResults();
+        return;
+    }
+
+    const q = fillState.questions[fillState.current];
+    const display = q.sentence.replace('___', '<span class="fill-blank">_____</span>');
+
+    document.getElementById('fill-question').innerHTML = display;
+    document.getElementById('fill-hint').textContent = `💡 ${q.hint}`;
+    document.getElementById('fill-num').textContent = fillState.current + 1;
+    document.getElementById('fill-score').textContent = fillState.score;
+    document.getElementById('fill-input').value = '';
+    document.getElementById('fill-input').focus();
+    document.getElementById('fill-feedback').className = 'fillblank-feedback';
+    document.getElementById('fill-result').style.display = 'none';
+}
+
+function checkFillAnswer() {
+    const input = document.getElementById('fill-input');
+    const userAnswer = input.value.trim().toLowerCase();
+    const correctAnswer = fillState.questions[fillState.current].answer.toLowerCase();
+
+    const feedback = document.getElementById('fill-feedback');
+
+    if (userAnswer === correctAnswer) {
+        fillState.score++;
+        document.getElementById('fill-score').textContent = fillState.score;
+        feedback.textContent = '✅ Saktë!';
+        feedback.className = 'fillblank-feedback show correct';
+    } else {
+        feedback.textContent = `❌ Gabim! Përgjigja: ${fillState.questions[fillState.current].answer}`;
+        feedback.className = 'fillblank-feedback show wrong';
+    }
+
+    setTimeout(() => {
+        fillState.current++;
+        loadFillQuestion();
+    }, 1500);
+}
+
+function showFillResults() {
+    const pct = Math.round((fillState.score / fillState.questions.length) * 100);
+    document.getElementById('fill-result').innerHTML = `<h4>🎉 Rezultati: ${pct}%</h4><p>${fillState.score}/${fillState.questions.length} përgjigje të sakta</p><button class="quiz-btn" onclick="initFillBlankGame()">🔄 Luaj Përsëri</button>`;
+    document.getElementById('fill-result').style.display = 'block';
+    document.getElementById('fill-question').innerHTML = '';
+    document.getElementById('fill-hint').textContent = '';
+    document.getElementById('fill-input').style.display = 'none';
+    document.getElementById('fill-submit').style.display = 'none';
+}
+
+// ============================================
+// HANGMAN GAME
+// ============================================
+let hangmanState = { word: '', hint: '', guessed: [], lives: 6, score: 0 };
+
+function initHangmanGame() {
+    const vocab = gameVocab[currentGameLevel];
+    const item = vocab[Math.floor(Math.random() * vocab.length)];
+
+    hangmanState = {
+        word: item.de.toUpperCase(),
+        hint: item.sq,
+        guessed: [],
+        lives: 6,
+        score: 0
+    };
+
+    renderHangman();
+    createKeyboard();
+    document.getElementById('hang-result').style.display = 'none';
+}
+
+function renderHangman() {
+    // Render lives
+    document.getElementById('hang-lives').textContent = '❤️'.repeat(hangmanState.lives) + '🖤'.repeat(6 - hangmanState.lives);
+    document.getElementById('hang-score').textContent = hangmanState.score;
+
+    // Render hint
+    document.getElementById('hang-hint').textContent = `Përkthimi: ${hangmanState.hint}`;
+
+    // Render word
+    const display = hangmanState.word.split('').map(letter => {
+        if (letter === ' ') return ' ';
+        return hangmanState.guessed.includes(letter) ? letter : '_';
+    }).join(' ');
+
+    document.getElementById('hang-word').textContent = display;
+}
+
+function createKeyboard() {
+    const keyboard = document.getElementById('hang-keyboard');
+    keyboard.innerHTML = '';
+
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß'.split('');
+
+    letters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.className = 'keyboard-key';
+        btn.textContent = letter;
+        btn.addEventListener('click', () => guessLetter(letter, btn));
+        keyboard.appendChild(btn);
+    });
+}
+
+function guessLetter(letter, btn) {
+    if (hangmanState.guessed.includes(letter) || hangmanState.lives <= 0) return;
+
+    hangmanState.guessed.push(letter);
+    btn.disabled = true;
+
+    if (hangmanState.word.includes(letter)) {
+        btn.classList.add('correct');
+        // Check win
+        const won = hangmanState.word.split('').every(l => l === ' ' || hangmanState.guessed.includes(l));
+        if (won) {
+            hangmanState.score++;
+            document.getElementById('hang-result').innerHTML = `<h4>🎉 Fitove!</h4><p>Fjala ishte: ${hangmanState.word}</p><button class="quiz-btn" onclick="initHangmanGame()">🔄 Fjala Tjetër</button>`;
+            document.getElementById('hang-result').style.display = 'block';
+        }
+    } else {
+        btn.classList.add('wrong');
+        hangmanState.lives--;
+        if (hangmanState.lives <= 0) {
+            document.getElementById('hang-result').innerHTML = `<h4>😔 Humbje!</h4><p>Fjala ishte: ${hangmanState.word}</p><button class="quiz-btn" onclick="initHangmanGame()">🔄 Provo Përsëri</button>`;
+            document.getElementById('hang-result').style.display = 'block';
+        }
+    }
+
+    renderHangman();
+}
+
+// ============================================
+// WORD SCRAMBLE GAME
+// ============================================
+let scrambleState = { word: '', hint: '', scrambled: [], answer: [], current: 0, score: 0, questions: [] };
+
+function initScrambleGame() {
+    const vocab = [...gameVocab[currentGameLevel]].sort(() => Math.random() - 0.5).slice(0, 8);
+    scrambleState = {
+        questions: vocab,
+        current: 0,
+        score: 0,
+        word: '',
+        hint: '',
+        scrambled: [],
+        answer: []
+    };
+
+    loadScrambleWord();
+
+    document.getElementById('scramble-clear').onclick = clearScramble;
+    document.getElementById('scramble-submit').onclick = checkScramble;
+}
+
+function loadScrambleWord() {
+    if (scrambleState.current >= scrambleState.questions.length) {
+        showScrambleResults();
+        return;
+    }
+
+    const item = scrambleState.questions[scrambleState.current];
+    scrambleState.word = item.de.toUpperCase();
+    scrambleState.hint = item.sq;
+    scrambleState.answer = [];
+
+    // Scramble letters
+    scrambleState.scrambled = scrambleState.word.split('').map((letter, i) => ({ letter, used: false, id: i }));
+    scrambleState.scrambled.sort(() => Math.random() - 0.5);
+
+    renderScramble();
+    document.getElementById('scramble-num').textContent = scrambleState.current + 1;
+    document.getElementById('scramble-score').textContent = scrambleState.score;
+    document.getElementById('scramble-feedback').className = 'scramble-feedback';
+    document.getElementById('scramble-result').style.display = 'none';
+}
+
+function renderScramble() {
+    document.getElementById('scramble-hint').textContent = `Përkthimi: ${scrambleState.hint}`;
+
+    const lettersDiv = document.getElementById('scramble-letters');
+    lettersDiv.innerHTML = '';
+
+    scrambleState.scrambled.forEach((item, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'scramble-letter' + (item.used ? ' used' : '');
+        btn.textContent = item.letter;
+        btn.addEventListener('click', () => selectScrambleLetter(i));
+        lettersDiv.appendChild(btn);
+    });
+
+    document.getElementById('scramble-answer').textContent = scrambleState.answer.map(i => scrambleState.scrambled[i].letter).join('');
+}
+
+function selectScrambleLetter(index) {
+    if (scrambleState.scrambled[index].used) return;
+
+    scrambleState.scrambled[index].used = true;
+    scrambleState.answer.push(index);
+    renderScramble();
+}
+
+function clearScramble() {
+    scrambleState.scrambled.forEach(item => item.used = false);
+    scrambleState.answer = [];
+    renderScramble();
+}
+
+function checkScramble() {
+    const userAnswer = scrambleState.answer.map(i => scrambleState.scrambled[i].letter).join('');
+    const feedback = document.getElementById('scramble-feedback');
+
+    if (userAnswer === scrambleState.word) {
+        scrambleState.score++;
+        document.getElementById('scramble-score').textContent = scrambleState.score;
+        feedback.textContent = '✅ Saktë!';
+        feedback.className = 'scramble-feedback show correct';
+    } else {
+        feedback.textContent = `❌ Gabim! Fjala: ${scrambleState.word}`;
+        feedback.className = 'scramble-feedback show wrong';
+    }
+
+    setTimeout(() => {
+        scrambleState.current++;
+        loadScrambleWord();
+    }, 1500);
+}
+
+function showScrambleResults() {
+    const pct = Math.round((scrambleState.score / scrambleState.questions.length) * 100);
+    document.getElementById('scramble-result').innerHTML = `<h4>🎉 Rezultati: ${pct}%</h4><p>${scrambleState.score}/${scrambleState.questions.length} fjalë të sakta</p><button class="quiz-btn" onclick="initScrambleGame()">🔄 Luaj Përsëri</button>`;
+    document.getElementById('scramble-result').style.display = 'block';
+    document.getElementById('scramble-letters').innerHTML = '';
+    document.getElementById('scramble-answer').textContent = '';
+    document.getElementById('scramble-hint').textContent = '';
+}
+
+// ============================================
+// TOPIC CONTENT DATA
+// ============================================
 const topicContent = {
     'greetings-a1': {
         breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Përshëndetjet</span>',
@@ -467,1160 +1569,5 @@ const topicContent = {
                 <div class="dialogue-line"><span class="speaker speaker-b">Bewerber:</span><span class="german">Ich arbeite gut im Team.</span><span class="albanian">Punoj mirë në grup.</span></div>
             </div>
             <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p>"Zu meinen Stärken gehört..." = Ndër pikat e mia të forta...</p></div>`
-    },
-    // A2 Vocabulary - Essen
-    'essen-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ushqimi</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🍽️</span><div class="modal-header-text"><h2>Ushqimi - Das Essen</h2><p>Fjalor i zgjeruar për ushqimin</p></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">das Frühstück</div><div class="albanian">mëngjesi</div><div class="example">"Zum Frühstück esse ich Brot."</div></div>
-                <div class="modal-word-card"><div class="german">das Mittagessen</div><div class="albanian">dreka</div><div class="example">"Das Mittagessen ist um 12 Uhr."</div></div>
-                <div class="modal-word-card"><div class="german">das Abendessen</div><div class="albanian">darka</div><div class="example">"Was gibt es zum Abendessen?"</div></div>
-                <div class="modal-word-card"><div class="german">die Suppe</div><div class="albanian">supa</div><div class="example">"Die Suppe ist heiß."</div></div>
-                <div class="modal-word-card"><div class="german">der Salat</div><div class="albanian">sallata</div><div class="example">"Ich möchte einen Salat."</div></div>
-                <div class="modal-word-card"><div class="german">das Hähnchen</div><div class="albanian">pula</div><div class="example">"Das Hähnchen schmeckt gut."</div></div>
-                <div class="modal-word-card"><div class="german">die Kartoffel</div><div class="albanian">patatja</div><div class="example">"Kartoffeln mit Soße."</div></div>
-                <div class="modal-word-card"><div class="german">der Reis</div><div class="albanian">orizi</div><div class="example">"Reis oder Nudeln?"</div></div>
-                <div class="modal-word-card"><div class="german">die Nudeln</div><div class="albanian">makaronat</div><div class="example">"Nudeln mit Tomatensoße."</div></div>
-                <div class="modal-word-card"><div class="german">der Kuchen</div><div class="albanian">torta</div><div class="example">"Zum Nachtisch gibt es Kuchen."</div></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Shprehje të dobishme</h4><p><strong>Guten Appetit!</strong> = Të bëftë mirë!</p><p><strong>Es schmeckt gut!</strong> = Ka shije të mirë!</p></div>`
-    },
-    // A2 Vocabulary - Körper
-    'korper-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Trupi</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🏃</span><div class="modal-header-text"><h2>Trupi - Der Körper</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">der Kopf</div><div class="albanian">koka</div></div>
-                <div class="modal-word-card"><div class="german">das Auge</div><div class="albanian">syri</div></div>
-                <div class="modal-word-card"><div class="german">die Nase</div><div class="albanian">hunda</div></div>
-                <div class="modal-word-card"><div class="german">der Mund</div><div class="albanian">goja</div></div>
-                <div class="modal-word-card"><div class="german">das Ohr</div><div class="albanian">veshi</div></div>
-                <div class="modal-word-card"><div class="german">die Hand</div><div class="albanian">dora</div></div>
-                <div class="modal-word-card"><div class="german">der Arm</div><div class="albanian">krahu</div></div>
-                <div class="modal-word-card"><div class="german">das Bein</div><div class="albanian">këmba</div></div>
-                <div class="modal-word-card"><div class="german">der Fuß</div><div class="albanian">këmba (shputa)</div></div>
-                <div class="modal-word-card"><div class="german">der Bauch</div><div class="albanian">barku</div></div>
-                <div class="modal-word-card"><div class="german">der Rücken</div><div class="albanian">shpina</div></div>
-                <div class="modal-word-card"><div class="german">das Herz</div><div class="albanian">zemra</div></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Për dhimbje</h4><p><strong>Ich habe Kopfschmerzen</strong> = Kam dhimbje koke</p><p><strong>Mein Arm tut weh</strong> = Më dhemb krahu</p></div>`
-    },
-    // A2 Vocabulary - Wetter
-    'wetter-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Moti</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🌤️</span><div class="modal-header-text"><h2>Moti - Das Wetter</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">die Sonne</div><div class="albanian">dielli</div><div class="example">"Die Sonne scheint."</div></div>
-                <div class="modal-word-card"><div class="german">der Regen</div><div class="albanian">shiu</div><div class="example">"Es regnet."</div></div>
-                <div class="modal-word-card"><div class="german">der Schnee</div><div class="albanian">bora</div><div class="example">"Es schneit."</div></div>
-                <div class="modal-word-card"><div class="german">der Wind</div><div class="albanian">era</div><div class="example">"Der Wind ist stark."</div></div>
-                <div class="modal-word-card"><div class="german">die Wolke</div><div class="albanian">reja</div><div class="example">"Viele Wolken am Himmel."</div></div>
-                <div class="modal-word-card"><div class="german">heiß</div><div class="albanian">nxehtë</div><div class="example">"Es ist heiß."</div></div>
-                <div class="modal-word-card"><div class="german">kalt</div><div class="albanian">ftohtë</div><div class="example">"Es ist kalt."</div></div>
-                <div class="modal-word-card"><div class="german">warm</div><div class="albanian">ngrohtë</div><div class="example">"Es ist warm."</div></div>
-                <div class="modal-word-card"><div class="german">das Gewitter</div><div class="albanian">stuhia</div><div class="example">"Ein Gewitter kommt."</div></div>
-                <div class="modal-word-card"><div class="german">der Nebel</div><div class="albanian">mjegulla</div><div class="example">"Heute ist Nebel."</div></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Pyetje për motin</h4><p><strong>Wie ist das Wetter?</strong> = Si është moti?</p><p><strong>Wie wird das Wetter morgen?</strong> = Si do të jetë moti nesër?</p></div>`
-    },
-    // A2 Vocabulary - Kleidung
-    'kleidung-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Veshjet</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">👔</span><div class="modal-header-text"><h2>Veshjet - Die Kleidung</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">das Hemd</div><div class="albanian">këmisha</div></div>
-                <div class="modal-word-card"><div class="german">die Hose</div><div class="albanian">pantallona</div></div>
-                <div class="modal-word-card"><div class="german">das Kleid</div><div class="albanian">fustani</div></div>
-                <div class="modal-word-card"><div class="german">der Rock</div><div class="albanian">fundi</div></div>
-                <div class="modal-word-card"><div class="german">die Jacke</div><div class="albanian">xhaketa</div></div>
-                <div class="modal-word-card"><div class="german">der Mantel</div><div class="albanian">pallto</div></div>
-                <div class="modal-word-card"><div class="german">die Schuhe</div><div class="albanian">këpucët</div></div>
-                <div class="modal-word-card"><div class="german">die Socken</div><div class="albanian">çorapet</div></div>
-                <div class="modal-word-card"><div class="german">der Pullover</div><div class="albanian">triko</div></div>
-                <div class="modal-word-card"><div class="german">die Mütze</div><div class="albanian">kapela</div></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Në dyqan</h4><p><strong>Kann ich das anprobieren?</strong> = A mund ta provoj?</p><p><strong>Das passt mir gut.</strong> = Më shkon mirë.</p></div>`
-    },
-    // A2 Grammar - Präpositionen
-    'prapositionen-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Parafjalët</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📌</span><div class="modal-header-text"><h2>Parafjalët - Präpositionen</h2></div></div>
-            <div class="grammar-deep-section"><h3>📌 Akkusativ Präpositionen</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>für</strong></span><span class="al">për - Das ist für dich.</span></li>
-                <li><span class="de"><strong>gegen</strong></span><span class="al">kundër - gegen die Wand</span></li>
-                <li><span class="de"><strong>ohne</strong></span><span class="al">pa - ohne mich</span></li>
-                <li><span class="de"><strong>durch</strong></span><span class="al">përmes - durch die Stadt</span></li>
-                <li><span class="de"><strong>um</strong></span><span class="al">rreth - um den Tisch</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Dativ Präpositionen</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>mit</strong></span><span class="al">me - mit dem Auto</span></li>
-                <li><span class="de"><strong>bei</strong></span><span class="al">tek - bei mir</span></li>
-                <li><span class="de"><strong>nach</strong></span><span class="al">pas, drejt - nach Hause</span></li>
-                <li><span class="de"><strong>von</strong></span><span class="al">nga - von der Arbeit</span></li>
-                <li><span class="de"><strong>zu</strong></span><span class="al">te, drejt - zum Arzt</span></li>
-                <li><span class="de"><strong>aus</strong></span><span class="al">nga - aus Albanien</span></li>
-                <li><span class="de"><strong>seit</strong></span><span class="al">që nga - seit zwei Jahren</span></li>
-            </ul></div>
-            <div class="grammar-rule-box"><h4>💡 Këshillë</h4><p>Mëso: <strong>für, gegen, ohne, durch, um</strong> = Akkusativ</p><p><strong>mit, bei, nach, von, zu, aus, seit</strong> = Dativ</p></div>`
-    },
-    // A2 Grammar - Nebensätze
-    'nebensatze-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Fjali Dytësore</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🔀</span><div class="modal-header-text"><h2>Fjali Dytësore - Nebensätze</h2><p>Folja shkon në fund!</p></div></div>
-            <div class="grammar-rule-box"><h4>🎯 Rregulli kryesor</h4><p>Në fjalitë dytësore, folja shkon në <strong>FUND</strong> të fjalisë!</p></div>
-            <div class="grammar-deep-section"><h3>📌 weil (sepse)</h3><ul class="grammar-examples-list">
-                <li><span class="de">Ich lerne Deutsch, <strong>weil</strong> ich in Deutschland arbeiten <strong>will</strong>.</span><span class="al">Mësoj gjermanisht sepse dua të punoj në Gjermani.</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 dass (që)</h3><ul class="grammar-examples-list">
-                <li><span class="de">Ich denke, <strong>dass</strong> er nett <strong>ist</strong>.</span><span class="al">Mendoj që ai është i mirë.</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 wenn (kur, nëse)</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Wenn</strong> ich Zeit <strong>habe</strong>, gehe ich ins Kino.</span><span class="al">Kur kam kohë, shkoj në kinema.</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 obwohl (megjithëse)</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Obwohl</strong> es regnet, gehe ich <strong>spazieren</strong>.</span><span class="al">Megjithëse bie shi, shkoj në shëtitje.</span></li>
-            </ul></div>`
-    },
-    // A2 Grammar - Komparativ
-    'komparativ-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Krahasimi</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📊</span><div class="modal-header-text"><h2>Krahasimi - Komparativ & Superlativ</h2></div></div>
-            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>Komparativ:</strong> + er (schneller, größer)</p><p><strong>Superlativ:</strong> am + sten (am schnellsten)</p></div>
-            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
-                <li><span class="de">schnell → schnell<strong>er</strong> → am schnell<strong>sten</strong></span><span class="al">shpejt → më shpejt → më i shpejti</span></li>
-                <li><span class="de">groß → größ<strong>er</strong> → am größ<strong>ten</strong></span><span class="al">i madh → më i madh → më i madhi</span></li>
-                <li><span class="de">alt →ält<strong>er</strong> → amält<strong>esten</strong></span><span class="al">i vjetër → më i vjetër → më i vjetri</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>⚠️ Të parregullt</h3><ul class="grammar-examples-list">
-                <li><span class="de">gut → besser → am besten</span><span class="al">mirë → më mirë → më i miri</span></li>
-                <li><span class="de">viel → mehr → am meisten</span><span class="al">shumë → më shumë → më së shumti</span></li>
-                <li><span class="de">gern → lieber → am liebsten</span><span class="al">me qejf → më me qejf → më së shumti</span></li>
-            </ul></div>
-            <div class="grammar-rule-box"><h4>📌 Krahasim me "als" dhe "wie"</h4><p><strong>so ... wie</strong> = aq ... sa (barazim)</p><p><strong>...er als</strong> = më ... se (ndryshim)</p></div>`
-    },
-    // A2 Examples - Restaurant
-    'restaurant-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Restorant</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🍴</span><div class="modal-header-text"><h2>Në restorant - Im Restaurant</h2></div></div>
-            <div class="dialogue-box">
-                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Haben Sie reserviert?</span><span class="albanian">Keni rezervuar?</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ja, auf den Namen Müller.</span><span class="albanian">Po, me emrin Müller.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Was möchten Sie bestellen?</span><span class="albanian">Çfarë dëshironi të porosisni?</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ich hätte gern das Schnitzel mit Pommes.</span><span class="albanian">Do të doja shnicëllin me patate.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Und zu trinken?</span><span class="albanian">Dhe për të pirë?</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ein Glas Wasser, bitte.</span><span class="albanian">Një gotë ujë, ju lutem.</span></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Die Rechnung, bitte!</strong> = Faturën, ju lutem!</p><p><strong>Stimmt so.</strong> = Mbaje kushurin (bakshishin).</p></div>`
-    },
-    // A2 Examples - Telefon
-    'telefon-a2': {
-        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Telefon</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📞</span><div class="modal-header-text"><h2>Në telefon - Am Telefon</h2></div></div>
-            <div class="dialogue-box">
-                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Hallo, hier ist Anna Meier.</span><span class="albanian">Alo, këtu është Anna Meier.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Sekretärin:</span><span class="german">Guten Tag, wie kann ich Ihnen helfen?</span><span class="albanian">Mirëdita, si mund t'ju ndihmoj?</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Ich möchte einen Termin machen.</span><span class="albanian">Dua të caktoj një takim.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Sekretärin:</span><span class="german">Einen Moment, bitte. Ich verbinde Sie.</span><span class="albanian">Një moment, ju lutem. Po ju lidh.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Danke, ich warte.</span><span class="albanian">Faleminderit, pres.</span></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Kann ich eine Nachricht hinterlassen?</strong> = A mund të lë një mesazh?</p><p><strong>Können Sie das buchstabieren?</strong> = A mund ta shkruani shkronjë për shkronjë?</p></div>`
-    },
-    // B1 Vocabulary - Meinung
-    'meinung-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Opinioni</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">💭</span><div class="modal-header-text"><h2>Shprehje Opinioni - Meinungsäußerung</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">Meiner Meinung nach...</div><div class="albanian">Sipas mendimit tim...</div></div>
-                <div class="modal-word-card"><div class="german">Ich denke, dass...</div><div class="albanian">Mendoj që...</div></div>
-                <div class="modal-word-card"><div class="german">Ich bin der Meinung...</div><div class="albanian">Jam i mendimit...</div></div>
-                <div class="modal-word-card"><div class="german">Ich finde...</div><div class="albanian">Gjej/Mendoj...</div></div>
-                <div class="modal-word-card"><div class="german">Ich glaube...</div><div class="albanian">Besoj...</div></div>
-                <div class="modal-word-card"><div class="german">Es scheint mir...</div><div class="albanian">Më duket...</div></div>
-                <div class="modal-word-card"><div class="german">Ich stimme zu.</div><div class="albanian">Pajtohem.</div></div>
-                <div class="modal-word-card"><div class="german">Ich bin dagegen.</div><div class="albanian">Jam kundër.</div></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Për të kundërshtuar</h4><p><strong>Das sehe ich anders.</strong> = E shoh ndryshe.</p><p><strong>Da bin ich anderer Meinung.</strong> = Kam mendim tjetër.</p></div>`
-    },
-    // B1 Vocabulary - Umwelt
-    'umwelt-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Mjedisi</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🌍</span><div class="modal-header-text"><h2>Mjedisi & Shoqëria - Umwelt & Gesellschaft</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">die Umwelt</div><div class="albanian">mjedisi</div></div>
-                <div class="modal-word-card"><div class="german">der Klimawandel</div><div class="albanian">ndryshimet klimatike</div></div>
-                <div class="modal-word-card"><div class="german">die Verschmutzung</div><div class="albanian">ndotja</div></div>
-                <div class="modal-word-card"><div class="german">recyceln</div><div class="albanian">ricikloj</div></div>
-                <div class="modal-word-card"><div class="german">die Energie</div><div class="albanian">energjia</div></div>
-                <div class="modal-word-card"><div class="german">erneuerbar</div><div class="albanian">i rinovueshëm</div></div>
-                <div class="modal-word-card"><div class="german">die Gesellschaft</div><div class="albanian">shoqëria</div></div>
-                <div class="modal-word-card"><div class="german">die Arbeitslosigkeit</div><div class="albanian">papunësia</div></div>
-                <div class="modal-word-card"><div class="german">die Gleichberechtigung</div><div class="albanian">barazia</div></div>
-                <div class="modal-word-card"><div class="german">nachhaltig</div><div class="albanian">i qëndrueshëm</div></div>
-            </div>`
-    },
-    // B1 Vocabulary - Konnektoren
-    'konnektoren-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Lidhëzat</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📊</span><div class="modal-header-text"><h2>Fjalë Lidhëse - Konnektoren</h2></div></div>
-            <div class="grammar-deep-section"><h3>📌 Shkak & Pasojë</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>deshalb / deswegen</strong></span><span class="al">prandaj</span></li>
-                <li><span class="de"><strong>darum / daher</strong></span><span class="al">për këtë arsye</span></li>
-                <li><span class="de"><strong>trotzdem</strong></span><span class="al">megjithatë</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Shtim & Kundërshtim</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>außerdem</strong></span><span class="al">përveç kësaj</span></li>
-                <li><span class="de"><strong>jedoch / allerdings</strong></span><span class="al">megjithatë</span></li>
-                <li><span class="de"><strong>einerseits ... andererseits</strong></span><span class="al">nga njëra anë ... nga ana tjetër</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Kohë</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>bevor</strong></span><span class="al">para se</span></li>
-                <li><span class="de"><strong>nachdem</strong></span><span class="al">pasi</span></li>
-                <li><span class="de"><strong>während</strong></span><span class="al">ndërsa</span></li>
-                <li><span class="de"><strong>sobald</strong></span><span class="al">sapo</span></li>
-            </ul></div>`
-    },
-    // B1 Vocabulary - Arbeit
-    'arbeit-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Puna</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">💼</span><div class="modal-header-text"><h2>Puna & Karriera - Arbeit & Karriere</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">die Bewerbung</div><div class="albanian">aplikimi</div></div>
-                <div class="modal-word-card"><div class="german">der Lebenslauf</div><div class="albanian">CV-ja</div></div>
-                <div class="modal-word-card"><div class="german">das Vorstellungsgespräch</div><div class="albanian">intervista</div></div>
-                <div class="modal-word-card"><div class="german">der Vertrag</div><div class="albanian">kontrata</div></div>
-                <div class="modal-word-card"><div class="german">das Gehalt</div><div class="albanian">paga</div></div>
-                <div class="modal-word-card"><div class="german">die Überstunden</div><div class="albanian">orët shtesë</div></div>
-                <div class="modal-word-card"><div class="german">der Urlaub</div><div class="albanian">pushimet</div></div>
-                <div class="modal-word-card"><div class="german">kündigen</div><div class="albanian">jap dorëheqjen</div></div>
-                <div class="modal-word-card"><div class="german">befördern</div><div class="albanian">promovoj</div></div>
-                <div class="modal-word-card"><div class="german">die Erfahrung</div><div class="albanian">përvoja</div></div>
-            </div>`
-    },
-    // B1 Vocabulary - Medien
-    'medien-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Media</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📱</span><div class="modal-header-text"><h2>Media & Teknologjia - Medien & Technologie</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">das Internet</div><div class="albanian">interneti</div></div>
-                <div class="modal-word-card"><div class="german">die sozialen Medien</div><div class="albanian">rrjetet sociale</div></div>
-                <div class="modal-word-card"><div class="german">die Nachricht</div><div class="albanian">lajmi</div></div>
-                <div class="modal-word-card"><div class="german">die Werbung</div><div class="albanian">reklama</div></div>
-                <div class="modal-word-card"><div class="german">herunterladen</div><div class="albanian">shkarkoj</div></div>
-                <div class="modal-word-card"><div class="german">hochladen</div><div class="albanian">ngarkoj</div></div>
-                <div class="modal-word-card"><div class="german">teilen</div><div class="albanian">ndaj</div></div>
-                <div class="modal-word-card"><div class="german">die App</div><div class="albanian">aplikacioni</div></div>
-                <div class="modal-word-card"><div class="german">das Passwort</div><div class="albanian">fjalëkalimi</div></div>
-                <div class="modal-word-card"><div class="german">der Datenschutz</div><div class="albanian">mbrojtja e të dhënave</div></div>
-            </div>`
-    },
-    // B1 Vocabulary - Redewendungen
-    'redewendungen-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Shprehje</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">💬</span><div class="modal-header-text"><h2>Shprehje Idiomatike - Redewendungen</h2></div></div>
-            <div class="modal-word-grid">
-                <div class="modal-word-card"><div class="german">Daumen drücken</div><div class="albanian">Të uroj fat (fjalë për fjalë: shtyp gishtin)</div><div class="example">"Ich drücke dir die Daumen!"</div></div>
-                <div class="modal-word-card"><div class="german">ins Fettnäpfchen treten</div><div class="albanian">Bëj gafë</div><div class="example">"Er ist ins Fettnäpfchen getreten."</div></div>
-                <div class="modal-word-card"><div class="german">Schwein haben</div><div class="albanian">Kam fat</div><div class="example">"Da hast du Schwein gehabt!"</div></div>
-                <div class="modal-word-card"><div class="german">die Nase voll haben</div><div class="albanian">Më ka ardhur në majë të hundës</div><div class="example">"Ich habe die Nase voll!"</div></div>
-                <div class="modal-word-card"><div class="german">unter vier Augen</div><div class="albanian">Sy më sy (privatisht)</div><div class="example">"Lass uns unter vier Augen reden."</div></div>
-                <div class="modal-word-card"><div class="german">jemanden auf den Arm nehmen</div><div class="albanian">Tall dikë</div><div class="example">"Du nimmst mich auf den Arm!"</div></div>
-            </div>`
-    },
-    // B1 Grammar - Genitiv
-    'genitiv-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Genitiv</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📍</span><div class="modal-header-text"><h2>Rasa Gjinore - Der Genitiv</h2></div></div>
-            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>der/das</strong> → des + (e)s | <strong>die</strong> → der</p></div>
-            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
-                <li><span class="de">Das Auto <strong>des Mannes</strong></span><span class="al">Makina e burrit</span></li>
-                <li><span class="de">Die Tasche <strong>der Frau</strong></span><span class="al">Çanta e gruas</span></li>
-                <li><span class="de">Das Spielzeug <strong>des Kindes</strong></span><span class="al">Lodra e fëmijës</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Parafjalë me Genitiv</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>wegen</strong></span><span class="al">për shkak të - wegen des Wetters</span></li>
-                <li><span class="de"><strong>trotz</strong></span><span class="al">pavarësisht - trotz des Regens</span></li>
-                <li><span class="de"><strong>während</strong></span><span class="al">gjatë - während der Arbeit</span></li>
-                <li><span class="de"><strong>statt</strong></span><span class="al">në vend të - statt des Autos</span></li>
-            </ul></div>`
-    },
-    // B1 Grammar - Relativsätze
-    'relativsatze-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Fjali Relative</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📝</span><div class="modal-header-text"><h2>Fjali Relative - Relativsätze</h2></div></div>
-            <div class="grammar-rule-box"><h4>📐 Përemrat relativë</h4><p>Nominativ: der, die, das | Akkusativ: den, die, das | Dativ: dem, der, dem</p></div>
-            <div class="grammar-deep-section"><h3>📌 Shembuj Nominativ</h3><ul class="grammar-examples-list">
-                <li><span class="de">Der Mann, <strong>der</strong> dort steht, ist mein Bruder.</span><span class="al">Burri që qëndron atje është vëllai im.</span></li>
-                <li><span class="de">Die Frau, <strong>die</strong> singt, ist Lehrerin.</span><span class="al">Gruaja që këndon është mësuese.</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Shembuj Akkusativ</h3><ul class="grammar-examples-list">
-                <li><span class="de">Das Buch, <strong>das</strong> ich lese, ist interessant.</span><span class="al">Libri që po lexoj është interesant.</span></li>
-                <li><span class="de">Der Film, <strong>den</strong> wir gesehen haben, war gut.</span><span class="al">Filmi që pamë ishte i mirë.</span></li>
-            </ul></div>`
-    },
-    // B1 Grammar - Indirekte Rede
-    'indirekte-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ligjërata e Zhdrejtë</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">💬</span><div class="modal-header-text"><h2>Ligjërata e Zhdrejtë - Indirekte Rede</h2></div></div>
-            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p>Përdor <strong>Konjunktiv I</strong> ose <strong>würde + Infinitiv</strong></p></div>
-            <div class="grammar-deep-section"><h3>📌 Direkte → Indirekte</h3><ul class="grammar-examples-list">
-                <li><span class="de">Er sagt: "Ich <strong>bin</strong> müde."</span><span class="al">Ai thotë: "Jam i lodhur."</span></li>
-                <li><span class="de">Er sagt, er <strong>sei</strong> müde.</span><span class="al">Ai thotë që është i lodhur.</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Me würde (më e thjeshtë)</h3><ul class="grammar-examples-list">
-                <li><span class="de">Sie sagt, sie <strong>würde</strong> morgen kommen.</span><span class="al">Ajo thotë që do të vinte nesër.</span></li>
-            </ul></div>`
-    },
-    // B1 Grammar - Plusquamperfekt
-    'plusquamperfekt-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Plusquamperfekt</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">⏪</span><div class="modal-header-text"><h2>E kryera e tejshkuar - Das Plusquamperfekt</h2></div></div>
-            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>hatte/war</strong> + Partizip II</p></div>
-            <div class="grammar-deep-section"><h3>📌 Përdorimi</h3><p>Për veprime që ndodhën <strong>para</strong> një veprimi tjetër në të kaluarën.</p></div>
-            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
-                <li><span class="de">Nachdem ich gegessen <strong>hatte</strong>, ging ich spazieren.</span><span class="al">Pasi kisha ngrënë, shkova në shëtitje.</span></li>
-                <li><span class="de">Als er ankam, <strong>waren</strong> wir schon gegangen.</span><span class="al">Kur mbërriti, ne kishim ikur tashmë.</span></li>
-                <li><span class="de">Sie <strong>hatte</strong> das Buch schon gelesen.</span><span class="al">Ajo e kishte lexuar tashmë librin.</span></li>
-            </ul></div>`
-    },
-    // B1 Examples - Diskussion
-    'diskussion-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Diskutim</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📰</span><div class="modal-header-text"><h2>Diskutim - Diskussion</h2></div></div>
-            <div class="dialogue-box">
-                <div class="dialogue-line"><span class="speaker speaker-a">Maria:</span><span class="german">Meiner Meinung nach sollten wir mehr recyceln.</span><span class="albanian">Sipas mendimit tim duhet të riciklojmë më shumë.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Peter:</span><span class="german">Da stimme ich dir zu, aber es ist nicht so einfach.</span><span class="albanian">Pajtohem, por nuk është aq e thjeshtë.</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-a">Maria:</span><span class="german">Warum denkst du das?</span><span class="albanian">Pse mendon kështu?</span></div>
-                <div class="dialogue-line"><span class="speaker speaker-b">Peter:</span><span class="german">Einerseits fehlt die Infrastruktur, andererseits sind viele Leute nicht informiert.</span><span class="albanian">Nga njëra anë mungon infrastruktura, nga ana tjetër shumë njerëz nuk janë të informuar.</span></div>
-            </div>
-            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Ich bin der Meinung, dass...</strong> = Jam i mendimit që...</p><p><strong>Das sehe ich anders.</strong> = E shoh ndryshe.</p></div>`
-    },
-    // B1 Examples - Beschwerde
-    'beschwerde-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ankesë</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">📝</span><div class="modal-header-text"><h2>Ankesë formale - Formelle Beschwerde</h2></div></div>
-            <div class="grammar-deep-section"><h3>📌 Struktura e letrës</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Sehr geehrte Damen und Herren,</strong></span><span class="al">Të nderuar zonja dhe zotërinj,</span></li>
-                <li><span class="de"><strong>ich schreibe Ihnen, weil...</strong></span><span class="al">Ju shkruaj sepse...</span></li>
-                <li><span class="de"><strong>Ich möchte mich beschweren über...</strong></span><span class="al">Dua të ankohem për...</span></li>
-                <li><span class="de"><strong>Ich erwarte eine baldige Antwort.</strong></span><span class="al">Pres një përgjigje të shpejtë.</span></li>
-                <li><span class="de"><strong>Mit freundlichen Grüßen</strong></span><span class="al">Me respekt</span></li>
-            </ul></div>
-            <div class="grammar-rule-box"><h4>📌 Frazat e dobishme</h4><p><strong>Das ist inakzeptabel.</strong> = Kjo është e papranueshme.</p><p><strong>Ich fordere eine Erstattung.</strong> = Kërkoj rimbursim.</p></div>`
-    },
-    // B1 Examples - Präsentation
-    'praesentation-b1': {
-        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Prezantim</span>',
-        html: `<div class="modal-header"><span class="modal-header-icon">🎤</span><div class="modal-header-text"><h2>Prezantim - Präsentation</h2></div></div>
-            <div class="grammar-deep-section"><h3>📌 Hyrja</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Heute möchte ich über... sprechen.</strong></span><span class="al">Sot dua të flas për...</span></li>
-                <li><span class="de"><strong>Mein Thema heute ist...</strong></span><span class="al">Tema ime sot është...</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Struktura</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Zuerst werde ich... erklären.</strong></span><span class="al">Së pari do të shpjegoj...</span></li>
-                <li><span class="de"><strong>Dann möchte ich... zeigen.</strong></span><span class="al">Pastaj dua të tregoj...</span></li>
-                <li><span class="de"><strong>Zum Schluss...</strong></span><span class="al">Në fund...</span></li>
-            </ul></div>
-            <div class="grammar-deep-section"><h3>📌 Përfundimi</h3><ul class="grammar-examples-list">
-                <li><span class="de"><strong>Zusammenfassend kann man sagen...</strong></span><span class="al">Duke përmbledhur mund të thuhet...</span></li>
-                <li><span class="de"><strong>Haben Sie noch Fragen?</strong></span><span class="al">Keni pyetje?</span></li>
-                <li><span class="de"><strong>Vielen Dank für Ihre Aufmerksamkeit!</strong></span><span class="al">Faleminderit për vëmendjen tuaj!</span></li>
-            </ul></div>`
     }
 };
-
-// Dictionary Functionality
-function initializeDictionary() {
-    const input = document.getElementById('dictionary-input');
-    const searchBtn = document.getElementById('dictionary-search-btn');
-    const resultsDiv = document.getElementById('dictionary-results');
-    const directionBtns = document.querySelectorAll('.direction-btn');
-
-    let currentDirection = 'de-sq';
-
-    // Direction toggle
-    directionBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            directionBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentDirection = btn.dataset.direction;
-            input.placeholder = currentDirection === 'de-sq'
-                ? 'Shkruaj fjalën në gjermanisht...'
-                : 'Shkruaj fjalën në shqip...';
-        });
-    });
-
-    // Search function
-    function performSearch() {
-        const term = input.value.trim();
-        if (!term) return;
-
-        const dictUrl = currentDirection === 'de-sq'
-            ? `https://de-sq.dict.cc/?s=${encodeURIComponent(term)}`
-            : `https://sq-de.dict.cc/?s=${encodeURIComponent(term)}`;
-
-        const glosbeUrl = currentDirection === 'de-sq'
-            ? `https://glosbe.com/de/sq/${encodeURIComponent(term)}`
-            : `https://glosbe.com/sq/de/${encodeURIComponent(term)}`;
-
-        resultsDiv.innerHTML = `
-            <div class="dictionary-external-link">
-                <div class="search-term-display">"${term}"</div>
-                <h3>Kërko në fjalorët e jashtëm:</h3>
-                <p>Për shkak të kufizimeve teknike, rezultatet hapen në një dritare të re.</p>
-                <div class="dict-buttons">
-                    <a href="${dictUrl}" target="_blank" rel="noopener" class="dict-link-btn">
-                        <span>📖</span> Hap në dict.cc
-                    </a>
-                    <a href="${glosbeUrl}" target="_blank" rel="noopener" class="dict-link-btn" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
-                        <span>🌐</span> Hap në Glosbe
-                    </a>
-                </div>
-                <div class="recent-searches" style="margin-top: 30px;">
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Këshillë: Mbaj Ctrl (ose Cmd) kur klikoni për ta hapur në sfondi.</p>
-                </div>
-            </div>
-        `;
-    }
-
-    // Event listeners
-    searchBtn.addEventListener('click', performSearch);
-    input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') performSearch();
-    });
-}
-
-// Quiz System
-const quizData = {
-    a1: [
-        { question: "Si thuhet 'Mirëmëngjes'?", options: ["Guten Abend", "Guten Morgen", "Guten Tag", "Gute Nacht"], correct: 1, explanation: "'Guten Morgen'" },
-        { question: "Nyja për femërorë?", options: ["der", "die", "das", "den"], correct: 1, explanation: "'die'" },
-        { question: "'sein' për 'ich'?", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'ich bin'" },
-        { question: "Numri 7?", options: ["sechs", "sieben", "acht", "neun"], correct: 1, explanation: "'sieben'" },
-        { question: "'die Mutter' =?", options: ["babai", "motra", "nëna", "gjyshja"], correct: 2, explanation: "nëna" },
-        { question: "'blu' =?", options: ["rot", "grün", "blau", "gelb"], correct: 2, explanation: "'blau'" },
-        { question: "'Ich ___ Student.'", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'bin'" },
-        { question: "'Mirupafshim' =?", options: ["Hallo", "Tschüss", "Danke", "Bitte"], correct: 1, explanation: "'Tschüss'" },
-        { question: "Nyja për 'Kind'?", options: ["der", "die", "das", "den"], correct: 2, explanation: "'das'" },
-        { question: "'haben' për 'du'?", options: ["habe", "hast", "hat", "haben"], correct: 1, explanation: "'hast'" }
-    ],
-    a2: [
-        { question: "Akkusativ 'der Mann'?", options: ["der", "den", "dem", "des"], correct: 1, explanation: "'den'" },
-        { question: "'Ich ___ Deutsch ___.'", options: ["bin gelernt", "habe gelernt", "habe gelearnt", "bin gelarnt"], correct: 1, explanation: "'habe gelernt'" },
-        { question: "'mund' =?", options: ["müssen", "können", "sollen", "wollen"], correct: 1, explanation: "'können'" },
-        { question: "'treni' =?", options: ["Auto", "Bus", "Zug", "Flugzeug"], correct: 2, explanation: "'der Zug'" },
-        { question: "'Ich gebe ___ Frau...' (Dat)", options: ["die", "der", "den", "dem"], correct: 1, explanation: "'der'" },
-        { question: "Perfekt 'fahren'?", options: ["habe gefahrt", "bin gefahren", "habe gefahren", "bin gefahrt"], correct: 1, explanation: "'bin gefahren'" },
-        { question: "'müssen' =?", options: ["mund", "dua", "duhet", "lejohet"], correct: 2, explanation: "'duhet'" },
-        { question: "'mëngjesi' =?", options: ["Mittagessen", "Abendessen", "Frühstück", "Mahlzeit"], correct: 2, explanation: "'Frühstück'" },
-        { question: "Saktë?", options: ["ein Kaffee", "einen Kaffee", "einer Kaffee", "einem Kaffee"], correct: 1, explanation: "'einen Kaffee'" },
-        { question: "'mjeku' =?", options: ["Lehrer", "Arzt", "Kellner", "Koch"], correct: 1, explanation: "'der Arzt'" }
-    ],
-    b1: [
-        { question: "Genitiv 'der Mann'?", options: ["dem", "den", "des Mannes", "der"], correct: 2, explanation: "'des Mannes'" },
-        { question: "Passiv =?", options: ["haben+PII", "werden+PII", "sein+PII", "werden+Inf"], correct: 1, explanation: "'werden+PII'" },
-        { question: "Konj.II 'sein' ich?", options: ["bin", "sei", "wäre", "würde"], correct: 2, explanation: "'wäre'" },
-        { question: "'Der Mann, ___ dort steht'", options: ["das", "die", "der", "den"], correct: 2, explanation: "'der'" },
-        { question: "Shkak =?", options: ["obwohl", "weil", "wenn", "damit"], correct: 1, explanation: "'weil'" },
-        { question: "'Wenn ich Zeit ___'", options: ["habe", "hätte", "hatte", "haben"], correct: 1, explanation: "'hätte'" },
-        { question: "'Klimawandel' =?", options: ["mjedisi", "ndryshime klimatike", "qëndrueshmëri", "papunësi"], correct: 1, explanation: "ndryshime klimatike" },
-        { question: "Cila Passiv?", options: ["Ich koche", "Essen wird gekocht", "Ich habe gekocht", "Essen ist gut"], correct: 1, explanation: "'wird gekocht'" },
-        { question: "'Meiner Meinung ___'", options: ["zu", "für", "nach", "von"], correct: 2, explanation: "'nach'" },
-        { question: "Konj.II 'können' Sie?", options: ["können", "konnten", "könnten", "gekonnt"], correct: 2, explanation: "'könnten'" }
-    ]
-};
-
-const quizState = { a1: { currentQuestion: 0, score: 0, answered: false }, a2: { currentQuestion: 0, score: 0, answered: false }, b1: { currentQuestion: 0, score: 0, answered: false } };
-
-function initializeQuizzes() {
-    ['a1', 'a2', 'b1'].forEach(level => {
-        loadQuestion(level);
-        document.getElementById(`${level}-next-btn`).addEventListener('click', () => { quizState[level].currentQuestion++; loadQuestion(level); });
-        document.getElementById(`${level}-restart-btn`).addEventListener('click', () => { quizState[level] = { currentQuestion: 0, score: 0, answered: false }; document.getElementById(`${level}-restart-btn`).style.display = 'none'; loadQuestion(level); });
-    });
-}
-
-function loadQuestion(level) {
-    const state = quizState[level];
-    if (state.currentQuestion >= quizData[level].length) { showResults(level); return; }
-    const q = quizData[level][state.currentQuestion];
-    document.getElementById(`${level}-question`).textContent = q.question;
-    document.getElementById(`${level}-question-num`).textContent = state.currentQuestion + 1;
-    document.getElementById(`${level}-score`).textContent = state.score;
-    const opts = document.getElementById(`${level}-options`);
-    opts.innerHTML = '';
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'quiz-option';
-        btn.textContent = opt;
-        btn.addEventListener('click', () => handleAnswer(level, i));
-        opts.appendChild(btn);
-    });
-    state.answered = false;
-    document.getElementById(`${level}-feedback`).classList.remove('show', 'correct', 'incorrect');
-    document.getElementById(`${level}-next-btn`).style.display = 'none';
-    document.getElementById(`${level}-results`).style.display = 'none';
-    document.querySelector(`#quiz-${level}-game .quiz-question-container`).style.display = 'block';
-}
-
-function handleAnswer(level, idx) {
-    const state = quizState[level];
-    if (state.answered) return;
-    state.answered = true;
-    const q = quizData[level][state.currentQuestion];
-    const opts = document.querySelectorAll(`#${level}-options .quiz-option`);
-    opts.forEach(o => o.classList.add('disabled'));
-    opts[q.correct].classList.add('correct');
-    const fb = document.getElementById(`${level}-feedback`);
-    if (idx === q.correct) { state.score++; document.getElementById(`${level}-score`).textContent = state.score; fb.textContent = `✅ Saktë! ${q.explanation}`; fb.classList.add('correct'); }
-    else { opts[idx].classList.add('incorrect'); fb.textContent = `❌ Gabim! ${q.explanation}`; fb.classList.add('incorrect'); }
-    fb.classList.add('show');
-    document.getElementById(`${level}-next-btn`).style.display = 'inline-block';
-    updateProgress();
-}
-
-function showResults(level) {
-    const state = quizState[level];
-    const pct = Math.round((state.score / quizData[level].length) * 100);
-    document.querySelector(`#quiz-${level}-game .quiz-question-container`).style.display = 'none';
-    document.getElementById(`${level}-feedback`).classList.remove('show');
-    document.getElementById(`${level}-next-btn`).style.display = 'none';
-    document.getElementById(`${level}-results`).style.display = 'block';
-    document.getElementById(`${level}-final-score`).textContent = pct;
-    document.getElementById(`${level}-results-message`).textContent = pct >= 80 ? '🎉 Shkëlqyeshëm!' : pct >= 60 ? '👍 Mirë!' : pct >= 40 ? '📚 Praktiko!' : '💪 Mëso përsëri!';
-    document.getElementById(`${level}-restart-btn`).style.display = 'inline-block';
-}
-
-function updateProgress() {
-    ['a1', 'a2', 'b1'].forEach(level => {
-        const bar = document.getElementById(`${level}-progress`);
-        if (bar) bar.style.width = `${(quizState[level].currentQuestion / quizData[level].length) * 100}%`;
-    });
-}
-
-// ============================================
-// GAMES SYSTEM - Multiple Game Types
-// ============================================
-
-// Game vocabulary data for different games
-const gameVocab = {
-    a1: [
-        { de: 'Hallo', sq: 'Përshëndetje' },
-        { de: 'Guten Morgen', sq: 'Mirëmëngjes' },
-        { de: 'Danke', sq: 'Faleminderit' },
-        { de: 'Bitte', sq: 'Ju lutem' },
-        { de: 'Ja', sq: 'Po' },
-        { de: 'Nein', sq: 'Jo' },
-        { de: 'Eins', sq: 'Një' },
-        { de: 'Zwei', sq: 'Dy' },
-        { de: 'Drei', sq: 'Tre' },
-        { de: 'Rot', sq: 'E kuqe' },
-        { de: 'Blau', sq: 'Blu' },
-        { de: 'Grün', sq: 'E gjelbër' },
-        { de: 'Mutter', sq: 'Nëna' },
-        { de: 'Vater', sq: 'Babai' },
-        { de: 'Wasser', sq: 'Ujë' },
-        { de: 'Brot', sq: 'Bukë' }
-    ],
-    a2: [
-        { de: 'Arzt', sq: 'Mjek' },
-        { de: 'Lehrer', sq: 'Mësues' },
-        { de: 'Zug', sq: 'Tren' },
-        { de: 'Flugzeug', sq: 'Aeroplan' },
-        { de: 'Frühstück', sq: 'Mëngjes' },
-        { de: 'Mittagessen', sq: 'Drekë' },
-        { de: 'Kopf', sq: 'Kokë' },
-        { de: 'Hand', sq: 'Dorë' },
-        { de: 'Sonne', sq: 'Diell' },
-        { de: 'Regen', sq: 'Shi' },
-        { de: 'Hemd', sq: 'Këmishë' },
-        { de: 'Hose', sq: 'Pantallona' },
-        { de: 'Schule', sq: 'Shkollë' },
-        { de: 'Arbeit', sq: 'Punë' },
-        { de: 'Geld', sq: 'Para' },
-        { de: 'Zeit', sq: 'Kohë' }
-    ],
-    b1: [
-        { de: 'Meinung', sq: 'Mendim' },
-        { de: 'Umwelt', sq: 'Mjedis' },
-        { de: 'Gesellschaft', sq: 'Shoqëri' },
-        { de: 'Erfahrung', sq: 'Përvojë' },
-        { de: 'Entscheidung', sq: 'Vendim' },
-        { de: 'Verantwortung', sq: 'Përgjegjësi' },
-        { de: 'Entwicklung', sq: 'Zhvillim' },
-        { de: 'Vorschlag', sq: 'Propozim' },
-        { de: 'Zusammenhang', sq: 'Lidhje' },
-        { de: 'Unterschied', sq: 'Dallim' },
-        { de: 'Vergleich', sq: 'Krahasim' },
-        { de: 'Bedeutung', sq: 'Kuptim' },
-        { de: 'Lösung', sq: 'Zgjidhje' },
-        { de: 'Vorteil', sq: 'Përparësi' },
-        { de: 'Nachteil', sq: 'Disavantazh' },
-        { de: 'Ziel', sq: 'Qëllim' }
-    ]
-};
-
-// Fill in the blank data
-const fillBlankData = {
-    a1: [
-        { sentence: 'Ich ___ Student.', answer: 'bin', hint: 'folja "sein" për ich' },
-        { sentence: 'Er ___ Lehrer.', answer: 'ist', hint: 'folja "sein" për er' },
-        { sentence: 'Wir ___ aus Albanien.', answer: 'sind', hint: 'folja "sein" për wir' },
-        { sentence: 'Du ___ ein Buch.', answer: 'hast', hint: 'folja "haben" për du' },
-        { sentence: 'Ich ___ Wasser.', answer: 'trinke', hint: 'folja "trinken" për ich' },
-        { sentence: 'Sie ___ Deutsch.', answer: 'spricht', hint: 'folja "sprechen" për sie' },
-        { sentence: 'Das ist ___ Buch.', answer: 'ein', hint: 'nyja e pacaktuar' },
-        { sentence: '___ Frau ist nett.', answer: 'Die', hint: 'nyja për femërore' }
-    ],
-    a2: [
-        { sentence: 'Ich habe das Buch ___.', answer: 'gelesen', hint: 'Partizip II i "lesen"' },
-        { sentence: 'Er ist nach Berlin ___.', answer: 'gefahren', hint: 'Partizip II i "fahren"' },
-        { sentence: 'Ich ___ Deutsch lernen.', answer: 'möchte', hint: 'folje modale - dëshirë' },
-        { sentence: 'Du ___ das machen.', answer: 'musst', hint: 'folje modale - detyrë' },
-        { sentence: 'Ich gebe ___ Frau das Buch.', answer: 'der', hint: 'Dativ femërore' },
-        { sentence: 'Ich sehe ___ Mann.', answer: 'den', hint: 'Akkusativ mashkullore' },
-        { sentence: 'Ich lerne, ___ ich eine Prüfung habe.', answer: 'weil', hint: 'lidhëz shkaku' },
-        { sentence: 'Ich weiß, ___ er kommt.', answer: 'dass', hint: 'lidhëz deklarative' }
-    ],
-    b1: [
-        { sentence: 'Das Buch ___ Mannes ist interessant.', answer: 'des', hint: 'Genitiv mashkullore' },
-        { sentence: 'Wenn ich reich ___, würde ich reisen.', answer: 'wäre', hint: 'Konjunktiv II i "sein"' },
-        { sentence: 'Das Essen ___ gekocht.', answer: 'wird', hint: 'Passiv - "werden"' },
-        { sentence: 'Der Mann, ___ dort steht, ist mein Vater.', answer: 'der', hint: 'Përemër relativ' },
-        { sentence: 'Meiner Meinung ___ ist das richtig.', answer: 'nach', hint: 'parafjalë për opinion' },
-        { sentence: 'Er sagte, er ___ krank.', answer: 'sei', hint: 'Konjunktiv I' },
-        { sentence: 'Obwohl es regnet, ___ ich spazieren.', answer: 'gehe', hint: 'folja në fjali kryesore' },
-        { sentence: 'Je mehr ich lerne, ___ besser verstehe ich.', answer: 'desto', hint: 'je... desto' }
-    ]
-};
-
-// Initialize Games System
-function initializeGames() {
-    // Game card click handlers
-    document.querySelectorAll('.game-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const game = card.dataset.game;
-            const level = card.dataset.level;
-            startGame(game, level);
-        });
-    });
-
-    // Back to games buttons
-    document.querySelectorAll('.back-to-games-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const level = btn.dataset.level;
-            document.getElementById(`game-container-${level}`).style.display = 'none';
-            document.getElementById(`games-grid-${level}`).style.display = 'grid';
-            // Hide all game areas
-            document.querySelectorAll(`#game-container-${level} .game-area`).forEach(area => {
-                area.style.display = 'none';
-            });
-        });
-    });
-}
-
-function startGame(game, level) {
-    // Hide games grid, show game container
-    document.getElementById(`games-grid-${level}`).style.display = 'none';
-    document.getElementById(`game-container-${level}`).style.display = 'block';
-
-    // Hide all game areas first
-    document.querySelectorAll(`#game-container-${level} .game-area`).forEach(area => {
-        area.style.display = 'none';
-    });
-
-    // Show and initialize the selected game
-    switch(game) {
-        case 'quiz':
-            document.getElementById(`quiz-${level}-game`).style.display = 'block';
-            quizState[level] = { currentQuestion: 0, score: 0, answered: false };
-            loadQuestion(level);
-            break;
-        case 'matching':
-            document.getElementById(`matching-${level}-game`).style.display = 'block';
-            initMatchingGame(level);
-            break;
-        case 'memory':
-            document.getElementById(`memory-${level}-game`).style.display = 'block';
-            initMemoryGame(level);
-            break;
-        case 'fillblank':
-            document.getElementById(`fillblank-${level}-game`).style.display = 'block';
-            initFillBlankGame(level);
-            break;
-        case 'hangman':
-            document.getElementById(`hangman-${level}-game`).style.display = 'block';
-            initHangmanGame(level);
-            break;
-        case 'scramble':
-            document.getElementById(`scramble-${level}-game`).style.display = 'block';
-            initScrambleGame(level);
-            break;
-    }
-}
-
-// ============================================
-// MATCHING GAME
-// ============================================
-const matchingState = {};
-
-function initMatchingGame(level) {
-    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 8);
-    matchingState[level] = {
-        pairs: vocab,
-        selected: null,
-        matched: 0,
-        startTime: Date.now()
-    };
-
-    const leftCol = document.getElementById(`${level}-match-left`);
-    const rightCol = document.getElementById(`${level}-match-right`);
-    leftCol.innerHTML = '';
-    rightCol.innerHTML = '';
-
-    // Shuffle arrays separately
-    const leftItems = vocab.map((v, i) => ({ text: v.de, idx: i, type: 'de' })).sort(() => Math.random() - 0.5);
-    const rightItems = vocab.map((v, i) => ({ text: v.sq, idx: i, type: 'sq' })).sort(() => Math.random() - 0.5);
-
-    leftItems.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'match-item';
-        div.textContent = item.text;
-        div.dataset.idx = item.idx;
-        div.dataset.type = item.type;
-        div.addEventListener('click', () => handleMatchClick(level, div));
-        leftCol.appendChild(div);
-    });
-
-    rightItems.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'match-item';
-        div.textContent = item.text;
-        div.dataset.idx = item.idx;
-        div.dataset.type = item.type;
-        div.addEventListener('click', () => handleMatchClick(level, div));
-        rightCol.appendChild(div);
-    });
-
-    document.getElementById(`${level}-match-score`).textContent = '0';
-    document.getElementById(`${level}-match-result`).style.display = 'none';
-
-    // Start timer
-    if (matchingState[level].timer) clearInterval(matchingState[level].timer);
-    matchingState[level].timer = setInterval(() => {
-        const elapsed = Math.floor((Date.now() - matchingState[level].startTime) / 1000);
-        document.getElementById(`${level}-match-time`).textContent = elapsed;
-    }, 1000);
-}
-
-function handleMatchClick(level, element) {
-    if (element.classList.contains('matched')) return;
-
-    const state = matchingState[level];
-
-    if (state.selected && state.selected !== element) {
-        // Check for match
-        if (state.selected.dataset.idx === element.dataset.idx && state.selected.dataset.type !== element.dataset.type) {
-            // Match!
-            state.selected.classList.add('matched');
-            element.classList.add('matched');
-            state.matched++;
-            document.getElementById(`${level}-match-score`).textContent = state.matched;
-
-            if (state.matched === state.pairs.length) {
-                clearInterval(state.timer);
-                const time = Math.floor((Date.now() - state.startTime) / 1000);
-                document.getElementById(`${level}-match-result`).innerHTML = `
-                    <h4>🎉 Shkëlqyeshëm!</h4>
-                    <p>I gjete të gjithë çiftet në ${time} sekonda!</p>
-                    <button class="quiz-btn" onclick="initMatchingGame('${level}')">🔄 Luaj Përsëri</button>
-                `;
-                document.getElementById(`${level}-match-result`).style.display = 'block';
-            }
-        } else {
-            // No match
-            state.selected.classList.add('wrong');
-            element.classList.add('wrong');
-            setTimeout(() => {
-                state.selected.classList.remove('wrong', 'selected');
-                element.classList.remove('wrong');
-                state.selected = null;
-            }, 500);
-            return;
-        }
-        state.selected.classList.remove('selected');
-        state.selected = null;
-    } else {
-        if (state.selected) state.selected.classList.remove('selected');
-        state.selected = element;
-        element.classList.add('selected');
-    }
-}
-
-// ============================================
-// MEMORY GAME
-// ============================================
-const memoryState = {};
-
-function initMemoryGame(level) {
-    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 6);
-    const cards = [];
-    vocab.forEach((v, i) => {
-        cards.push({ text: v.de, pairId: i, type: 'de' });
-        cards.push({ text: v.sq, pairId: i, type: 'sq' });
-    });
-    cards.sort(() => Math.random() - 0.5);
-
-    memoryState[level] = {
-        cards: cards,
-        flipped: [],
-        matched: 0,
-        moves: 0,
-        locked: false
-    };
-
-    const grid = document.getElementById(`${level}-memory-grid`);
-    grid.innerHTML = '';
-
-    cards.forEach((card, idx) => {
-        const div = document.createElement('div');
-        div.className = 'memory-card';
-        div.innerHTML = `<div class="memory-card-inner"><div class="memory-card-front">?</div><div class="memory-card-back">${card.text}</div></div>`;
-        div.dataset.idx = idx;
-        div.addEventListener('click', () => handleMemoryClick(level, div, idx));
-        grid.appendChild(div);
-    });
-
-    document.getElementById(`${level}-memory-moves`).textContent = '0';
-    document.getElementById(`${level}-memory-pairs`).textContent = '0';
-    document.getElementById(`${level}-memory-result`).style.display = 'none';
-}
-
-function handleMemoryClick(level, element, idx) {
-    const state = memoryState[level];
-    if (state.locked || element.classList.contains('flipped') || element.classList.contains('matched')) return;
-
-    element.classList.add('flipped');
-    state.flipped.push({ element, idx, card: state.cards[idx] });
-
-    if (state.flipped.length === 2) {
-        state.moves++;
-        document.getElementById(`${level}-memory-moves`).textContent = state.moves;
-        state.locked = true;
-
-        const [first, second] = state.flipped;
-        if (first.card.pairId === second.card.pairId && first.card.type !== second.card.type) {
-            // Match!
-            first.element.classList.add('matched');
-            second.element.classList.add('matched');
-            state.matched++;
-            document.getElementById(`${level}-memory-pairs`).textContent = state.matched;
-            state.flipped = [];
-            state.locked = false;
-
-            if (state.matched === 6) {
-                document.getElementById(`${level}-memory-result`).innerHTML = `
-                    <h4>🎉 Bravo!</h4>
-                    <p>I gjete të gjitha çiftet me ${state.moves} lëvizje!</p>
-                    <button class="quiz-btn" onclick="initMemoryGame('${level}')">🔄 Luaj Përsëri</button>
-                `;
-                document.getElementById(`${level}-memory-result`).style.display = 'block';
-            }
-        } else {
-            // No match
-            setTimeout(() => {
-                first.element.classList.remove('flipped');
-                second.element.classList.remove('flipped');
-                state.flipped = [];
-                state.locked = false;
-            }, 1000);
-        }
-    }
-}
-
-// ============================================
-// FILL IN THE BLANK GAME
-// ============================================
-const fillState = {};
-
-function initFillBlankGame(level) {
-    fillState[level] = {
-        questions: [...fillBlankData[level]].sort(() => Math.random() - 0.5),
-        current: 0,
-        score: 0
-    };
-    loadFillQuestion(level);
-
-    document.getElementById(`${level}-fill-submit`).onclick = () => checkFillAnswer(level);
-    document.getElementById(`${level}-fill-input`).onkeypress = (e) => {
-        if (e.key === 'Enter') checkFillAnswer(level);
-    };
-}
-
-function loadFillQuestion(level) {
-    const state = fillState[level];
-    if (state.current >= state.questions.length) {
-        showFillResults(level);
-        return;
-    }
-
-    const q = state.questions[state.current];
-    document.getElementById(`${level}-fill-question`).innerHTML = `<span class="fill-sentence">${q.sentence.replace('___', '<span class="fill-blank">______</span>')}</span>`;
-    document.getElementById(`${level}-fill-hint`).textContent = `💡 ${q.hint}`;
-    document.getElementById(`${level}-fill-input`).value = '';
-    document.getElementById(`${level}-fill-input`).focus();
-    document.getElementById(`${level}-fill-feedback`).textContent = '';
-    document.getElementById(`${level}-fill-feedback`).className = 'fillblank-feedback';
-    document.getElementById(`${level}-fill-num`).textContent = state.current + 1;
-    document.getElementById(`${level}-fill-score`).textContent = state.score;
-    document.getElementById(`${level}-fill-result`).style.display = 'none';
-}
-
-function checkFillAnswer(level) {
-    const state = fillState[level];
-    const q = state.questions[state.current];
-    const input = document.getElementById(`${level}-fill-input`).value.trim().toLowerCase();
-    const feedback = document.getElementById(`${level}-fill-feedback`);
-
-    if (input === q.answer.toLowerCase()) {
-        state.score++;
-        feedback.textContent = '✅ Saktë!';
-        feedback.className = 'fillblank-feedback correct show';
-    } else {
-        feedback.textContent = `❌ Gabim! Përgjigja: ${q.answer}`;
-        feedback.className = 'fillblank-feedback wrong show';
-    }
-
-    setTimeout(() => {
-        state.current++;
-        loadFillQuestion(level);
-    }, 1500);
-}
-
-function showFillResults(level) {
-    const state = fillState[level];
-    const pct = Math.round((state.score / state.questions.length) * 100);
-    document.getElementById(`${level}-fill-result`).innerHTML = `
-        <h4>🎉 Rezultati!</h4>
-        <div class="results-circle"><span class="results-score">${pct}</span><span class="results-percent">%</span></div>
-        <p>${pct >= 80 ? 'Shkëlqyeshëm!' : pct >= 60 ? 'Mirë!' : 'Praktiko më shumë!'}</p>
-        <button class="quiz-btn" onclick="initFillBlankGame('${level}')">🔄 Luaj Përsëri</button>
-    `;
-    document.getElementById(`${level}-fill-result`).style.display = 'block';
-}
-
-// ============================================
-// HANGMAN GAME
-// ============================================
-const hangmanState = {};
-
-function initHangmanGame(level) {
-    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5);
-    const word = vocab[0];
-
-    hangmanState[level] = {
-        word: word.de.toUpperCase(),
-        hint: word.sq,
-        guessed: [],
-        lives: 6,
-        score: 0,
-        wordIndex: 0,
-        vocab: vocab
-    };
-
-    renderHangman(level);
-    renderKeyboard(level);
-}
-
-function renderHangman(level) {
-    const state = hangmanState[level];
-    let display = '';
-    for (let char of state.word) {
-        if (char === ' ') display += '  ';
-        else if (state.guessed.includes(char)) display += char + ' ';
-        else display += '_ ';
-    }
-    document.getElementById(`${level}-hang-word`).textContent = display;
-    document.getElementById(`${level}-hang-hint`).textContent = `💡 ${state.hint}`;
-    document.getElementById(`${level}-hang-lives`).textContent = '❤️'.repeat(state.lives) + '🖤'.repeat(6 - state.lives);
-    document.getElementById(`${level}-hang-score`).textContent = state.score;
-    document.getElementById(`${level}-hang-result`).style.display = 'none';
-}
-
-function renderKeyboard(level) {
-    const keyboard = document.getElementById(`${level}-hang-keyboard`);
-    keyboard.innerHTML = '';
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß'.split('');
-    letters.forEach(letter => {
-        const btn = document.createElement('button');
-        btn.className = 'keyboard-key';
-        btn.textContent = letter;
-        btn.addEventListener('click', () => guessLetter(level, letter, btn));
-        keyboard.appendChild(btn);
-    });
-}
-
-function guessLetter(level, letter, btn) {
-    const state = hangmanState[level];
-    if (state.guessed.includes(letter) || state.lives <= 0) return;
-
-    state.guessed.push(letter);
-    btn.disabled = true;
-
-    if (state.word.includes(letter)) {
-        btn.classList.add('correct');
-        // Check if word is complete
-        const wordComplete = state.word.split('').every(c => c === ' ' || state.guessed.includes(c));
-        if (wordComplete) {
-            state.score++;
-            state.wordIndex++;
-            if (state.wordIndex < state.vocab.length) {
-                setTimeout(() => nextHangmanWord(level), 1000);
-            } else {
-                document.getElementById(`${level}-hang-result`).innerHTML = `
-                    <h4>🎉 Fitove!</h4>
-                    <p>Pikët: ${state.score}</p>
-                    <button class="quiz-btn" onclick="initHangmanGame('${level}')">🔄 Luaj Përsëri</button>
-                `;
-                document.getElementById(`${level}-hang-result`).style.display = 'block';
-            }
-        }
-    } else {
-        btn.classList.add('wrong');
-        state.lives--;
-        if (state.lives <= 0) {
-            document.getElementById(`${level}-hang-result`).innerHTML = `
-                <h4>😔 Humbje!</h4>
-                <p>Fjala ishte: ${state.word}</p>
-                <p>Pikët: ${state.score}</p>
-                <button class="quiz-btn" onclick="initHangmanGame('${level}')">🔄 Luaj Përsëri</button>
-            `;
-            document.getElementById(`${level}-hang-result`).style.display = 'block';
-        }
-    }
-    renderHangman(level);
-}
-
-function nextHangmanWord(level) {
-    const state = hangmanState[level];
-    const word = state.vocab[state.wordIndex];
-    state.word = word.de.toUpperCase();
-    state.hint = word.sq;
-    state.guessed = [];
-    state.lives = 6;
-    renderHangman(level);
-    renderKeyboard(level);
-}
-
-// ============================================
-// WORD SCRAMBLE GAME
-// ============================================
-const scrambleState = {};
-
-function initScrambleGame(level) {
-    scrambleState[level] = {
-        vocab: [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 8),
-        current: 0,
-        score: 0,
-        answer: ''
-    };
-    loadScrambleWord(level);
-
-    document.getElementById(`${level}-scramble-clear`).onclick = () => clearScramble(level);
-    document.getElementById(`${level}-scramble-submit`).onclick = () => checkScramble(level);
-}
-
-function loadScrambleWord(level) {
-    const state = scrambleState[level];
-    if (state.current >= state.vocab.length) {
-        showScrambleResults(level);
-        return;
-    }
-
-    const word = state.vocab[state.current];
-    state.answer = '';
-    state.correctWord = word.de;
-
-    // Scramble the word
-    let letters = word.de.split('');
-    for (let i = letters.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [letters[i], letters[j]] = [letters[j], letters[i]];
-    }
-
-    document.getElementById(`${level}-scramble-hint`).textContent = `💡 ${word.sq}`;
-    document.getElementById(`${level}-scramble-num`).textContent = state.current + 1;
-    document.getElementById(`${level}-scramble-score`).textContent = state.score;
-    document.getElementById(`${level}-scramble-feedback`).textContent = '';
-    document.getElementById(`${level}-scramble-feedback`).className = 'scramble-feedback';
-    document.getElementById(`${level}-scramble-result`).style.display = 'none';
-
-    renderScrambleLetters(level, letters);
-    renderScrambleAnswer(level);
-}
-
-function renderScrambleLetters(level, letters) {
-    const container = document.getElementById(`${level}-scramble-letters`);
-    container.innerHTML = '';
-    letters.forEach((letter, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'scramble-letter';
-        btn.textContent = letter;
-        btn.dataset.idx = idx;
-        btn.addEventListener('click', () => selectScrambleLetter(level, letter, btn));
-        container.appendChild(btn);
-    });
-}
-
-function renderScrambleAnswer(level) {
-    document.getElementById(`${level}-scramble-answer`).textContent = scrambleState[level].answer || '_';
-}
-
-function selectScrambleLetter(level, letter, btn) {
-    if (btn.classList.contains('used')) return;
-    btn.classList.add('used');
-    scrambleState[level].answer += letter;
-    renderScrambleAnswer(level);
-}
-
-function clearScramble(level) {
-    scrambleState[level].answer = '';
-    document.querySelectorAll(`#${level}-scramble-letters .scramble-letter`).forEach(btn => {
-        btn.classList.remove('used');
-    });
-    renderScrambleAnswer(level);
-}
-
-function checkScramble(level) {
-    const state = scrambleState[level];
-    const feedback = document.getElementById(`${level}-scramble-feedback`);
-
-    if (state.answer.toLowerCase() === state.correctWord.toLowerCase()) {
-        state.score++;
-        feedback.textContent = '✅ Saktë!';
-        feedback.className = 'scramble-feedback correct show';
-    } else {
-        feedback.textContent = `❌ Gabim! Fjala: ${state.correctWord}`;
-        feedback.className = 'scramble-feedback wrong show';
-    }
-
-    setTimeout(() => {
-        state.current++;
-        loadScrambleWord(level);
-    }, 1500);
-}
-
-function showScrambleResults(level) {
-    const state = scrambleState[level];
-    const pct = Math.round((state.score / state.vocab.length) * 100);
-    document.getElementById(`${level}-scramble-result`).innerHTML = `
-        <h4>🎉 Rezultati!</h4>
-        <div class="results-circle"><span class="results-score">${pct}</span><span class="results-percent">%</span></div>
-        <p>${pct >= 80 ? 'Shkëlqyeshëm!' : pct >= 60 ? 'Mirë!' : 'Praktiko më shumë!'}</p>
-        <button class="quiz-btn" onclick="initScrambleGame('${level}')">🔄 Luaj Përsëri</button>
-    `;
-    document.getElementById(`${level}-scramble-result`).style.display = 'block';
-}
-
-// Initialize games when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeGames);

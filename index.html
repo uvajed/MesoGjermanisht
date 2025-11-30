@@ -10,15 +10,11 @@
     <meta property="og:title" content="Mëso Gjermanisht">
     <meta property="og:description" content="Platforma më e mirë për të mësuar gjermanisht për shqiptarë">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-theme="home">
     <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="bg-circle bg-circle-1"></div>
-        <div class="bg-circle bg-circle-2"></div>
-        <div class="bg-circle bg-circle-3"></div>
-    </div>
+    <div class="bg-animation"></div>
 
     <!-- Deep Dive Modal -->
     <div class="modal-overlay" id="modal-overlay">
@@ -35,986 +31,591 @@
             <img src="Meso Gjermanisht.png" alt="Mëso Gjermanisht Logo" class="logo-img">
             <h1>Mëso Gjermanisht</h1>
         </div>
-        <p class="tagline">Platforma më e mirë për të mësuar gjermanisht</p>
     </header>
 
-    <!-- Level Tabs -->
-    <nav class="level-tabs">
-        <button class="tab-btn active" data-level="a1">
-            <span class="tab-icon">🌱</span>
-            <span class="tab-text">A1</span>
-            <span class="tab-subtitle">Fillestar</span>
+    <!-- Main Navigation -->
+    <nav class="main-nav">
+        <button class="main-nav-btn active" data-page="home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Ballina</span>
         </button>
-        <button class="tab-btn" data-level="a2">
-            <span class="tab-icon">🌿</span>
-            <span class="tab-text">A2</span>
-            <span class="tab-subtitle">Bazik</span>
+        <button class="main-nav-btn" data-page="learn">
+            <span class="nav-icon">📚</span>
+            <span class="nav-text">Mëso</span>
         </button>
-        <button class="tab-btn" data-level="b1">
-            <span class="tab-icon">🌳</span>
-            <span class="tab-text">B1</span>
-            <span class="tab-subtitle">Mesatar</span>
+        <button class="main-nav-btn" data-page="games">
+            <span class="nav-icon">🎮</span>
+            <span class="nav-text">Lojërat</span>
         </button>
-        <button class="tab-btn" data-level="dictionary">
-            <span class="tab-icon">📖</span>
-            <span class="tab-text">Fjalor</span>
-            <span class="tab-subtitle">Dictionary</span>
+        <button class="main-nav-btn" data-page="dictionary">
+            <span class="nav-icon">📖</span>
+            <span class="nav-text">Fjalor</span>
         </button>
     </nav>
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- A1 Level -->
-        <section class="level-content active" id="a1">
-            <div class="level-header">
-                <h2>🌱 Niveli A1 - Fillestar</h2>
-                <p>Hapat e parë në gjuhën gjermane</p>
-                <div class="progress-bar">
-                    <div class="progress" id="a1-progress"></div>
+
+        <!-- ==================== HOME/DASHBOARD ==================== -->
+        <section class="page-content active" id="home">
+            <div class="dashboard">
+                <!-- Welcome Card -->
+                <div class="dashboard-welcome">
+                    <h2>Mirë se erdhe! 👋</h2>
+                    <p>Fillo të mësosh gjermanisht sot</p>
+                </div>
+
+                <!-- Daily Word Card -->
+                <div class="dashboard-card daily-word-card">
+                    <div class="card-header">
+                        <span class="card-icon">💡</span>
+                        <h3>Fjala e Ditës</h3>
+                    </div>
+                    <div class="daily-word-content">
+                        <div class="daily-word-de" id="daily-word-de">Willkommen</div>
+                        <div class="daily-word-sq" id="daily-word-sq">Mirëseardhje</div>
+                        <div class="daily-word-example" id="daily-word-example">"Willkommen in Deutschland!"</div>
+                    </div>
+                    <button class="daily-word-btn" id="new-word-btn">🔄 Fjalë e re</button>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="dashboard-card quick-actions-card">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <h3>Veprime të Shpejta</h3>
+                    </div>
+                    <div class="quick-actions-grid">
+                        <button class="quick-action-btn" data-action="learn-a1">
+                            <span class="qa-icon">🌱</span>
+                            <span class="qa-text">Fillo A1</span>
+                        </button>
+                        <button class="quick-action-btn" data-action="play-game">
+                            <span class="qa-icon">🎮</span>
+                            <span class="qa-text">Luaj Lojë</span>
+                        </button>
+                        <button class="quick-action-btn" data-action="dictionary">
+                            <span class="qa-icon">🔍</span>
+                            <span class="qa-text">Kërko Fjalë</span>
+                        </button>
+                        <button class="quick-action-btn" data-action="random-topic">
+                            <span class="qa-icon">🎲</span>
+                            <span class="qa-text">Temë Rastësore</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="dashboard-card progress-card">
+                    <div class="card-header">
+                        <span class="card-icon">📊</span>
+                        <h3>Progresi Yt</h3>
+                    </div>
+                    <div class="progress-levels">
+                        <div class="progress-level" data-level="a1">
+                            <div class="progress-level-header">
+                                <span class="level-badge a1">A1</span>
+                                <span class="level-name">Fillestar</span>
+                            </div>
+                            <div class="progress-bar-mini">
+                                <div class="progress-fill" id="progress-a1" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-level" data-level="a2">
+                            <div class="progress-level-header">
+                                <span class="level-badge a2">A2</span>
+                                <span class="level-name">Bazik</span>
+                            </div>
+                            <div class="progress-bar-mini">
+                                <div class="progress-fill" id="progress-a2" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-level" data-level="b1">
+                            <div class="progress-level-header">
+                                <span class="level-badge b1">B1</span>
+                                <span class="level-name">Mesatar</span>
+                            </div>
+                            <div class="progress-bar-mini">
+                                <div class="progress-fill" id="progress-b1" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Games -->
+                <div class="dashboard-card featured-games-card">
+                    <div class="card-header">
+                        <span class="card-icon">🎯</span>
+                        <h3>Lojëra të Preferuara</h3>
+                    </div>
+                    <div class="featured-games-grid">
+                        <button class="featured-game" data-game="memory" data-level="a1">
+                            <span class="fg-icon">🧠</span>
+                            <span class="fg-name">Memorie</span>
+                        </button>
+                        <button class="featured-game" data-game="matching" data-level="a1">
+                            <span class="fg-icon">🔗</span>
+                            <span class="fg-name">Përputhje</span>
+                        </button>
+                        <button class="featured-game" data-game="hangman" data-level="a1">
+                            <span class="fg-icon">🎯</span>
+                            <span class="fg-name">Varëse</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Section Navigation -->
-            <div class="section-nav">
-                <button class="section-btn active" data-section="vocabulary-a1">📚 Fjalor</button>
-                <button class="section-btn" data-section="grammar-a1">📖 Gramatikë</button>
-                <button class="section-btn" data-section="examples-a1">💡 Shembuj</button>
-                <button class="section-btn" data-section="quiz-a1">🎮 Lojë</button>
+        <!-- ==================== LEARN SECTION ==================== -->
+        <section class="page-content" id="learn">
+            <!-- Level Selector -->
+            <div class="level-selector">
+                <button class="level-btn active" data-level="a1">
+                    <span class="level-icon">🌱</span>
+                    <div class="level-info">
+                        <span class="level-name">A1</span>
+                        <span class="level-desc">Fillestar</span>
+                    </div>
+                </button>
+                <button class="level-btn" data-level="a2">
+                    <span class="level-icon">🌿</span>
+                    <div class="level-info">
+                        <span class="level-name">A2</span>
+                        <span class="level-desc">Bazik</span>
+                    </div>
+                </button>
+                <button class="level-btn" data-level="b1">
+                    <span class="level-icon">🌳</span>
+                    <div class="level-info">
+                        <span class="level-name">B1</span>
+                        <span class="level-desc">Mesatar</span>
+                    </div>
+                </button>
             </div>
 
-            <!-- A1 Vocabulary -->
-            <div class="section-content active" id="vocabulary-a1">
-                <h3>📚 Fjalori Bazë - Grundwortschatz</h3>
-                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
+            <!-- Content Type Tabs -->
+            <div class="content-tabs">
+                <button class="content-tab active" data-content="vocabulary">📚 Fjalor</button>
+                <button class="content-tab" data-content="grammar">📖 Gramatikë</button>
+                <button class="content-tab" data-content="examples">💡 Shembuj</button>
+            </div>
 
-                <!-- Topic Cards Grid -->
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card" data-topic="greetings-a1">
-                        <div class="topic-icon">👋</div>
-                        <div class="topic-info">
-                            <h4>Përshëndetjet</h4>
-                            <p class="topic-german">Begrüßungen</p>
-                            <span class="topic-count">6 fjalë</span>
+            <!-- Learning Content Area -->
+            <div class="learning-content">
+                <!-- A1 Content -->
+                <div class="level-content active" id="learn-a1">
+                    <!-- A1 Vocabulary -->
+                    <div class="content-section active" id="vocabulary-a1">
+                        <div class="section-header">
+                            <h3>📚 Fjalori A1 - Grundwortschatz</h3>
+                            <p>Kliko mbi një temë për të parë më shumë detaje</p>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="greetings-a1">
+                                <div class="topic-icon">👋</div>
+                                <div class="topic-info">
+                                    <h4>Përshëndetjet</h4>
+                                    <p class="topic-german">Begrüßungen</p>
+                                    <span class="topic-count">6 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="numbers-a1">
+                                <div class="topic-icon">🔢</div>
+                                <div class="topic-info">
+                                    <h4>Numrat 0-20</h4>
+                                    <p class="topic-german">Zahlen</p>
+                                    <span class="topic-count">21 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="family-a1">
+                                <div class="topic-icon">👨‍👩‍👧‍👦</div>
+                                <div class="topic-info">
+                                    <h4>Familja</h4>
+                                    <p class="topic-german">Die Familie</p>
+                                    <span class="topic-count">6 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="colors-a1">
+                                <div class="topic-icon">🎨</div>
+                                <div class="topic-info">
+                                    <h4>Ngjyrat</h4>
+                                    <p class="topic-german">Die Farben</p>
+                                    <span class="topic-count">8 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="days-a1">
+                                <div class="topic-icon">📅</div>
+                                <div class="topic-info">
+                                    <h4>Ditët e Javës</h4>
+                                    <p class="topic-german">Die Wochentage</p>
+                                    <span class="topic-count">7 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="food-a1">
+                                <div class="topic-icon">🍎</div>
+                                <div class="topic-info">
+                                    <h4>Ushqimi Bazë</h4>
+                                    <p class="topic-german">Grundnahrungsmittel</p>
+                                    <span class="topic-count">10 fjalë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- A1 Grammar -->
+                    <div class="content-section" id="grammar-a1">
+                        <div class="section-header">
+                            <h3>📖 Gramatika A1 - Grammatik</h3>
+                            <p>Kliko mbi një temë gramatikore për shpjegime</p>
+                        </div>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="artikel-a1">
+                                <div class="topic-icon">🔤</div>
+                                <div class="topic-info">
+                                    <h4>Nyjet</h4>
+                                    <p class="topic-german">Artikel (der, die, das)</p>
+                                    <span class="topic-count">Themë kryesore</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="pronomen-a1">
+                                <div class="topic-icon">👤</div>
+                                <div class="topic-info">
+                                    <h4>Përemrat Vetorë</h4>
+                                    <p class="topic-german">Personalpronomen</p>
+                                    <span class="topic-count">9 përemra</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="sein-a1">
+                                <div class="topic-icon">🏃</div>
+                                <div class="topic-info">
+                                    <h4>Folja "sein"</h4>
+                                    <p class="topic-german">Das Verb "sein"</p>
+                                    <span class="topic-count">Konjugim</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="haben-a1">
+                                <div class="topic-icon">📝</div>
+                                <div class="topic-info">
+                                    <h4>Folja "haben"</h4>
+                                    <p class="topic-german">Das Verb "haben"</p>
+                                    <span class="topic-count">Konjugim</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="verben-a1">
+                                <div class="topic-icon">⚡</div>
+                                <div class="topic-info">
+                                    <h4>Foljet e Rregullta</h4>
+                                    <p class="topic-german">Regelmäßige Verben</p>
+                                    <span class="topic-count">Konjugim bazë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="satzbau-a1">
+                                <div class="topic-icon">🧱</div>
+                                <div class="topic-info">
+                                    <h4>Rendi i Fjalëve</h4>
+                                    <p class="topic-german">Satzbau</p>
+                                    <span class="topic-count">Strukturë fjalie</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- A1 Examples -->
+                    <div class="content-section" id="examples-a1">
+                        <div class="section-header">
+                            <h3>💡 Shembuj A1 - Praktische Beispiele</h3>
+                            <p>Dialogë dhe situata të jetës së përditshme</p>
+                        </div>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="vorstellen-a1">
+                                <div class="topic-icon">🤝</div>
+                                <div class="topic-info">
+                                    <h4>Të prezantohesh</h4>
+                                    <p class="topic-german">Sich vorstellen</p>
+                                    <span class="topic-count">Dialog + Shpjegim</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="einkaufen-a1">
+                                <div class="topic-icon">🛒</div>
+                                <div class="topic-info">
+                                    <h4>Në dyqan</h4>
+                                    <p class="topic-german">Im Geschäft</p>
+                                    <span class="topic-count">Dialog + Shpjegim</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="zuhause-a1">
+                                <div class="topic-icon">🏠</div>
+                                <div class="topic-info">
+                                    <h4>Në shtëpi</h4>
+                                    <p class="topic-german">Zu Hause</p>
+                                    <span class="topic-count">Fjali + Analizë</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                            <a href="#" class="topic-card" data-topic="cafe-a1">
+                                <div class="topic-icon">☕</div>
+                                <div class="topic-info">
+                                    <h4>Në kafene</h4>
+                                    <p class="topic-german">Im Café</p>
+                                    <span class="topic-count">Dialog + Shpjegim</span>
+                                </div>
+                                <span class="topic-arrow">→</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-                    <a href="#" class="topic-card" data-topic="numbers-a1">
-                        <div class="topic-icon">🔢</div>
-                        <div class="topic-info">
-                            <h4>Numrat 0-20</h4>
-                            <p class="topic-german">Zahlen</p>
-                            <span class="topic-count">21 fjalë</span>
+                <!-- A2 Content -->
+                <div class="level-content" id="learn-a2">
+                    <div class="content-section active" id="vocabulary-a2">
+                        <div class="section-header">
+                            <h3>📚 Fjalori A2 - Erweiterter Wortschatz</h3>
+                            <p>Kliko mbi një temë për të parë më shumë detaje</p>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="berufe-a2"><div class="topic-icon">💼</div><div class="topic-info"><h4>Profesionet</h4><p class="topic-german">Die Berufe</p><span class="topic-count">12 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="verkehr-a2"><div class="topic-icon">🚗</div><div class="topic-info"><h4>Transporti</h4><p class="topic-german">Verkehrsmittel</p><span class="topic-count">8 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="essen-a2"><div class="topic-icon">🍽️</div><div class="topic-info"><h4>Ushqimi</h4><p class="topic-german">Das Essen</p><span class="topic-count">10 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="korper-a2"><div class="topic-icon">🏃</div><div class="topic-info"><h4>Trupi</h4><p class="topic-german">Der Körper</p><span class="topic-count">12 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="wetter-a2"><div class="topic-icon">🌤️</div><div class="topic-info"><h4>Moti</h4><p class="topic-german">Das Wetter</p><span class="topic-count">10 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="kleidung-a2"><div class="topic-icon">👔</div><div class="topic-info"><h4>Veshjet</h4><p class="topic-german">Die Kleidung</p><span class="topic-count">10 fjalë</span></div><span class="topic-arrow">→</span></a>
+                        </div>
+                    </div>
+                    <div class="content-section" id="grammar-a2">
+                        <div class="section-header">
+                            <h3>📖 Gramatika A2 - Erweiterte Grammatik</h3>
+                            <p>Kliko mbi një temë gramatikore për shpjegime</p>
+                        </div>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="falle-a2"><div class="topic-icon">📍</div><div class="topic-info"><h4>Rasat</h4><p class="topic-german">Die Fälle (Nom, Akk, Dat)</p><span class="topic-count">Themë kryesore</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="perfekt-a2"><div class="topic-icon">⏰</div><div class="topic-info"><h4>E kaluara (Perfekt)</h4><p class="topic-german">Das Perfekt</p><span class="topic-count">haben/sein + Partizip II</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="modalverben-a2"><div class="topic-icon">🔗</div><div class="topic-info"><h4>Foljet Modale</h4><p class="topic-german">Modalverben</p><span class="topic-count">6 folje</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="prapositionen-a2"><div class="topic-icon">📌</div><div class="topic-info"><h4>Parafjalët</h4><p class="topic-german">Präpositionen</p><span class="topic-count">Akk/Dat/Wechsel</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="nebensatze-a2"><div class="topic-icon">🔀</div><div class="topic-info"><h4>Fjali Dytësore</h4><p class="topic-german">Nebensätze</p><span class="topic-count">weil, dass, wenn</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="komparativ-a2"><div class="topic-icon">📊</div><div class="topic-info"><h4>Krahasimi</h4><p class="topic-german">Komparativ & Superlativ</p><span class="topic-count">Shkallët</span></div><span class="topic-arrow">→</span></a>
+                        </div>
+                    </div>
+                    <div class="content-section" id="examples-a2">
+                        <div class="section-header">
+                            <h3>💡 Shembuj A2 - Praktische Beispiele</h3>
+                            <p>Dialogë dhe situata të jetës së përditshme</p>
+                        </div>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="arzt-a2"><div class="topic-icon">🏥</div><div class="topic-info"><h4>Tek mjeku</h4><p class="topic-german">Beim Arzt</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="bahnhof-a2"><div class="topic-icon">🚉</div><div class="topic-info"><h4>Në stacion</h4><p class="topic-german">Am Bahnhof</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="restaurant-a2"><div class="topic-icon">🍴</div><div class="topic-info"><h4>Në restorant</h4><p class="topic-german">Im Restaurant</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="telefon-a2"><div class="topic-icon">📞</div><div class="topic-info"><h4>Në telefon</h4><p class="topic-german">Am Telefon</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                        </div>
+                    </div>
+                </div>
 
-                    <a href="#" class="topic-card" data-topic="family-a1">
-                        <div class="topic-icon">👨‍👩‍👧‍👦</div>
-                        <div class="topic-info">
-                            <h4>Familja</h4>
-                            <p class="topic-german">Die Familie</p>
-                            <span class="topic-count">6 fjalë</span>
+                <!-- B1 Content -->
+                <div class="level-content" id="learn-b1">
+                    <div class="content-section active" id="vocabulary-b1">
+                        <div class="section-header">
+                            <h3>📚 Fjalori B1 - Fortgeschrittener Wortschatz</h3>
+                            <p>Kliko mbi një temë për të parë më shumë detaje</p>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="colors-a1">
-                        <div class="topic-icon">🎨</div>
-                        <div class="topic-info">
-                            <h4>Ngjyrat</h4>
-                            <p class="topic-german">Die Farben</p>
-                            <span class="topic-count">8 fjalë</span>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="meinung-b1"><div class="topic-icon">💭</div><div class="topic-info"><h4>Shprehje Opinioni</h4><p class="topic-german">Meinungsäußerung</p><span class="topic-count">8 shprehje</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="umwelt-b1"><div class="topic-icon">🌍</div><div class="topic-info"><h4>Mjedisi & Shoqëria</h4><p class="topic-german">Umwelt & Gesellschaft</p><span class="topic-count">12 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="konnektoren-b1"><div class="topic-icon">📊</div><div class="topic-info"><h4>Fjalë Lidhëse</h4><p class="topic-german">Konnektoren</p><span class="topic-count">16 lidhëza</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="arbeit-b1"><div class="topic-icon">💼</div><div class="topic-info"><h4>Puna & Karriera</h4><p class="topic-german">Arbeit & Karriere</p><span class="topic-count">15 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="medien-b1"><div class="topic-icon">📱</div><div class="topic-info"><h4>Media & Teknologjia</h4><p class="topic-german">Medien & Technologie</p><span class="topic-count">12 fjalë</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="redewendungen-b1"><div class="topic-icon">💬</div><div class="topic-info"><h4>Shprehje Idiomatike</h4><p class="topic-german">Redewendungen</p><span class="topic-count">10 shprehje</span></div><span class="topic-arrow">→</span></a>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="days-a1">
-                        <div class="topic-icon">📅</div>
-                        <div class="topic-info">
-                            <h4>Ditët e Javës</h4>
-                            <p class="topic-german">Die Wochentage</p>
-                            <span class="topic-count">7 fjalë</span>
+                    </div>
+                    <div class="content-section" id="grammar-b1">
+                        <div class="section-header">
+                            <h3>📖 Gramatika B1 - Fortgeschrittene Grammatik</h3>
+                            <p>Kliko mbi një temë gramatikore për shpjegime</p>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="food-a1">
-                        <div class="topic-icon">🍎</div>
-                        <div class="topic-info">
-                            <h4>Ushqimi Bazë</h4>
-                            <p class="topic-german">Grundnahrungsmittel</p>
-                            <span class="topic-count">10 fjalë</span>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="genitiv-b1"><div class="topic-icon">📍</div><div class="topic-info"><h4>Rasa Gjinore</h4><p class="topic-german">Der Genitiv</p><span class="topic-count">Rasa e 4-të</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="passiv-b1"><div class="topic-icon">🔄</div><div class="topic-info"><h4>Pësore</h4><p class="topic-german">Das Passiv</p><span class="topic-count">werden + Partizip II</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="konjunktiv-b1"><div class="topic-icon">🌀</div><div class="topic-info"><h4>Konjunktiv II</h4><p class="topic-german">Der Konjunktiv II</p><span class="topic-count">Mënyra dëshirore</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="relativsatze-b1"><div class="topic-icon">📝</div><div class="topic-info"><h4>Fjali Relative</h4><p class="topic-german">Relativsätze</p><span class="topic-count">der, die, das...</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="indirekte-b1"><div class="topic-icon">💬</div><div class="topic-info"><h4>Ligjërata e Zhdrejtë</h4><p class="topic-german">Indirekte Rede</p><span class="topic-count">Konjunktiv I</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="plusquamperfekt-b1"><div class="topic-icon">⏪</div><div class="topic-info"><h4>E kryera e tejshkuar</h4><p class="topic-german">Das Plusquamperfekt</p><span class="topic-count">hatte/war + Partizip II</span></div><span class="topic-arrow">→</span></a>
                         </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
+                    </div>
+                    <div class="content-section" id="examples-b1">
+                        <div class="section-header">
+                            <h3>💡 Shembuj B1 - Fortgeschrittene Beispiele</h3>
+                            <p>Dialogë dhe situata të avancuara</p>
+                        </div>
+                        <div class="topic-cards-grid">
+                            <a href="#" class="topic-card" data-topic="bewerbung-b1"><div class="topic-icon">💼</div><div class="topic-info"><h4>Intervistë pune</h4><p class="topic-german">Bewerbungsgespräch</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="diskussion-b1"><div class="topic-icon">📰</div><div class="topic-info"><h4>Diskutim</h4><p class="topic-german">Diskussion</p><span class="topic-count">Dialog + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="beschwerde-b1"><div class="topic-icon">📝</div><div class="topic-info"><h4>Ankesë formale</h4><p class="topic-german">Formelle Beschwerde</p><span class="topic-count">Letër + Shpjegim</span></div><span class="topic-arrow">→</span></a>
+                            <a href="#" class="topic-card" data-topic="praesentation-b1"><div class="topic-icon">🎤</div><div class="topic-info"><h4>Prezantim</h4><p class="topic-german">Präsentation</p><span class="topic-count">Struktura + Fraza</span></div><span class="topic-arrow">→</span></a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- A1 Grammar -->
-            <div class="section-content" id="grammar-a1">
-                <h3>📖 Gramatika A1 - Grammatik</h3>
-                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card grammar-card" data-topic="artikel-a1">
-                        <div class="topic-icon">🔤</div>
-                        <div class="topic-info">
-                            <h4>Nyjet</h4>
-                            <p class="topic-german">Artikel (der, die, das)</p>
-                            <span class="topic-count">Themë kryesore</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="pronomen-a1">
-                        <div class="topic-icon">👤</div>
-                        <div class="topic-info">
-                            <h4>Përemrat Vetorë</h4>
-                            <p class="topic-german">Personalpronomen</p>
-                            <span class="topic-count">9 përemra</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="sein-a1">
-                        <div class="topic-icon">🏃</div>
-                        <div class="topic-info">
-                            <h4>Folja "sein"</h4>
-                            <p class="topic-german">Das Verb "sein"</p>
-                            <span class="topic-count">Konjugim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="haben-a1">
-                        <div class="topic-icon">📝</div>
-                        <div class="topic-info">
-                            <h4>Folja "haben"</h4>
-                            <p class="topic-german">Das Verb "haben"</p>
-                            <span class="topic-count">Konjugim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="verben-a1">
-                        <div class="topic-icon">⚡</div>
-                        <div class="topic-info">
-                            <h4>Foljet e Rregullta</h4>
-                            <p class="topic-german">Regelmäßige Verben</p>
-                            <span class="topic-count">Konjugim bazë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="satzbau-a1">
-                        <div class="topic-icon">🧱</div>
-                        <div class="topic-info">
-                            <h4>Rendi i Fjalëve</h4>
-                            <p class="topic-german">Satzbau</p>
-                            <span class="topic-count">Strukturë fjalie</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
+        <!-- ==================== GAMES SECTION ==================== -->
+        <section class="page-content" id="games">
+            <div class="games-header">
+                <h2>🎮 Lojërat</h2>
+                <p>Mëso duke luajtur! Zgjidh nivelin dhe llojin e lojës</p>
             </div>
 
-            <!-- A1 Examples -->
-            <div class="section-content" id="examples-a1">
-                <h3>💡 Shembuj Praktikë - Praktische Beispiele</h3>
-                <p class="section-intro">Kliko për të parë dialogë dhe situata të jetës së përditshme.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card example-card" data-topic="vorstellen-a1">
-                        <div class="topic-icon">🤝</div>
-                        <div class="topic-info">
-                            <h4>Të prezantohesh</h4>
-                            <p class="topic-german">Sich vorstellen</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="einkaufen-a1">
-                        <div class="topic-icon">🛒</div>
-                        <div class="topic-info">
-                            <h4>Në dyqan</h4>
-                            <p class="topic-german">Im Geschäft</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="zuhause-a1">
-                        <div class="topic-icon">🏠</div>
-                        <div class="topic-info">
-                            <h4>Në shtëpi</h4>
-                            <p class="topic-german">Zu Hause</p>
-                            <span class="topic-count">Fjali + Analizë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="cafe-a1">
-                        <div class="topic-icon">☕</div>
-                        <div class="topic-info">
-                            <h4>Në kafene</h4>
-                            <p class="topic-german">Im Café</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
+            <!-- Game Level Selector -->
+            <div class="game-level-selector">
+                <button class="game-level-btn active" data-level="a1">
+                    <span class="level-badge a1">A1</span> Fillestar
+                </button>
+                <button class="game-level-btn" data-level="a2">
+                    <span class="level-badge a2">A2</span> Bazik
+                </button>
+                <button class="game-level-btn" data-level="b1">
+                    <span class="level-badge b1">B1</span> Mesatar
+                </button>
             </div>
 
-            <!-- A1 Games -->
-            <div class="section-content" id="quiz-a1">
-                <h3>🎮 Lojërat A1 - Testo njohuritë e tua!</h3>
-                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
-
-                <!-- Game Selection -->
-                <div class="games-grid" id="games-grid-a1">
-                    <div class="game-card" data-game="quiz" data-level="a1">
-                        <div class="game-icon">❓</div>
-                        <div class="game-info">
+            <!-- Games Hub -->
+            <div class="games-hub" id="games-hub">
+                <div class="games-grid-full">
+                    <div class="game-card-large" data-game="quiz">
+                        <div class="game-card-icon">❓</div>
+                        <div class="game-card-content">
                             <h4>Kuiz</h4>
                             <p>Testo njohuritë me pyetje me shumë zgjedhje</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
                     </div>
-                    <div class="game-card" data-game="matching" data-level="a1">
-                        <div class="game-icon">🔗</div>
-                        <div class="game-info">
+                    <div class="game-card-large" data-game="matching">
+                        <div class="game-card-icon">🔗</div>
+                        <div class="game-card-content">
                             <h4>Përputhje</h4>
                             <p>Lidh fjalët gjermanisht me shqip</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
                     </div>
-                    <div class="game-card" data-game="memory" data-level="a1">
-                        <div class="game-icon">🧠</div>
-                        <div class="game-info">
+                    <div class="game-card-large" data-game="memory">
+                        <div class="game-card-icon">🧠</div>
+                        <div class="game-card-content">
                             <h4>Memorie</h4>
                             <p>Gjej çiftet e fjalëve të fshehura</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
                     </div>
-                    <div class="game-card" data-game="fillblank" data-level="a1">
-                        <div class="game-icon">✏️</div>
-                        <div class="game-info">
+                    <div class="game-card-large" data-game="fillblank">
+                        <div class="game-card-icon">✏️</div>
+                        <div class="game-card-content">
                             <h4>Plotëso</h4>
                             <p>Shkruaj fjalën që mungon</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
                     </div>
-                    <div class="game-card" data-game="hangman" data-level="a1">
-                        <div class="game-icon">🎯</div>
-                        <div class="game-info">
+                    <div class="game-card-large" data-game="hangman">
+                        <div class="game-card-icon">🎯</div>
+                        <div class="game-card-content">
                             <h4>Varëse</h4>
                             <p>Qëllo shkronjat për të gjetur fjalën</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
                     </div>
-                    <div class="game-card" data-game="scramble" data-level="a1">
-                        <div class="game-icon">🔀</div>
-                        <div class="game-info">
+                    <div class="game-card-large" data-game="scramble">
+                        <div class="game-card-icon">🔀</div>
+                        <div class="game-card-content">
                             <h4>Rirregullim</h4>
                             <p>Rirregulloji shkronjat për të bërë fjalën</p>
                         </div>
+                        <span class="game-card-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Game Area -->
+            <div class="game-play-area" id="game-play-area" style="display: none;">
+                <button class="back-to-games-btn" id="back-to-games-hub">← Kthehu tek Lojërat</button>
+
+                <!-- Quiz Game -->
+                <div class="quiz-container game-area" id="quiz-game" style="display: none;">
+                    <div class="quiz-header">
+                        <div class="quiz-score"><span class="score-label">Pikët:</span><span class="score-value" id="game-score">0</span><span class="score-total">/ 10</span></div>
+                        <div class="quiz-progress"><span class="progress-label">Pyetja:</span><span class="progress-value" id="game-question-num">1</span><span class="progress-total">/ 10</span></div>
+                    </div>
+                    <div class="quiz-question-container">
+                        <div class="quiz-question" id="game-question"></div>
+                        <div class="quiz-options" id="game-options"></div>
+                    </div>
+                    <div class="quiz-feedback" id="game-feedback"></div>
+                    <div class="quiz-controls">
+                        <button class="quiz-btn" id="game-next-btn" style="display: none;">Pyetja Tjetër →</button>
+                        <button class="quiz-btn restart-btn" id="game-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                    </div>
+                    <div class="quiz-results" id="game-results" style="display: none;">
+                        <h4>🎉 Rezultati Juaj!</h4>
+                        <div class="results-circle"><span class="results-score" id="game-final-score">0</span><span class="results-percent">%</span></div>
+                        <p class="results-message" id="game-results-message"></p>
                     </div>
                 </div>
 
-                <!-- Game Container (hidden by default) -->
-                <div class="game-container" id="game-container-a1" style="display: none;">
-                    <button class="back-to-games-btn" data-level="a1">← Kthehu tek Lojërat</button>
+                <!-- Matching Game -->
+                <div class="matching-container game-area" id="matching-game" style="display: none;">
+                    <div class="matching-header"><div class="matching-score">Çiftet: <span id="match-score">0</span>/8</div><div class="matching-timer">Koha: <span id="match-time">0</span>s</div></div>
+                    <div class="matching-columns"><div class="matching-column" id="match-left"></div><div class="matching-column" id="match-right"></div></div>
+                    <div class="matching-result" id="match-result" style="display: none;"></div>
+                </div>
 
-                    <!-- Quiz Game -->
-                    <div class="quiz-container game-area" id="quiz-a1-game" style="display: none;">
-                        <div class="quiz-header">
-                            <div class="quiz-score">
-                                <span class="score-label">Pikët:</span>
-                                <span class="score-value" id="a1-score">0</span>
-                                <span class="score-total">/ 10</span>
-                            </div>
-                            <div class="quiz-progress">
-                                <span class="progress-label">Pyetja:</span>
-                                <span class="progress-value" id="a1-question-num">1</span>
-                                <span class="progress-total">/ 10</span>
-                            </div>
-                        </div>
-                        <div class="quiz-question-container">
-                            <div class="quiz-question" id="a1-question"></div>
-                            <div class="quiz-options" id="a1-options"></div>
-                        </div>
-                        <div class="quiz-feedback" id="a1-feedback"></div>
-                        <div class="quiz-controls">
-                            <button class="quiz-btn" id="a1-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                            <button class="quiz-btn restart-btn" id="a1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
-                        </div>
-                        <div class="quiz-results" id="a1-results" style="display: none;">
-                            <h4>🎉 Rezultati Juaj!</h4>
-                            <div class="results-circle">
-                                <span class="results-score" id="a1-final-score">0</span>
-                                <span class="results-percent">%</span>
-                            </div>
-                            <p class="results-message" id="a1-results-message"></p>
-                        </div>
-                    </div>
+                <!-- Memory Game -->
+                <div class="memory-container game-area" id="memory-game" style="display: none;">
+                    <div class="memory-header"><div class="memory-moves">Lëvizje: <span id="memory-moves">0</span></div><div class="memory-pairs">Çiftet: <span id="memory-pairs">0</span>/6</div></div>
+                    <div class="memory-grid" id="memory-grid"></div>
+                    <div class="memory-result" id="memory-result" style="display: none;"></div>
+                </div>
 
-                    <!-- Matching Game -->
-                    <div class="matching-container game-area" id="matching-a1-game" style="display: none;">
-                        <div class="matching-header">
-                            <div class="matching-score">Çiftet: <span id="a1-match-score">0</span>/8</div>
-                            <div class="matching-timer">Koha: <span id="a1-match-time">0</span>s</div>
-                        </div>
-                        <div class="matching-columns">
-                            <div class="matching-column" id="a1-match-left"></div>
-                            <div class="matching-column" id="a1-match-right"></div>
-                        </div>
-                        <div class="matching-result" id="a1-match-result" style="display: none;"></div>
-                    </div>
+                <!-- Fill in the Blank Game -->
+                <div class="fillblank-container game-area" id="fillblank-game" style="display: none;">
+                    <div class="fillblank-header"><div class="fillblank-score">Pikët: <span id="fill-score">0</span>/8</div><div class="fillblank-progress">Pyetja: <span id="fill-num">1</span>/8</div></div>
+                    <div class="fillblank-question" id="fill-question"></div>
+                    <div class="fillblank-input-area"><input type="text" class="fillblank-input" id="fill-input" placeholder="Shkruaj përgjigjen..."><button class="fillblank-submit" id="fill-submit">Kontrollo</button></div>
+                    <div class="fillblank-hint" id="fill-hint"></div>
+                    <div class="fillblank-feedback" id="fill-feedback"></div>
+                    <div class="fillblank-result" id="fill-result" style="display: none;"></div>
+                </div>
 
-                    <!-- Memory Game -->
-                    <div class="memory-container game-area" id="memory-a1-game" style="display: none;">
-                        <div class="memory-header">
-                            <div class="memory-moves">Lëvizje: <span id="a1-memory-moves">0</span></div>
-                            <div class="memory-pairs">Çiftet: <span id="a1-memory-pairs">0</span>/6</div>
-                        </div>
-                        <div class="memory-grid" id="a1-memory-grid"></div>
-                        <div class="memory-result" id="a1-memory-result" style="display: none;"></div>
-                    </div>
+                <!-- Hangman Game -->
+                <div class="hangman-container game-area" id="hangman-game" style="display: none;">
+                    <div class="hangman-header"><div class="hangman-lives">Jetë: <span id="hang-lives">❤️❤️❤️❤️❤️❤️</span></div><div class="hangman-score">Pikët: <span id="hang-score">0</span></div></div>
+                    <div class="hangman-hint" id="hang-hint"></div>
+                    <div class="hangman-word" id="hang-word"></div>
+                    <div class="hangman-keyboard" id="hang-keyboard"></div>
+                    <div class="hangman-result" id="hang-result" style="display: none;"></div>
+                </div>
 
-                    <!-- Fill in the Blank Game -->
-                    <div class="fillblank-container game-area" id="fillblank-a1-game" style="display: none;">
-                        <div class="fillblank-header">
-                            <div class="fillblank-score">Pikët: <span id="a1-fill-score">0</span>/8</div>
-                            <div class="fillblank-progress">Pyetja: <span id="a1-fill-num">1</span>/8</div>
-                        </div>
-                        <div class="fillblank-question" id="a1-fill-question"></div>
-                        <div class="fillblank-input-area">
-                            <input type="text" class="fillblank-input" id="a1-fill-input" placeholder="Shkruaj përgjigjen...">
-                            <button class="fillblank-submit" id="a1-fill-submit">Kontrollo</button>
-                        </div>
-                        <div class="fillblank-hint" id="a1-fill-hint"></div>
-                        <div class="fillblank-feedback" id="a1-fill-feedback"></div>
-                        <div class="fillblank-result" id="a1-fill-result" style="display: none;"></div>
-                    </div>
-
-                    <!-- Hangman Game -->
-                    <div class="hangman-container game-area" id="hangman-a1-game" style="display: none;">
-                        <div class="hangman-header">
-                            <div class="hangman-lives">Jetë: <span id="a1-hang-lives">❤️❤️❤️❤️❤️❤️</span></div>
-                            <div class="hangman-score">Pikët: <span id="a1-hang-score">0</span></div>
-                        </div>
-                        <div class="hangman-hint" id="a1-hang-hint"></div>
-                        <div class="hangman-word" id="a1-hang-word"></div>
-                        <div class="hangman-keyboard" id="a1-hang-keyboard"></div>
-                        <div class="hangman-result" id="a1-hang-result" style="display: none;"></div>
-                    </div>
-
-                    <!-- Word Scramble Game -->
-                    <div class="scramble-container game-area" id="scramble-a1-game" style="display: none;">
-                        <div class="scramble-header">
-                            <div class="scramble-score">Pikët: <span id="a1-scramble-score">0</span>/8</div>
-                            <div class="scramble-progress">Fjala: <span id="a1-scramble-num">1</span>/8</div>
-                        </div>
-                        <div class="scramble-hint" id="a1-scramble-hint"></div>
-                        <div class="scramble-letters" id="a1-scramble-letters"></div>
-                        <div class="scramble-answer" id="a1-scramble-answer"></div>
-                        <div class="scramble-controls">
-                            <button class="scramble-clear" id="a1-scramble-clear">Fshi</button>
-                            <button class="scramble-submit" id="a1-scramble-submit">Kontrollo</button>
-                        </div>
-                        <div class="scramble-feedback" id="a1-scramble-feedback"></div>
-                        <div class="scramble-result" id="a1-scramble-result" style="display: none;"></div>
-                    </div>
+                <!-- Word Scramble Game -->
+                <div class="scramble-container game-area" id="scramble-game" style="display: none;">
+                    <div class="scramble-header"><div class="scramble-score">Pikët: <span id="scramble-score">0</span>/8</div><div class="scramble-progress">Fjala: <span id="scramble-num">1</span>/8</div></div>
+                    <div class="scramble-hint" id="scramble-hint"></div>
+                    <div class="scramble-letters" id="scramble-letters"></div>
+                    <div class="scramble-answer" id="scramble-answer"></div>
+                    <div class="scramble-controls"><button class="scramble-clear" id="scramble-clear">Fshi</button><button class="scramble-submit" id="scramble-submit">Kontrollo</button></div>
+                    <div class="scramble-feedback" id="scramble-feedback"></div>
+                    <div class="scramble-result" id="scramble-result" style="display: none;"></div>
                 </div>
             </div>
         </section>
 
-        <!-- A2 Level -->
-        <section class="level-content" id="a2">
-            <div class="level-header">
-                <h2>🌿 Niveli A2 - Bazik</h2>
-                <p>Zgjeroni njohuritë tuaja</p>
-                <div class="progress-bar">
-                    <div class="progress" id="a2-progress"></div>
-                </div>
-            </div>
-
-            <div class="section-nav">
-                <button class="section-btn active" data-section="vocabulary-a2">📚 Fjalor</button>
-                <button class="section-btn" data-section="grammar-a2">📖 Gramatikë</button>
-                <button class="section-btn" data-section="examples-a2">💡 Shembuj</button>
-                <button class="section-btn" data-section="quiz-a2">🎮 Lojë</button>
-            </div>
-
-            <!-- A2 Vocabulary -->
-            <div class="section-content active" id="vocabulary-a2">
-                <h3>📚 Fjalori A2 - Erweiterter Wortschatz</h3>
-                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card" data-topic="berufe-a2">
-                        <div class="topic-icon">💼</div>
-                        <div class="topic-info">
-                            <h4>Profesionet</h4>
-                            <p class="topic-german">Die Berufe</p>
-                            <span class="topic-count">12 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="verkehr-a2">
-                        <div class="topic-icon">🚗</div>
-                        <div class="topic-info">
-                            <h4>Transporti</h4>
-                            <p class="topic-german">Verkehrsmittel</p>
-                            <span class="topic-count">8 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="essen-a2">
-                        <div class="topic-icon">🍽️</div>
-                        <div class="topic-info">
-                            <h4>Ushqimi</h4>
-                            <p class="topic-german">Das Essen</p>
-                            <span class="topic-count">10 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="korper-a2">
-                        <div class="topic-icon">🏃</div>
-                        <div class="topic-info">
-                            <h4>Trupi</h4>
-                            <p class="topic-german">Der Körper</p>
-                            <span class="topic-count">12 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="wetter-a2">
-                        <div class="topic-icon">🌤️</div>
-                        <div class="topic-info">
-                            <h4>Moti</h4>
-                            <p class="topic-german">Das Wetter</p>
-                            <span class="topic-count">10 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="kleidung-a2">
-                        <div class="topic-icon">👔</div>
-                        <div class="topic-info">
-                            <h4>Veshjet</h4>
-                            <p class="topic-german">Die Kleidung</p>
-                            <span class="topic-count">10 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- A2 Grammar -->
-            <div class="section-content" id="grammar-a2">
-                <h3>📖 Gramatika A2 - Erweiterte Grammatik</h3>
-                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card grammar-card" data-topic="falle-a2">
-                        <div class="topic-icon">📍</div>
-                        <div class="topic-info">
-                            <h4>Rasat</h4>
-                            <p class="topic-german">Die Fälle (Nom, Akk, Dat)</p>
-                            <span class="topic-count">Themë kryesore</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="perfekt-a2">
-                        <div class="topic-icon">⏰</div>
-                        <div class="topic-info">
-                            <h4>E kaluara (Perfekt)</h4>
-                            <p class="topic-german">Das Perfekt</p>
-                            <span class="topic-count">haben/sein + Partizip II</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="modalverben-a2">
-                        <div class="topic-icon">🔗</div>
-                        <div class="topic-info">
-                            <h4>Foljet Modale</h4>
-                            <p class="topic-german">Modalverben</p>
-                            <span class="topic-count">6 folje</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="prapositionen-a2">
-                        <div class="topic-icon">📌</div>
-                        <div class="topic-info">
-                            <h4>Parafjalët</h4>
-                            <p class="topic-german">Präpositionen</p>
-                            <span class="topic-count">Akk/Dat/Wechsel</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="nebensatze-a2">
-                        <div class="topic-icon">🔀</div>
-                        <div class="topic-info">
-                            <h4>Fjali Dytësore</h4>
-                            <p class="topic-german">Nebensätze</p>
-                            <span class="topic-count">weil, dass, wenn</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="komparativ-a2">
-                        <div class="topic-icon">📊</div>
-                        <div class="topic-info">
-                            <h4>Krahasimi</h4>
-                            <p class="topic-german">Komparativ & Superlativ</p>
-                            <span class="topic-count">Shkallët</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- A2 Examples -->
-            <div class="section-content" id="examples-a2">
-                <h3>💡 Shembuj A2 - Praktische Beispiele</h3>
-                <p class="section-intro">Kliko për të parë dialogë dhe situata të jetës së përditshme.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card example-card" data-topic="arzt-a2">
-                        <div class="topic-icon">🏥</div>
-                        <div class="topic-info">
-                            <h4>Tek mjeku</h4>
-                            <p class="topic-german">Beim Arzt</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="bahnhof-a2">
-                        <div class="topic-icon">🚉</div>
-                        <div class="topic-info">
-                            <h4>Në stacion</h4>
-                            <p class="topic-german">Am Bahnhof</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="restaurant-a2">
-                        <div class="topic-icon">🍴</div>
-                        <div class="topic-info">
-                            <h4>Në restorant</h4>
-                            <p class="topic-german">Im Restaurant</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="telefon-a2">
-                        <div class="topic-icon">📞</div>
-                        <div class="topic-info">
-                            <h4>Në telefon</h4>
-                            <p class="topic-german">Am Telefon</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- A2 Games -->
-            <div class="section-content" id="quiz-a2">
-                <h3>🎮 Lojërat A2 - Testo njohuritë e tua!</h3>
-                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
-
-                <div class="games-grid" id="games-grid-a2">
-                    <div class="game-card" data-game="quiz" data-level="a2">
-                        <div class="game-icon">❓</div>
-                        <div class="game-info"><h4>Kuiz</h4><p>Testo njohuritë me pyetje me shumë zgjedhje</p></div>
-                    </div>
-                    <div class="game-card" data-game="matching" data-level="a2">
-                        <div class="game-icon">🔗</div>
-                        <div class="game-info"><h4>Përputhje</h4><p>Lidh fjalët gjermanisht me shqip</p></div>
-                    </div>
-                    <div class="game-card" data-game="memory" data-level="a2">
-                        <div class="game-icon">🧠</div>
-                        <div class="game-info"><h4>Memorie</h4><p>Gjej çiftet e fjalëve të fshehura</p></div>
-                    </div>
-                    <div class="game-card" data-game="fillblank" data-level="a2">
-                        <div class="game-icon">✏️</div>
-                        <div class="game-info"><h4>Plotëso</h4><p>Shkruaj fjalën që mungon</p></div>
-                    </div>
-                    <div class="game-card" data-game="hangman" data-level="a2">
-                        <div class="game-icon">🎯</div>
-                        <div class="game-info"><h4>Varëse</h4><p>Qëllo shkronjat për të gjetur fjalën</p></div>
-                    </div>
-                    <div class="game-card" data-game="scramble" data-level="a2">
-                        <div class="game-icon">🔀</div>
-                        <div class="game-info"><h4>Rirregullim</h4><p>Rirregulloji shkronjat për të bërë fjalën</p></div>
-                    </div>
-                </div>
-
-                <div class="game-container" id="game-container-a2" style="display: none;">
-                    <button class="back-to-games-btn" data-level="a2">← Kthehu tek Lojërat</button>
-                    <div class="quiz-container game-area" id="quiz-a2-game" style="display: none;">
-                        <div class="quiz-header">
-                            <div class="quiz-score"><span class="score-label">Pikët:</span><span class="score-value" id="a2-score">0</span><span class="score-total">/ 10</span></div>
-                            <div class="quiz-progress"><span class="progress-label">Pyetja:</span><span class="progress-value" id="a2-question-num">1</span><span class="progress-total">/ 10</span></div>
-                        </div>
-                        <div class="quiz-question-container">
-                            <div class="quiz-question" id="a2-question"></div>
-                            <div class="quiz-options" id="a2-options"></div>
-                        </div>
-                        <div class="quiz-feedback" id="a2-feedback"></div>
-                        <div class="quiz-controls">
-                            <button class="quiz-btn" id="a2-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                            <button class="quiz-btn restart-btn" id="a2-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
-                        </div>
-                        <div class="quiz-results" id="a2-results" style="display: none;">
-                            <h4>🎉 Rezultati Juaj!</h4>
-                            <div class="results-circle"><span class="results-score" id="a2-final-score">0</span><span class="results-percent">%</span></div>
-                            <p class="results-message" id="a2-results-message"></p>
-                        </div>
-                    </div>
-                    <div class="matching-container game-area" id="matching-a2-game" style="display: none;">
-                        <div class="matching-header"><div class="matching-score">Çiftet: <span id="a2-match-score">0</span>/8</div><div class="matching-timer">Koha: <span id="a2-match-time">0</span>s</div></div>
-                        <div class="matching-columns"><div class="matching-column" id="a2-match-left"></div><div class="matching-column" id="a2-match-right"></div></div>
-                        <div class="matching-result" id="a2-match-result" style="display: none;"></div>
-                    </div>
-                    <div class="memory-container game-area" id="memory-a2-game" style="display: none;">
-                        <div class="memory-header"><div class="memory-moves">Lëvizje: <span id="a2-memory-moves">0</span></div><div class="memory-pairs">Çiftet: <span id="a2-memory-pairs">0</span>/6</div></div>
-                        <div class="memory-grid" id="a2-memory-grid"></div>
-                        <div class="memory-result" id="a2-memory-result" style="display: none;"></div>
-                    </div>
-                    <div class="fillblank-container game-area" id="fillblank-a2-game" style="display: none;">
-                        <div class="fillblank-header"><div class="fillblank-score">Pikët: <span id="a2-fill-score">0</span>/8</div><div class="fillblank-progress">Pyetja: <span id="a2-fill-num">1</span>/8</div></div>
-                        <div class="fillblank-question" id="a2-fill-question"></div>
-                        <div class="fillblank-input-area"><input type="text" class="fillblank-input" id="a2-fill-input" placeholder="Shkruaj përgjigjen..."><button class="fillblank-submit" id="a2-fill-submit">Kontrollo</button></div>
-                        <div class="fillblank-hint" id="a2-fill-hint"></div>
-                        <div class="fillblank-feedback" id="a2-fill-feedback"></div>
-                        <div class="fillblank-result" id="a2-fill-result" style="display: none;"></div>
-                    </div>
-                    <div class="hangman-container game-area" id="hangman-a2-game" style="display: none;">
-                        <div class="hangman-header"><div class="hangman-lives">Jetë: <span id="a2-hang-lives">❤️❤️❤️❤️❤️❤️</span></div><div class="hangman-score">Pikët: <span id="a2-hang-score">0</span></div></div>
-                        <div class="hangman-hint" id="a2-hang-hint"></div>
-                        <div class="hangman-word" id="a2-hang-word"></div>
-                        <div class="hangman-keyboard" id="a2-hang-keyboard"></div>
-                        <div class="hangman-result" id="a2-hang-result" style="display: none;"></div>
-                    </div>
-                    <div class="scramble-container game-area" id="scramble-a2-game" style="display: none;">
-                        <div class="scramble-header"><div class="scramble-score">Pikët: <span id="a2-scramble-score">0</span>/8</div><div class="scramble-progress">Fjala: <span id="a2-scramble-num">1</span>/8</div></div>
-                        <div class="scramble-hint" id="a2-scramble-hint"></div>
-                        <div class="scramble-letters" id="a2-scramble-letters"></div>
-                        <div class="scramble-answer" id="a2-scramble-answer"></div>
-                        <div class="scramble-controls"><button class="scramble-clear" id="a2-scramble-clear">Fshi</button><button class="scramble-submit" id="a2-scramble-submit">Kontrollo</button></div>
-                        <div class="scramble-feedback" id="a2-scramble-feedback"></div>
-                        <div class="scramble-result" id="a2-scramble-result" style="display: none;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- B1 Level -->
-        <section class="level-content" id="b1">
-            <div class="level-header">
-                <h2>🌳 Niveli B1 - Mesatar</h2>
-                <p>Komunikim i pavarur</p>
-                <div class="progress-bar">
-                    <div class="progress" id="b1-progress"></div>
-                </div>
-            </div>
-
-            <div class="section-nav">
-                <button class="section-btn active" data-section="vocabulary-b1">📚 Fjalor</button>
-                <button class="section-btn" data-section="grammar-b1">📖 Gramatikë</button>
-                <button class="section-btn" data-section="examples-b1">💡 Shembuj</button>
-                <button class="section-btn" data-section="quiz-b1">🎮 Lojë</button>
-            </div>
-
-            <!-- B1 Vocabulary -->
-            <div class="section-content active" id="vocabulary-b1">
-                <h3>📚 Fjalori B1 - Fortgeschrittener Wortschatz</h3>
-                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card" data-topic="meinung-b1">
-                        <div class="topic-icon">💭</div>
-                        <div class="topic-info">
-                            <h4>Shprehje Opinioni</h4>
-                            <p class="topic-german">Meinungsäußerung</p>
-                            <span class="topic-count">8 shprehje</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="umwelt-b1">
-                        <div class="topic-icon">🌍</div>
-                        <div class="topic-info">
-                            <h4>Mjedisi & Shoqëria</h4>
-                            <p class="topic-german">Umwelt & Gesellschaft</p>
-                            <span class="topic-count">12 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="konnektoren-b1">
-                        <div class="topic-icon">📊</div>
-                        <div class="topic-info">
-                            <h4>Fjalë Lidhëse</h4>
-                            <p class="topic-german">Konnektoren</p>
-                            <span class="topic-count">16 lidhëza</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="arbeit-b1">
-                        <div class="topic-icon">💼</div>
-                        <div class="topic-info">
-                            <h4>Puna & Karriera</h4>
-                            <p class="topic-german">Arbeit & Karriere</p>
-                            <span class="topic-count">15 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="medien-b1">
-                        <div class="topic-icon">📱</div>
-                        <div class="topic-info">
-                            <h4>Media & Teknologjia</h4>
-                            <p class="topic-german">Medien & Technologie</p>
-                            <span class="topic-count">12 fjalë</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card" data-topic="redewendungen-b1">
-                        <div class="topic-icon">💬</div>
-                        <div class="topic-info">
-                            <h4>Shprehje Idiomatike</h4>
-                            <p class="topic-german">Redewendungen</p>
-                            <span class="topic-count">10 shprehje</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- B1 Grammar -->
-            <div class="section-content" id="grammar-b1">
-                <h3>📖 Gramatika B1 - Fortgeschrittene Grammatik</h3>
-                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card grammar-card" data-topic="genitiv-b1">
-                        <div class="topic-icon">📍</div>
-                        <div class="topic-info">
-                            <h4>Rasa Gjinore</h4>
-                            <p class="topic-german">Der Genitiv</p>
-                            <span class="topic-count">Rasa e 4-të</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="passiv-b1">
-                        <div class="topic-icon">🔄</div>
-                        <div class="topic-info">
-                            <h4>Pësore</h4>
-                            <p class="topic-german">Das Passiv</p>
-                            <span class="topic-count">werden + Partizip II</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="konjunktiv-b1">
-                        <div class="topic-icon">🌀</div>
-                        <div class="topic-info">
-                            <h4>Konjunktiv II</h4>
-                            <p class="topic-german">Der Konjunktiv II</p>
-                            <span class="topic-count">Mënyra dëshirore</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="relativsatze-b1">
-                        <div class="topic-icon">📝</div>
-                        <div class="topic-info">
-                            <h4>Fjali Relative</h4>
-                            <p class="topic-german">Relativsätze</p>
-                            <span class="topic-count">der, die, das...</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="indirekte-b1">
-                        <div class="topic-icon">💬</div>
-                        <div class="topic-info">
-                            <h4>Ligjërata e Zhdrejtë</h4>
-                            <p class="topic-german">Indirekte Rede</p>
-                            <span class="topic-count">Konjunktiv I</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card grammar-card" data-topic="plusquamperfekt-b1">
-                        <div class="topic-icon">⏪</div>
-                        <div class="topic-info">
-                            <h4>E kryera e tejshkuar</h4>
-                            <p class="topic-german">Das Plusquamperfekt</p>
-                            <span class="topic-count">hatte/war + Partizip II</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- B1 Examples -->
-            <div class="section-content" id="examples-b1">
-                <h3>💡 Shembuj B1 - Fortgeschrittene Beispiele</h3>
-                <p class="section-intro">Kliko për të parë dialogë dhe situata të avancuara.</p>
-
-                <div class="topic-cards-grid">
-                    <a href="#" class="topic-card example-card" data-topic="bewerbung-b1">
-                        <div class="topic-icon">💼</div>
-                        <div class="topic-info">
-                            <h4>Intervistë pune</h4>
-                            <p class="topic-german">Bewerbungsgespräch</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="diskussion-b1">
-                        <div class="topic-icon">📰</div>
-                        <div class="topic-info">
-                            <h4>Diskutim</h4>
-                            <p class="topic-german">Diskussion</p>
-                            <span class="topic-count">Dialog + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="beschwerde-b1">
-                        <div class="topic-icon">📝</div>
-                        <div class="topic-info">
-                            <h4>Ankesë formale</h4>
-                            <p class="topic-german">Formelle Beschwerde</p>
-                            <span class="topic-count">Letër + Shpjegim</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-
-                    <a href="#" class="topic-card example-card" data-topic="praesentation-b1">
-                        <div class="topic-icon">🎤</div>
-                        <div class="topic-info">
-                            <h4>Prezantim</h4>
-                            <p class="topic-german">Präsentation</p>
-                            <span class="topic-count">Struktura + Fraza</span>
-                        </div>
-                        <span class="topic-arrow">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- B1 Games -->
-            <div class="section-content" id="quiz-b1">
-                <h3>🎮 Lojërat B1 - Testo njohuritë e tua!</h3>
-                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
-
-                <div class="games-grid" id="games-grid-b1">
-                    <div class="game-card" data-game="quiz" data-level="b1">
-                        <div class="game-icon">❓</div>
-                        <div class="game-info"><h4>Kuiz</h4><p>Testo njohuritë me pyetje me shumë zgjedhje</p></div>
-                    </div>
-                    <div class="game-card" data-game="matching" data-level="b1">
-                        <div class="game-icon">🔗</div>
-                        <div class="game-info"><h4>Përputhje</h4><p>Lidh fjalët gjermanisht me shqip</p></div>
-                    </div>
-                    <div class="game-card" data-game="memory" data-level="b1">
-                        <div class="game-icon">🧠</div>
-                        <div class="game-info"><h4>Memorie</h4><p>Gjej çiftet e fjalëve të fshehura</p></div>
-                    </div>
-                    <div class="game-card" data-game="fillblank" data-level="b1">
-                        <div class="game-icon">✏️</div>
-                        <div class="game-info"><h4>Plotëso</h4><p>Shkruaj fjalën që mungon</p></div>
-                    </div>
-                    <div class="game-card" data-game="hangman" data-level="b1">
-                        <div class="game-icon">🎯</div>
-                        <div class="game-info"><h4>Varëse</h4><p>Qëllo shkronjat për të gjetur fjalën</p></div>
-                    </div>
-                    <div class="game-card" data-game="scramble" data-level="b1">
-                        <div class="game-icon">🔀</div>
-                        <div class="game-info"><h4>Rirregullim</h4><p>Rirregulloji shkronjat për të bërë fjalën</p></div>
-                    </div>
-                </div>
-
-                <div class="game-container" id="game-container-b1" style="display: none;">
-                    <button class="back-to-games-btn" data-level="b1">← Kthehu tek Lojërat</button>
-                    <div class="quiz-container game-area" id="quiz-b1-game" style="display: none;">
-                        <div class="quiz-header">
-                            <div class="quiz-score"><span class="score-label">Pikët:</span><span class="score-value" id="b1-score">0</span><span class="score-total">/ 10</span></div>
-                            <div class="quiz-progress"><span class="progress-label">Pyetja:</span><span class="progress-value" id="b1-question-num">1</span><span class="progress-total">/ 10</span></div>
-                        </div>
-                        <div class="quiz-question-container">
-                            <div class="quiz-question" id="b1-question"></div>
-                            <div class="quiz-options" id="b1-options"></div>
-                        </div>
-                        <div class="quiz-feedback" id="b1-feedback"></div>
-                        <div class="quiz-controls">
-                            <button class="quiz-btn" id="b1-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                            <button class="quiz-btn restart-btn" id="b1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
-                        </div>
-                        <div class="quiz-results" id="b1-results" style="display: none;">
-                            <h4>🎉 Rezultati Juaj!</h4>
-                            <div class="results-circle"><span class="results-score" id="b1-final-score">0</span><span class="results-percent">%</span></div>
-                            <p class="results-message" id="b1-results-message"></p>
-                        </div>
-                    </div>
-                    <div class="matching-container game-area" id="matching-b1-game" style="display: none;">
-                        <div class="matching-header"><div class="matching-score">Çiftet: <span id="b1-match-score">0</span>/8</div><div class="matching-timer">Koha: <span id="b1-match-time">0</span>s</div></div>
-                        <div class="matching-columns"><div class="matching-column" id="b1-match-left"></div><div class="matching-column" id="b1-match-right"></div></div>
-                        <div class="matching-result" id="b1-match-result" style="display: none;"></div>
-                    </div>
-                    <div class="memory-container game-area" id="memory-b1-game" style="display: none;">
-                        <div class="memory-header"><div class="memory-moves">Lëvizje: <span id="b1-memory-moves">0</span></div><div class="memory-pairs">Çiftet: <span id="b1-memory-pairs">0</span>/6</div></div>
-                        <div class="memory-grid" id="b1-memory-grid"></div>
-                        <div class="memory-result" id="b1-memory-result" style="display: none;"></div>
-                    </div>
-                    <div class="fillblank-container game-area" id="fillblank-b1-game" style="display: none;">
-                        <div class="fillblank-header"><div class="fillblank-score">Pikët: <span id="b1-fill-score">0</span>/8</div><div class="fillblank-progress">Pyetja: <span id="b1-fill-num">1</span>/8</div></div>
-                        <div class="fillblank-question" id="b1-fill-question"></div>
-                        <div class="fillblank-input-area"><input type="text" class="fillblank-input" id="b1-fill-input" placeholder="Shkruaj përgjigjen..."><button class="fillblank-submit" id="b1-fill-submit">Kontrollo</button></div>
-                        <div class="fillblank-hint" id="b1-fill-hint"></div>
-                        <div class="fillblank-feedback" id="b1-fill-feedback"></div>
-                        <div class="fillblank-result" id="b1-fill-result" style="display: none;"></div>
-                    </div>
-                    <div class="hangman-container game-area" id="hangman-b1-game" style="display: none;">
-                        <div class="hangman-header"><div class="hangman-lives">Jetë: <span id="b1-hang-lives">❤️❤️❤️❤️❤️❤️</span></div><div class="hangman-score">Pikët: <span id="b1-hang-score">0</span></div></div>
-                        <div class="hangman-hint" id="b1-hang-hint"></div>
-                        <div class="hangman-word" id="b1-hang-word"></div>
-                        <div class="hangman-keyboard" id="b1-hang-keyboard"></div>
-                        <div class="hangman-result" id="b1-hang-result" style="display: none;"></div>
-                    </div>
-                    <div class="scramble-container game-area" id="scramble-b1-game" style="display: none;">
-                        <div class="scramble-header"><div class="scramble-score">Pikët: <span id="b1-scramble-score">0</span>/8</div><div class="scramble-progress">Fjala: <span id="b1-scramble-num">1</span>/8</div></div>
-                        <div class="scramble-hint" id="b1-scramble-hint"></div>
-                        <div class="scramble-letters" id="b1-scramble-letters"></div>
-                        <div class="scramble-answer" id="b1-scramble-answer"></div>
-                        <div class="scramble-controls"><button class="scramble-clear" id="b1-scramble-clear">Fshi</button><button class="scramble-submit" id="b1-scramble-submit">Kontrollo</button></div>
-                        <div class="scramble-feedback" id="b1-scramble-feedback"></div>
-                        <div class="scramble-result" id="b1-scramble-result" style="display: none;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Dictionary Section -->
-        <section class="level-content" id="dictionary">
-            <div class="level-header">
+        <!-- ==================== DICTIONARY SECTION ==================== -->
+        <section class="page-content" id="dictionary">
+            <div class="dictionary-header">
                 <h2>📖 Fjalor Gjermanisht-Shqip</h2>
                 <p>Kërko fjalë në gjermanisht ose shqip</p>
             </div>
@@ -1046,18 +647,9 @@
                         <h3>Mirë se vini në Fjalor!</h3>
                         <p>Ky fjalor përdor <a href="https://de-sq.dict.cc/" target="_blank" rel="noopener">dict.cc</a> - një nga fjalorët më të mëdhenj falas në internet.</p>
                         <div class="dictionary-features">
-                            <div class="feature-item">
-                                <span class="feature-icon">✓</span>
-                                <span>Mijëra fjalë gjermanisht-shqip</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">✓</span>
-                                <span>Shembuj përdorimi</span>
-                            </div>
-                            <div class="feature-item">
-                                <span class="feature-icon">✓</span>
-                                <span>Falas dhe pa reklama</span>
-                            </div>
+                            <div class="feature-item"><span class="feature-icon">✓</span><span>Mijëra fjalë gjermanisht-shqip</span></div>
+                            <div class="feature-item"><span class="feature-icon">✓</span><span>Shembuj përdorimi</span></div>
+                            <div class="feature-item"><span class="feature-icon">✓</span><span>Falas dhe pa reklama</span></div>
                         </div>
                     </div>
                 </div>
@@ -1065,15 +657,9 @@
                 <div class="dictionary-sources">
                     <p>Burimet e fjalorit:</p>
                     <div class="source-links">
-                        <a href="https://de-sq.dict.cc/" target="_blank" rel="noopener" class="source-link">
-                            <span>📖</span> dict.cc (DE-SQ)
-                        </a>
-                        <a href="https://glosbe.com/de/sq" target="_blank" rel="noopener" class="source-link">
-                            <span>🌐</span> Glosbe
-                        </a>
-                        <a href="https://translate.google.com/?sl=de&tl=sq" target="_blank" rel="noopener" class="source-link">
-                            <span>🔄</span> Google Translate
-                        </a>
+                        <a href="https://de-sq.dict.cc/" target="_blank" rel="noopener" class="source-link"><span>📖</span> dict.cc (DE-SQ)</a>
+                        <a href="https://glosbe.com/de/sq" target="_blank" rel="noopener" class="source-link"><span>🌐</span> Glosbe</a>
+                        <a href="https://translate.google.com/?sl=de&tl=sq" target="_blank" rel="noopener" class="source-link"><span>🔄</span> Google Translate</a>
                     </div>
                 </div>
             </div>
