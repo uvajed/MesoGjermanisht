@@ -1,66 +1,42 @@
-// ========================================
 // Mëso Gjermanisht - Interactive Learning Platform
-// JavaScript functionality for tabs, sections, and quizzes
-// ========================================
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
     initializeTabs();
     initializeSectionNavigation();
     initializeQuizzes();
+    initializeTopicCards();
     updateProgress();
 });
 
-// ===== Tab Navigation =====
+// Tab Navigation
 function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const levelContents = document.querySelectorAll('.level-content');
-
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const level = button.dataset.level;
-
-            // Update active tab
             tabButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-
-            // Show corresponding content
             levelContents.forEach(content => {
                 content.classList.remove('active');
-                if (content.id === level) {
-                    content.classList.add('active');
-                }
+                if (content.id === level) content.classList.add('active');
             });
-
-            // Reset section navigation for the new level
             resetSectionNavigation(level);
         });
     });
 }
 
-// ===== Section Navigation =====
+// Section Navigation
 function initializeSectionNavigation() {
-    const sectionNavs = document.querySelectorAll('.section-nav');
-
-    sectionNavs.forEach(nav => {
-        const buttons = nav.querySelectorAll('.section-btn');
-
-        buttons.forEach(button => {
+    document.querySelectorAll('.section-nav').forEach(nav => {
+        nav.querySelectorAll('.section-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const sectionId = button.dataset.section;
                 const parentLevel = nav.closest('.level-content');
-
-                // Update active button
-                buttons.forEach(btn => btn.classList.remove('active'));
+                nav.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-
-                // Show corresponding section
-                const sections = parentLevel.querySelectorAll('.section-content');
-                sections.forEach(section => {
+                parentLevel.querySelectorAll('.section-content').forEach(section => {
                     section.classList.remove('active');
-                    if (section.id === sectionId) {
-                        section.classList.add('active');
-                    }
+                    if (section.id === sectionId) section.classList.add('active');
                 });
             });
         });
@@ -70,252 +46,497 @@ function initializeSectionNavigation() {
 function resetSectionNavigation(level) {
     const levelContent = document.getElementById(level);
     if (levelContent) {
-        const buttons = levelContent.querySelectorAll('.section-btn');
-        const sections = levelContent.querySelectorAll('.section-content');
-
-        // Reset to first section
-        buttons.forEach((btn, index) => {
-            btn.classList.toggle('active', index === 0);
-        });
-
-        sections.forEach((section, index) => {
-            section.classList.toggle('active', index === 0);
-        });
+        levelContent.querySelectorAll('.section-btn').forEach((btn, i) => btn.classList.toggle('active', i === 0));
+        levelContent.querySelectorAll('.section-content').forEach((section, i) => section.classList.toggle('active', i === 0));
     }
 }
 
-// ===== Quiz System =====
+// Topic Cards & Modal
+function initializeTopicCards() {
+    document.querySelectorAll('.topic-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(card.dataset.topic);
+        });
+    });
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-overlay').addEventListener('click', (e) => {
+        if (e.target.id === 'modal-overlay') closeModal();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+}
+
+function openModal(topicId) {
+    const content = topicContent[topicId];
+    if (!content) return;
+    document.getElementById('modal-breadcrumb').innerHTML = content.breadcrumb;
+    document.getElementById('modal-content').innerHTML = content.html;
+    document.getElementById('modal-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.querySelectorAll('.related-link').forEach(link => {
+        link.addEventListener('click', () => openModal(link.dataset.topic));
+    });
+    document.querySelectorAll('.practice-exercise .answer').forEach(answer => {
+        answer.addEventListener('click', () => answer.classList.toggle('revealed'));
+    });
+}
+
+function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Topic Content Data
+const topicContent = {
+    'greetings-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Përshëndetjet</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">👋</span><div class="modal-header-text"><h2>Përshëndetjet - Begrüßungen</h2><p>Mëso si të përshëndetësh në gjermanisht</p></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">Hallo</div><div class="albanian">Përshëndetje</div><div class="pronunciation">🔊 /ˈhalo/</div><div class="example">"Hallo, wie geht's?"</div><div class="usage-note">💡 Joformal, për miq</div></div>
+                <div class="modal-word-card"><div class="german">Guten Morgen</div><div class="albanian">Mirëmëngjes</div><div class="pronunciation">🔊 /ˈɡuːtn̩ ˈmɔʁɡn̩/</div><div class="example">"Guten Morgen, Herr Müller!"</div><div class="usage-note">💡 Deri në orën 10-11</div></div>
+                <div class="modal-word-card"><div class="german">Guten Tag</div><div class="albanian">Mirëdita</div><div class="pronunciation">🔊 /ˈɡuːtn̩ taːk/</div><div class="example">"Guten Tag! Kann ich Ihnen helfen?"</div><div class="usage-note">💡 Formale, gjatë ditës</div></div>
+                <div class="modal-word-card"><div class="german">Guten Abend</div><div class="albanian">Mirëmbrëma</div><div class="pronunciation">🔊 /ˈɡuːtn̩ ˈaːbn̩t/</div><div class="example">"Guten Abend zusammen!"</div><div class="usage-note">💡 Pas orës 18:00</div></div>
+                <div class="modal-word-card"><div class="german">Auf Wiedersehen</div><div class="albanian">Mirupafshim</div><div class="pronunciation">🔊 /aʊ̯f ˈviːdɐˌzeːən/</div><div class="example">"Auf Wiedersehen und bis bald!"</div><div class="usage-note">💡 Formale</div></div>
+                <div class="modal-word-card"><div class="german">Tschüss</div><div class="albanian">Çao</div><div class="pronunciation">🔊 /tʃʏs/</div><div class="example">"Tschüss, bis morgen!"</div><div class="usage-note">💡 Joformal</div></div>
+            </div>
+            <div class="practice-box"><h4>✏️ Praktikë</h4>
+                <div class="practice-exercise"><div class="question">Si i thoni shefit "mirëdita"?</div><div class="answer">Guten Tag!</div></div>
+                <div class="practice-exercise"><div class="question">Si i thoni mikut "çao"?</div><div class="answer">Tschüss!</div></div>
+            </div>
+            <div class="related-topics"><h4>Tema të ngjashme</h4><div class="related-links"><span class="related-link" data-topic="vorstellen-a1">🤝 Të prezantohesh</span><span class="related-link" data-topic="pronomen-a1">👤 Përemrat</span></div></div>`
+    },
+    'numbers-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Numrat</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🔢</span><div class="modal-header-text"><h2>Numrat 0-20 - Die Zahlen</h2><p>Mëso numrat bazë</p></div></div>
+            <div class="grammar-deep-section"><h3>📌 Numrat 0-12</h3><div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">null</div><div class="albanian">0</div></div>
+                <div class="modal-word-card"><div class="german">eins</div><div class="albanian">1</div></div>
+                <div class="modal-word-card"><div class="german">zwei</div><div class="albanian">2</div></div>
+                <div class="modal-word-card"><div class="german">drei</div><div class="albanian">3</div></div>
+                <div class="modal-word-card"><div class="german">vier</div><div class="albanian">4</div></div>
+                <div class="modal-word-card"><div class="german">fünf</div><div class="albanian">5</div></div>
+                <div class="modal-word-card"><div class="german">sechs</div><div class="albanian">6</div></div>
+                <div class="modal-word-card"><div class="german">sieben</div><div class="albanian">7</div></div>
+                <div class="modal-word-card"><div class="german">acht</div><div class="albanian">8</div></div>
+                <div class="modal-word-card"><div class="german">neun</div><div class="albanian">9</div></div>
+                <div class="modal-word-card"><div class="german">zehn</div><div class="albanian">10</div></div>
+                <div class="modal-word-card"><div class="german">elf</div><div class="albanian">11</div></div>
+                <div class="modal-word-card"><div class="german">zwölf</div><div class="albanian">12</div></div>
+            </div></div>
+            <div class="grammar-rule-box"><h4>📐 Rregulli 13-19</h4><p>Numri + <strong>zehn</strong>: dreizehn, vierzehn...</p><p>⚠️ <strong>sechzehn</strong> (jo sechszehn), <strong>siebzehn</strong> (jo siebenzehn)</p></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">dreizehn</div><div class="albanian">13</div></div>
+                <div class="modal-word-card"><div class="german">vierzehn</div><div class="albanian">14</div></div>
+                <div class="modal-word-card"><div class="german">fünfzehn</div><div class="albanian">15</div></div>
+                <div class="modal-word-card"><div class="german">sechzehn</div><div class="albanian">16</div></div>
+                <div class="modal-word-card"><div class="german">siebzehn</div><div class="albanian">17</div></div>
+                <div class="modal-word-card"><div class="german">achtzehn</div><div class="albanian">18</div></div>
+                <div class="modal-word-card"><div class="german">neunzehn</div><div class="albanian">19</div></div>
+                <div class="modal-word-card"><div class="german">zwanzig</div><div class="albanian">20</div></div>
+            </div>`
+    },
+    'family-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Familja</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">👨‍👩‍👧‍👦</span><div class="modal-header-text"><h2>Familja - Die Familie</h2><p>Anëtarët e familjes</p></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">die Mutter</div><div class="albanian">nëna</div><div class="example">"Meine Mutter kocht sehr gut."</div><div class="usage-note">💡 Joformal: die Mama</div></div>
+                <div class="modal-word-card"><div class="german">der Vater</div><div class="albanian">babai</div><div class="example">"Mein Vater arbeitet viel."</div><div class="usage-note">💡 Joformal: der Papa</div></div>
+                <div class="modal-word-card"><div class="german">der Bruder</div><div class="albanian">vëllai</div><div class="example">"Ich habe einen Bruder."</div></div>
+                <div class="modal-word-card"><div class="german">die Schwester</div><div class="albanian">motra</div><div class="example">"Meine Schwester ist älter."</div></div>
+                <div class="modal-word-card"><div class="german">die Oma</div><div class="albanian">gjyshja</div><div class="example">"Die Oma erzählt Geschichten."</div></div>
+                <div class="modal-word-card"><div class="german">der Opa</div><div class="albanian">gjyshi</div><div class="example">"Der Opa liest die Zeitung."</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📐 Nyjet</h4><p><strong>der</strong> = mashkullore | <strong>die</strong> = femërore</p></div>`
+    },
+    'colors-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ngjyrat</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🎨</span><div class="modal-header-text"><h2>Ngjyrat - Die Farben</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card" style="border-left-color:#e74c3c"><div class="german">rot</div><div class="albanian">i kuq</div></div>
+                <div class="modal-word-card" style="border-left-color:#3498db"><div class="german">blau</div><div class="albanian">blu</div></div>
+                <div class="modal-word-card" style="border-left-color:#2ecc71"><div class="german">grün</div><div class="albanian">jeshil</div></div>
+                <div class="modal-word-card" style="border-left-color:#f1c40f"><div class="german">gelb</div><div class="albanian">verdhë</div></div>
+                <div class="modal-word-card" style="border-left-color:#e67e22"><div class="german">orange</div><div class="albanian">portokalli</div></div>
+                <div class="modal-word-card" style="border-left-color:#9b59b6"><div class="german">lila</div><div class="albanian">vjollcë</div></div>
+                <div class="modal-word-card" style="border-left-color:#1a1a1a"><div class="german">schwarz</div><div class="albanian">i zi</div></div>
+                <div class="modal-word-card" style="border-left-color:#bdc3c7"><div class="german">weiß</div><div class="albanian">i bardhë</div></div>
+            </div>`
+    },
+    'days-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ditët</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📅</span><div class="modal-header-text"><h2>Ditët e Javës - Die Wochentage</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">der Montag</div><div class="albanian">E hëna</div></div>
+                <div class="modal-word-card"><div class="german">der Dienstag</div><div class="albanian">E marta</div></div>
+                <div class="modal-word-card"><div class="german">der Mittwoch</div><div class="albanian">E mërkura</div></div>
+                <div class="modal-word-card"><div class="german">der Donnerstag</div><div class="albanian">E enjtja</div></div>
+                <div class="modal-word-card"><div class="german">der Freitag</div><div class="albanian">E premtja</div></div>
+                <div class="modal-word-card"><div class="german">der Samstag</div><div class="albanian">E shtuna</div></div>
+                <div class="modal-word-card"><div class="german">der Sonntag</div><div class="albanian">E diela</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📐 Të gjitha ditët janë <strong>der</strong> (mashkullore)</h4><p>"Am Montag gehe ich arbeiten." = Të hënën shkoj në punë.</p></div>`
+    },
+    'food-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ushqimi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🍎</span><div class="modal-header-text"><h2>Ushqimi - Grundnahrungsmittel</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Brot</div><div class="albanian">buka</div></div>
+                <div class="modal-word-card"><div class="german">das Wasser</div><div class="albanian">uji</div></div>
+                <div class="modal-word-card"><div class="german">die Milch</div><div class="albanian">qumështi</div></div>
+                <div class="modal-word-card"><div class="german">der Käse</div><div class="albanian">djathi</div></div>
+                <div class="modal-word-card"><div class="german">das Ei</div><div class="albanian">veza</div></div>
+                <div class="modal-word-card"><div class="german">das Fleisch</div><div class="albanian">mishi</div></div>
+                <div class="modal-word-card"><div class="german">der Fisch</div><div class="albanian">peshku</div></div>
+                <div class="modal-word-card"><div class="german">das Obst</div><div class="albanian">frutat</div></div>
+                <div class="modal-word-card"><div class="german">das Gemüse</div><div class="albanian">perimet</div></div>
+                <div class="modal-word-card"><div class="german">der Kaffee</div><div class="albanian">kafeja</div></div>
+            </div>`
+    },
+    'artikel-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Nyjet</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🔤</span><div class="modal-header-text"><h2>Nyjet - Die Artikel</h2><p>der, die, das</p></div></div>
+            <div class="grammar-rule-box"><h4>🎯 Rregulli Kryesor</h4><p>Çdo emër ka gjini. Mëso nyjen bashkë me fjalën!</p></div>
+            <div class="grammar-deep-section"><h3>📌 Tre gjinitë</h3><ul class="grammar-examples-list">
+                <li><span class="de">der</span><span class="al">= mashkullore (der Mann, der Tisch)</span></li>
+                <li><span class="de">die</span><span class="al">= femërore (die Frau, die Lampe)</span></li>
+                <li><span class="de">das</span><span class="al">= asnjëanëse (das Kind, das Buch)</span></li>
+                <li><span class="de">die</span><span class="al">= shumës (die Kinder, die Bücher)</span></li>
+            </ul></div>
+            <div class="grammar-rule-box"><h4>💡 Këshilla</h4><p><strong>der:</strong> ditët, muajt, stinët</p><p><strong>die:</strong> -ung, -heit, -keit, -schaft</p><p><strong>das:</strong> -chen, -lein, -um, -ment</p></div>
+            <div class="practice-box"><h4>✏️ Praktikë</h4>
+                <div class="practice-exercise"><div class="question">___ Buch</div><div class="answer">das Buch</div></div>
+                <div class="practice-exercise"><div class="question">___ Frau</div><div class="answer">die Frau</div></div>
+                <div class="practice-exercise"><div class="question">___ Mann</div><div class="answer">der Mann</div></div>
+            </div>`
+    },
+    'pronomen-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Përemrat</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">👤</span><div class="modal-header-text"><h2>Përemrat Vetorë - Personalpronomen</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">ich</div><div class="albanian">unë</div><div class="example">"Ich bin Student."</div></div>
+                <div class="modal-word-card"><div class="german">du</div><div class="albanian">ti</div><div class="example">"Du bist nett."</div><div class="usage-note">💡 Joformal</div></div>
+                <div class="modal-word-card"><div class="german">er</div><div class="albanian">ai</div><div class="example">"Er arbeitet."</div></div>
+                <div class="modal-word-card"><div class="german">sie</div><div class="albanian">ajo</div><div class="example">"Sie ist Ärztin."</div></div>
+                <div class="modal-word-card"><div class="german">es</div><div class="albanian">ajo (sende)</div><div class="example">"Es ist kalt."</div></div>
+                <div class="modal-word-card"><div class="german">wir</div><div class="albanian">ne</div><div class="example">"Wir lernen Deutsch."</div></div>
+                <div class="modal-word-card"><div class="german">ihr</div><div class="albanian">ju (joformal)</div><div class="example">"Ihr seid Freunde."</div></div>
+                <div class="modal-word-card"><div class="german">sie</div><div class="albanian">ata/ato</div><div class="example">"Sie kommen aus Albanien."</div></div>
+                <div class="modal-word-card"><div class="german">Sie</div><div class="albanian">Ju (formal)</div><div class="example">"Sie sind freundlich."</div><div class="usage-note">💡 Me shkronjë të madhe!</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>⚠️ "sie" ka 3 kuptime!</h4><p>1. ajo (njëjës) | 2. ata/ato (shumës) | 3. Sie = Ju (formal)</p></div>`
+    },
+    'sein-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">sein</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🏃</span><div class="modal-header-text"><h2>Folja "sein" - të jesh</h2></div></div>
+            <div class="grammar-rule-box"><h4>⚠️ Folje e parregullt - memorizoje!</h4></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">ich bin</div><div class="albanian">unë jam</div></div>
+                <div class="modal-word-card"><div class="german">du bist</div><div class="albanian">ti je</div></div>
+                <div class="modal-word-card"><div class="german">er/sie/es ist</div><div class="albanian">ai/ajo është</div></div>
+                <div class="modal-word-card"><div class="german">wir sind</div><div class="albanian">ne jemi</div></div>
+                <div class="modal-word-card"><div class="german">ihr seid</div><div class="albanian">ju jeni</div></div>
+                <div class="modal-word-card"><div class="german">sie/Sie sind</div><div class="albanian">ata janë / Ju jeni</div></div>
+            </div>
+            <div class="practice-box"><h4>✏️ Praktikë</h4>
+                <div class="practice-exercise"><div class="question">Ich ___ Student.</div><div class="answer">bin</div></div>
+                <div class="practice-exercise"><div class="question">Du ___ nett.</div><div class="answer">bist</div></div>
+                <div class="practice-exercise"><div class="question">Wir ___ aus Albanien.</div><div class="answer">sind</div></div>
+            </div>`
+    },
+    'haben-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">haben</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📝</span><div class="modal-header-text"><h2>Folja "haben" - të kesh</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">ich habe</div><div class="albanian">unë kam</div></div>
+                <div class="modal-word-card"><div class="german">du hast</div><div class="albanian">ti ke</div></div>
+                <div class="modal-word-card"><div class="german">er/sie/es hat</div><div class="albanian">ai/ajo ka</div></div>
+                <div class="modal-word-card"><div class="german">wir haben</div><div class="albanian">ne kemi</div></div>
+                <div class="modal-word-card"><div class="german">ihr habt</div><div class="albanian">ju keni</div></div>
+                <div class="modal-word-card"><div class="german">sie/Sie haben</div><div class="albanian">ata kanë / Ju keni</div></div>
+            </div>
+            <div class="practice-box"><h4>✏️ Praktikë</h4>
+                <div class="practice-exercise"><div class="question">Er ___ viel Arbeit.</div><div class="answer">hat</div></div>
+                <div class="practice-exercise"><div class="question">Wir ___ keine Zeit.</div><div class="answer">haben</div></div>
+            </div>`
+    },
+    'verben-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Foljet</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">⚡</span><div class="modal-header-text"><h2>Foljet e Rregullta</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Rregulli</h4><p>Hiq <strong>-en</strong> + mbaresa: ich lern<strong>e</strong>, du lern<strong>st</strong>, er lern<strong>t</strong>...</p></div>
+            <div class="grammar-deep-section"><h3>📌 Mbaresat</h3><ul class="grammar-examples-list">
+                <li><span class="de">ich → -e</span><span class="al">ich lerne</span></li>
+                <li><span class="de">du → -st</span><span class="al">du lernst</span></li>
+                <li><span class="de">er/sie/es → -t</span><span class="al">er lernt</span></li>
+                <li><span class="de">wir → -en</span><span class="al">wir lernen</span></li>
+                <li><span class="de">ihr → -t</span><span class="al">ihr lernt</span></li>
+                <li><span class="de">sie/Sie → -en</span><span class="al">sie lernen</span></li>
+            </ul></div>`
+    },
+    'satzbau-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Satzbau</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🧱</span><div class="modal-header-text"><h2>Rendi i Fjalëve - Satzbau</h2></div></div>
+            <div class="grammar-rule-box"><h4>🎯 Folja në pozitën e DYTË!</h4></div>
+            <div class="grammar-deep-section"><h3>📌 Fjali dëftore</h3><ul class="grammar-examples-list">
+                <li><span class="de">Ich <strong>lerne</strong> Deutsch.</span><span class="al">Unë mësoj gjermanisht.</span></li>
+                <li><span class="de">Heute <strong>lerne</strong> ich Deutsch.</span><span class="al">Sot mësoj gjermanisht.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Fjali pyetëse</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Lernst</strong> du Deutsch?</span><span class="al">A mëson gjermanisht?</span></li>
+                <li><span class="de"><strong>Was</strong> lernst du?</span><span class="al">Çfarë mëson?</span></li>
+            </ul></div>
+            <div class="grammar-rule-box"><h4>💡 W-Fragen</h4><p>Wer? Was? Wo? Wann? Wie? Warum?</p></div>`
+    },
+    'vorstellen-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Prezantim</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🤝</span><div class="modal-header-text"><h2>Të prezantohesh - Sich vorstellen</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Hallo! Ich heiße Anna. Wie heißt du?</span><span class="albanian">Përshëndetje! Quhem Anna. Si quhesh?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Besnik:</span><span class="german">Hallo! Ich bin Besnik. Freut mich!</span><span class="albanian">Përshëndetje! Jam Besnik. Gëzohem!</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Woher kommst du?</span><span class="albanian">Nga vjen ti?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Besnik:</span><span class="german">Ich komme aus Albanien.</span><span class="albanian">Vij nga Shqipëria.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4>
+                <p><strong>Ich heiße...</strong> = Unë quhem...</p>
+                <p><strong>Woher kommst du?</strong> = Nga vjen?</p>
+                <p><strong>Ich komme aus...</strong> = Vij nga...</p>
+            </div>`
+    },
+    'einkaufen-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Dyqan</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🛒</span><div class="modal-header-text"><h2>Në dyqan - Im Geschäft</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Verkäufer:</span><span class="german">Kann ich Ihnen helfen?</span><span class="albanian">A mund t'ju ndihmoj?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Kunde:</span><span class="german">Was kostet das Brot?</span><span class="albanian">Sa kushton buka?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Verkäufer:</span><span class="german">Zwei Euro fünfzig.</span><span class="albanian">Dy euro e pesëdhjetë.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Kunde:</span><span class="german">Ich nehme es. Danke!</span><span class="albanian">E marr. Faleminderit!</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat e dobishme</h4><p><strong>Was kostet...?</strong> = Sa kushton...?</p><p><strong>Ich nehme...</strong> = E marr...</p></div>`
+    },
+    'zuhause-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Shtëpi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🏠</span><div class="modal-header-text"><h2>Në shtëpi - Zu Hause</h2></div></div>
+            <div class="grammar-deep-section"><ul class="grammar-examples-list">
+                <li><span class="de">Das ist mein Haus.</span><span class="al">Kjo është shtëpia ime.</span></li>
+                <li><span class="de">Die Küche ist groß.</span><span class="al">Kuzhina është e madhe.</span></li>
+                <li><span class="de">Ich wohne in einer Wohnung.</span><span class="al">Banoj në apartament.</span></li>
+            </ul></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Haus</div><div class="albanian">shtëpia</div></div>
+                <div class="modal-word-card"><div class="german">die Wohnung</div><div class="albanian">apartamenti</div></div>
+                <div class="modal-word-card"><div class="german">die Küche</div><div class="albanian">kuzhina</div></div>
+                <div class="modal-word-card"><div class="german">das Schlafzimmer</div><div class="albanian">dhoma e gjumit</div></div>
+                <div class="modal-word-card"><div class="german">das Badezimmer</div><div class="albanian">banjo</div></div>
+            </div>`
+    },
+    'cafe-a1': {
+        breadcrumb: '<span class="breadcrumb-item">A1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Kafene</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">☕</span><div class="modal-header-text"><h2>Në kafene - Im Café</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Was möchten Sie bestellen?</span><span class="albanian">Çfarë dëshironi?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ich möchte einen Kaffee, bitte.</span><span class="albanian">Do të doja një kafe.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Mit Milch?</span><span class="albanian">Me qumësht?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ja, bitte.</span><span class="albanian">Po, ju lutem.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Ich möchte...</strong> = Do të doja...</p><p><strong>mit</strong> = me | <strong>ohne</strong> = pa</p></div>`
+    },
+    // A2 Topics
+    'berufe-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Profesionet</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💼</span><div class="modal-header-text"><h2>Profesionet - Die Berufe</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Mashkullore → Femërore: shto -in</h4><p>der Arzt → die Ärzt<strong>in</strong></p></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">der Arzt / die Ärztin</div><div class="albanian">mjeku</div></div>
+                <div class="modal-word-card"><div class="german">der Lehrer / die Lehrerin</div><div class="albanian">mësuesi</div></div>
+                <div class="modal-word-card"><div class="german">der Ingenieur</div><div class="albanian">inxhinieri</div></div>
+                <div class="modal-word-card"><div class="german">der Koch / die Köchin</div><div class="albanian">kuzhinieri</div></div>
+                <div class="modal-word-card"><div class="german">der Kellner</div><div class="albanian">kamarieri</div></div>
+                <div class="modal-word-card"><div class="german">der Polizist</div><div class="albanian">polici</div></div>
+            </div>`
+    },
+    'verkehr-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Transporti</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🚗</span><div class="modal-header-text"><h2>Transporti - Verkehrsmittel</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Auto</div><div class="albanian">makina</div></div>
+                <div class="modal-word-card"><div class="german">der Zug</div><div class="albanian">treni</div></div>
+                <div class="modal-word-card"><div class="german">das Flugzeug</div><div class="albanian">aeroplani</div></div>
+                <div class="modal-word-card"><div class="german">das Fahrrad</div><div class="albanian">biçikleta</div></div>
+                <div class="modal-word-card"><div class="german">die U-Bahn</div><div class="albanian">metroja</div></div>
+                <div class="modal-word-card"><div class="german">der Bus</div><div class="albanian">autobusi</div></div>
+            </div>`
+    },
+    'falle-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Rasat</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📍</span><div class="modal-header-text"><h2>Rasat - Die Fälle</h2></div></div>
+            <div class="grammar-deep-section"><h3>📌 Nominativ (Kryefjala)</h3><p>Wer? Was? → <strong>Der Mann</strong> liest.</p></div>
+            <div class="grammar-deep-section"><h3>📌 Akkusativ (Kundrina e drejtë)</h3><p>Wen? Was? → Ich sehe <strong>den Mann</strong>.</p><p>⚠️ Vetëm der → den ndryshon!</p></div>
+            <div class="grammar-deep-section"><h3>📌 Dativ (Kundrina e zhdrejtë)</h3><p>Wem? → Ich gebe <strong>dem Mann</strong> das Buch.</p></div>`
+    },
+    'perfekt-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Perfekt</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">⏰</span><div class="modal-header-text"><h2>E kaluara - Das Perfekt</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 haben/sein + Partizip II</h4></div>
+            <div class="grammar-deep-section"><h3>Me "haben"</h3><ul class="grammar-examples-list">
+                <li><span class="de">Ich <strong>habe</strong> gelernt.</span><span class="al">Kam mësuar.</span></li>
+                <li><span class="de">Er <strong>hat</strong> gelesen.</span><span class="al">Ka lexuar.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>Me "sein" (lëvizje)</h3><ul class="grammar-examples-list">
+                <li><span class="de">Sie <strong>ist</strong> gefahren.</span><span class="al">Ka shkuar.</span></li>
+                <li><span class="de">Wir <strong>sind</strong> gekommen.</span><span class="al">Kemi ardhur.</span></li>
+            </ul></div>`
+    },
+    'modalverben-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Modalverben</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🔗</span><div class="modal-header-text"><h2>Foljet Modale</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">können</div><div class="albanian">mund</div><div class="example">"Ich kann Deutsch sprechen."</div></div>
+                <div class="modal-word-card"><div class="german">müssen</div><div class="albanian">duhet</div><div class="example">"Du musst lernen."</div></div>
+                <div class="modal-word-card"><div class="german">wollen</div><div class="albanian">dua</div><div class="example">"Er will Arzt werden."</div></div>
+                <div class="modal-word-card"><div class="german">sollen</div><div class="albanian">duhet (rekomandim)</div><div class="example">"Sie soll mehr schlafen."</div></div>
+                <div class="modal-word-card"><div class="german">dürfen</div><div class="albanian">lejohet</div><div class="example">"Hier darf man nicht rauchen."</div></div>
+                <div class="modal-word-card"><div class="german">möchten</div><div class="albanian">do të doja</div><div class="example">"Ich möchte einen Kaffee."</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📐 Struktura</h4><p>Modalverb + ... + <strong>Infinitiv</strong> (në fund)</p></div>`
+    },
+    'arzt-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Mjeku</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🏥</span><div class="modal-header-text"><h2>Tek mjeku - Beim Arzt</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Arzt:</span><span class="german">Was fehlt Ihnen?</span><span class="albanian">Çfarë keni?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Patient:</span><span class="german">Ich habe Kopfschmerzen.</span><span class="albanian">Kam dhimbje koke.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Arzt:</span><span class="german">Haben Sie auch Fieber?</span><span class="albanian">Keni temperaturë?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Patient:</span><span class="german">Ja, ein bisschen.</span><span class="albanian">Po, pak.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Fjalor</h4><p>Kopfschmerzen = dhimbje koke | Fieber = temperaturë | Husten = kollë</p></div>`
+    },
+    'bahnhof-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Stacion</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🚉</span><div class="modal-header-text"><h2>Në stacion - Am Bahnhof</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-b">Reisender:</span><span class="german">Wann fährt der Zug nach München?</span><span class="albanian">Kur niset treni për Mynih?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Beamter:</span><span class="german">Um 14:30 von Gleis 5.</span><span class="albanian">Në 14:30, binarët 5.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Reisender:</span><span class="german">Muss ich umsteigen?</span><span class="albanian">Duhet të ndërroj?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Beamter:</span><span class="german">Nein, es ist direkt.</span><span class="albanian">Jo, është direkt.</span></div>
+            </div>`
+    },
+    // B1 Topics
+    'konjunktiv-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Konjunktiv II</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🌀</span><div class="modal-header-text"><h2>Konjunktiv II</h2><p>Situata hipotetike</p></div></div>
+            <div class="grammar-deep-section"><h3>📌 Përdorimet</h3><ul class="grammar-examples-list">
+                <li><span class="de">Ich <strong>wäre</strong> gern reich.</span><span class="al">Do të doja të isha i pasur.</span></li>
+                <li><span class="de">Wenn ich Zeit <strong>hätte</strong>, <strong>würde</strong> ich reisen.</span><span class="al">Sikur të kisha kohë, do të udhëtoja.</span></li>
+                <li><span class="de"><strong>Könnten</strong> Sie mir helfen?</span><span class="al">A do të mundeshe të më ndihmoni?</span></li>
+            </ul></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">wäre</div><div class="albanian">do të isha</div></div>
+                <div class="modal-word-card"><div class="german">hätte</div><div class="albanian">do të kisha</div></div>
+                <div class="modal-word-card"><div class="german">könnte</div><div class="albanian">do të mundja</div></div>
+                <div class="modal-word-card"><div class="german">müsste</div><div class="albanian">do të duhej</div></div>
+            </div>`
+    },
+    'passiv-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Passiv</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🔄</span><div class="modal-header-text"><h2>Pësore - Das Passiv</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 werden + Partizip II</h4>
+                <p><strong>Aktiv:</strong> Der Koch kocht das Essen.</p>
+                <p><strong>Passiv:</strong> Das Essen wird gekocht.</p>
+            </div>
+            <div class="grammar-deep-section"><ul class="grammar-examples-list">
+                <li><span class="de">Das Haus <strong>wird</strong> gebaut.</span><span class="al">Shtëpia po ndërtohet.</span></li>
+                <li><span class="de">Die E-Mail <strong>wurde</strong> gesendet.</span><span class="al">E-maili u dërgua.</span></li>
+            </ul></div>`
+    },
+    'bewerbung-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Intervistë</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💼</span><div class="modal-header-text"><h2>Intervistë pune - Bewerbungsgespräch</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Chef:</span><span class="german">Erzählen Sie über sich.</span><span class="albanian">Tregoni për veten.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Bewerber:</span><span class="german">Ich bin 28 und habe Informatik studiert.</span><span class="albanian">Jam 28 vjeç, kam studiuar informatikë.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Chef:</span><span class="german">Was sind Ihre Stärken?</span><span class="albanian">Cilat janë pikat e forta?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Bewerber:</span><span class="german">Ich arbeite gut im Team.</span><span class="albanian">Punoj mirë në grup.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p>"Zu meinen Stärken gehört..." = Ndër pikat e mia të forta...</p></div>`
+    }
+};
+
+// Add remaining topics as empty placeholders
+['essen-a2','korper-a2','wetter-a2','kleidung-a2','prapositionen-a2','nebensatze-a2','komparativ-a2','restaurant-a2','telefon-a2',
+'meinung-b1','umwelt-b1','konnektoren-b1','arbeit-b1','medien-b1','redewendungen-b1','genitiv-b1','relativsatze-b1','indirekte-b1','plusquamperfekt-b1','diskussion-b1','beschwerde-b1','praesentation-b1'].forEach(id => {
+    if (!topicContent[id]) {
+        topicContent[id] = {
+            breadcrumb: '<span class="breadcrumb-item current">Duke u zhvilluar...</span>',
+            html: '<div class="modal-header"><span class="modal-header-icon">🚧</span><div class="modal-header-text"><h2>Duke u zhvilluar</h2><p>Kjo temë do të shtohet së shpejti!</p></div></div>'
+        };
+    }
+});
+
+// Quiz System
 const quizData = {
     a1: [
-        {
-            question: "Si thuhet 'Mirëmëngjes' në gjermanisht?",
-            options: ["Guten Abend", "Guten Morgen", "Guten Tag", "Gute Nacht"],
-            correct: 1,
-            explanation: "'Guten Morgen' do të thotë 'Mirëmëngjes'."
-        },
-        {
-            question: "Cila nyje përdoret për emrat femërorë?",
-            options: ["der", "die", "das", "den"],
-            correct: 1,
-            explanation: "'die' përdoret për emrat femërorë (p.sh. die Frau)."
-        },
-        {
-            question: "Si konjugohet folja 'sein' për 'ich'?",
-            options: ["bist", "ist", "bin", "sind"],
-            correct: 2,
-            explanation: "'ich bin' = 'unë jam'"
-        },
-        {
-            question: "Si thuhet numri 7 në gjermanisht?",
-            options: ["sechs", "sieben", "acht", "neun"],
-            correct: 1,
-            explanation: "'sieben' = shtatë"
-        },
-        {
-            question: "Çfarë do të thotë 'die Mutter'?",
-            options: ["babai", "motra", "nëna", "gjyshja"],
-            correct: 2,
-            explanation: "'die Mutter' = nëna"
-        },
-        {
-            question: "Si thuhet 'blu' në gjermanisht?",
-            options: ["rot", "grün", "blau", "gelb"],
-            correct: 2,
-            explanation: "'blau' = blu"
-        },
-        {
-            question: "Plotëso: 'Ich ___ Student.' (Unë jam student)",
-            options: ["bist", "ist", "bin", "sind"],
-            correct: 2,
-            explanation: "'Ich bin' = Unë jam"
-        },
-        {
-            question: "Si thuhet 'Mirupafshim' në gjermanisht?",
-            options: ["Hallo", "Tschüss", "Danke", "Bitte"],
-            correct: 1,
-            explanation: "'Tschüss' ose 'Auf Wiedersehen' = Mirupafshim"
-        },
-        {
-            question: "Cila nyje përdoret për 'Kind' (fëmijë)?",
-            options: ["der", "die", "das", "den"],
-            correct: 2,
-            explanation: "'das Kind' - Kind është asnjëanës."
-        },
-        {
-            question: "Si konjugohet 'haben' për 'du'?",
-            options: ["habe", "hast", "hat", "haben"],
-            correct: 1,
-            explanation: "'du hast' = ti ke"
-        }
+        { question: "Si thuhet 'Mirëmëngjes'?", options: ["Guten Abend", "Guten Morgen", "Guten Tag", "Gute Nacht"], correct: 1, explanation: "'Guten Morgen'" },
+        { question: "Nyja për femërorë?", options: ["der", "die", "das", "den"], correct: 1, explanation: "'die'" },
+        { question: "'sein' për 'ich'?", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'ich bin'" },
+        { question: "Numri 7?", options: ["sechs", "sieben", "acht", "neun"], correct: 1, explanation: "'sieben'" },
+        { question: "'die Mutter' =?", options: ["babai", "motra", "nëna", "gjyshja"], correct: 2, explanation: "nëna" },
+        { question: "'blu' =?", options: ["rot", "grün", "blau", "gelb"], correct: 2, explanation: "'blau'" },
+        { question: "'Ich ___ Student.'", options: ["bist", "ist", "bin", "sind"], correct: 2, explanation: "'bin'" },
+        { question: "'Mirupafshim' =?", options: ["Hallo", "Tschüss", "Danke", "Bitte"], correct: 1, explanation: "'Tschüss'" },
+        { question: "Nyja për 'Kind'?", options: ["der", "die", "das", "den"], correct: 2, explanation: "'das'" },
+        { question: "'haben' për 'du'?", options: ["habe", "hast", "hat", "haben"], correct: 1, explanation: "'hast'" }
     ],
     a2: [
-        {
-            question: "Cila është forma e saktë e Akkusativ për 'der Mann'?",
-            options: ["der Mann", "den Mann", "dem Mann", "des Mannes"],
-            correct: 1,
-            explanation: "Në Akkusativ, 'der' bëhet 'den' për mashkulloret."
-        },
-        {
-            question: "Plotëso me Perfekt: 'Ich ___ Deutsch ___.' (Mësova gjermanisht)",
-            options: ["bin gelernt", "habe gelernt", "habe gelearnt", "bin gelarnt"],
-            correct: 1,
-            explanation: "'lernen' formon Perfekt me 'haben': habe gelernt"
-        },
-        {
-            question: "Cila folje modale shpreh 'mund'?",
-            options: ["müssen", "können", "sollen", "wollen"],
-            correct: 1,
-            explanation: "'können' = mund (aftësi)"
-        },
-        {
-            question: "Si thuhet 'treni' në gjermanisht?",
-            options: ["das Auto", "der Bus", "der Zug", "das Flugzeug"],
-            correct: 2,
-            explanation: "'der Zug' = treni"
-        },
-        {
-            question: "Plotëso: 'Ich gebe ___ Frau das Buch.' (Dativ)",
-            options: ["die", "der", "den", "dem"],
-            correct: 1,
-            explanation: "Në Dativ, 'die' (femërore) bëhet 'der'."
-        },
-        {
-            question: "Si formohet Perfekt i 'fahren'?",
-            options: ["habe gefahrt", "bin gefahren", "habe gefahren", "bin gefahrt"],
-            correct: 1,
-            explanation: "'fahren' (lëvizje) formon Perfekt me 'sein': bin gefahren"
-        },
-        {
-            question: "Çfarë do të thotë 'müssen'?",
-            options: ["mund", "dua", "duhet", "lejohet"],
-            correct: 2,
-            explanation: "'müssen' = duhet (detyrim)"
-        },
-        {
-            question: "Si thuhet 'mëngjesi' në gjermanisht?",
-            options: ["das Mittagessen", "das Abendessen", "das Frühstück", "die Mahlzeit"],
-            correct: 2,
-            explanation: "'das Frühstück' = mëngjesi"
-        },
-        {
-            question: "Cila fjali është e saktë?",
-            options: ["Ich möchte ein Kaffee.", "Ich möchte einen Kaffee.", "Ich möchte einer Kaffee.", "Ich möchte einem Kaffee."],
-            correct: 1,
-            explanation: "'Kaffee' është mashkullor, në Akkusativ: 'einen Kaffee'"
-        },
-        {
-            question: "Si thuhet 'mjeku' në gjermanisht?",
-            options: ["der Lehrer", "der Arzt", "der Kellner", "der Koch"],
-            correct: 1,
-            explanation: "'der Arzt' = mjeku"
-        }
+        { question: "Akkusativ 'der Mann'?", options: ["der", "den", "dem", "des"], correct: 1, explanation: "'den'" },
+        { question: "'Ich ___ Deutsch ___.'", options: ["bin gelernt", "habe gelernt", "habe gelearnt", "bin gelarnt"], correct: 1, explanation: "'habe gelernt'" },
+        { question: "'mund' =?", options: ["müssen", "können", "sollen", "wollen"], correct: 1, explanation: "'können'" },
+        { question: "'treni' =?", options: ["Auto", "Bus", "Zug", "Flugzeug"], correct: 2, explanation: "'der Zug'" },
+        { question: "'Ich gebe ___ Frau...' (Dat)", options: ["die", "der", "den", "dem"], correct: 1, explanation: "'der'" },
+        { question: "Perfekt 'fahren'?", options: ["habe gefahrt", "bin gefahren", "habe gefahren", "bin gefahrt"], correct: 1, explanation: "'bin gefahren'" },
+        { question: "'müssen' =?", options: ["mund", "dua", "duhet", "lejohet"], correct: 2, explanation: "'duhet'" },
+        { question: "'mëngjesi' =?", options: ["Mittagessen", "Abendessen", "Frühstück", "Mahlzeit"], correct: 2, explanation: "'Frühstück'" },
+        { question: "Saktë?", options: ["ein Kaffee", "einen Kaffee", "einer Kaffee", "einem Kaffee"], correct: 1, explanation: "'einen Kaffee'" },
+        { question: "'mjeku' =?", options: ["Lehrer", "Arzt", "Kellner", "Koch"], correct: 1, explanation: "'der Arzt'" }
     ],
     b1: [
-        {
-            question: "Cila është forma Genitiv për 'der Mann'?",
-            options: ["dem Mann", "den Mann", "des Mannes", "der Männer"],
-            correct: 2,
-            explanation: "Në Genitiv mashkullor: 'des' + emri + '-(e)s'"
-        },
-        {
-            question: "Si formohet Passiv Präsens?",
-            options: ["haben + Partizip II", "werden + Partizip II", "sein + Partizip II", "werden + Infinitiv"],
-            correct: 1,
-            explanation: "Passiv = werden + Partizip II"
-        },
-        {
-            question: "Cila është forma Konjunktiv II e 'sein' për 'ich'?",
-            options: ["bin", "sei", "wäre", "würde sein"],
-            correct: 2,
-            explanation: "'ich wäre' = do të isha (Konjunktiv II)"
-        },
-        {
-            question: "Plotëso: 'Der Mann, ___ dort steht, ist mein Lehrer.'",
-            options: ["das", "die", "der", "den"],
-            correct: 2,
-            explanation: "Përemri relativ për mashkullore Nominativ: 'der'"
-        },
-        {
-            question: "Cili konnektor shpreh shkak?",
-            options: ["obwohl", "weil", "wenn", "damit"],
-            correct: 1,
-            explanation: "'weil' = sepse (shkak)"
-        },
-        {
-            question: "Plotëso: 'Wenn ich Zeit ___, ___ ich reisen.'",
-            options: ["habe, werde", "hätte, würde", "hatte, würde", "habe, würde"],
-            correct: 1,
-            explanation: "Konjunktiv II: hätte... würde (situatë hipotetike)"
-        },
-        {
-            question: "Si thuhet 'ndryshimet klimatike' në gjermanisht?",
-            options: ["die Umwelt", "der Klimawandel", "die Nachhaltigkeit", "die Arbeitslosigkeit"],
-            correct: 1,
-            explanation: "'der Klimawandel' = ndryshimet klimatike"
-        },
-        {
-            question: "Cila fjali është Passiv?",
-            options: ["Ich koche das Essen.", "Das Essen wird gekocht.", "Ich habe gekocht.", "Das Essen ist gut."],
-            correct: 1,
-            explanation: "'wird gekocht' = gatuhet (Passiv)"
-        },
-        {
-            question: "Plotëso: 'Meiner Meinung ___ ist das richtig.'",
-            options: ["zu", "für", "nach", "von"],
-            correct: 2,
-            explanation: "'Meiner Meinung nach' = sipas mendimit tim"
-        },
-        {
-            question: "Cila është forma Konjunktiv II e 'können' për 'Sie'?",
-            options: ["können", "konnten", "könnten", "gekonnt"],
-            correct: 2,
-            explanation: "'Sie könnten' = Ju do të mundeshe (Konjunktiv II)"
-        }
+        { question: "Genitiv 'der Mann'?", options: ["dem", "den", "des Mannes", "der"], correct: 2, explanation: "'des Mannes'" },
+        { question: "Passiv =?", options: ["haben+PII", "werden+PII", "sein+PII", "werden+Inf"], correct: 1, explanation: "'werden+PII'" },
+        { question: "Konj.II 'sein' ich?", options: ["bin", "sei", "wäre", "würde"], correct: 2, explanation: "'wäre'" },
+        { question: "'Der Mann, ___ dort steht'", options: ["das", "die", "der", "den"], correct: 2, explanation: "'der'" },
+        { question: "Shkak =?", options: ["obwohl", "weil", "wenn", "damit"], correct: 1, explanation: "'weil'" },
+        { question: "'Wenn ich Zeit ___'", options: ["habe", "hätte", "hatte", "haben"], correct: 1, explanation: "'hätte'" },
+        { question: "'Klimawandel' =?", options: ["mjedisi", "ndryshime klimatike", "qëndrueshmëri", "papunësi"], correct: 1, explanation: "ndryshime klimatike" },
+        { question: "Cila Passiv?", options: ["Ich koche", "Essen wird gekocht", "Ich habe gekocht", "Essen ist gut"], correct: 1, explanation: "'wird gekocht'" },
+        { question: "'Meiner Meinung ___'", options: ["zu", "für", "nach", "von"], correct: 2, explanation: "'nach'" },
+        { question: "Konj.II 'können' Sie?", options: ["können", "konnten", "könnten", "gekonnt"], correct: 2, explanation: "'könnten'" }
     ]
 };
 
-const quizState = {
-    a1: { currentQuestion: 0, score: 0, answered: false },
-    a2: { currentQuestion: 0, score: 0, answered: false },
-    b1: { currentQuestion: 0, score: 0, answered: false }
-};
+const quizState = { a1: { currentQuestion: 0, score: 0, answered: false }, a2: { currentQuestion: 0, score: 0, answered: false }, b1: { currentQuestion: 0, score: 0, answered: false } };
 
 function initializeQuizzes() {
     ['a1', 'a2', 'b1'].forEach(level => {
         loadQuestion(level);
-        setupQuizControls(level);
+        document.getElementById(`${level}-next-btn`).addEventListener('click', () => { quizState[level].currentQuestion++; loadQuestion(level); });
+        document.getElementById(`${level}-restart-btn`).addEventListener('click', () => { quizState[level] = { currentQuestion: 0, score: 0, answered: false }; document.getElementById(`${level}-restart-btn`).style.display = 'none'; loadQuestion(level); });
     });
 }
 
 function loadQuestion(level) {
     const state = quizState[level];
-    const questions = quizData[level];
-
-    if (state.currentQuestion >= questions.length) {
-        showResults(level);
-        return;
-    }
-
-    const question = questions[state.currentQuestion];
-
-    // Update UI
-    document.getElementById(`${level}-question`).textContent = question.question;
+    if (state.currentQuestion >= quizData[level].length) { showResults(level); return; }
+    const q = quizData[level][state.currentQuestion];
+    document.getElementById(`${level}-question`).textContent = q.question;
     document.getElementById(`${level}-question-num`).textContent = state.currentQuestion + 1;
     document.getElementById(`${level}-score`).textContent = state.score;
-
-    // Create options
-    const optionsContainer = document.getElementById(`${level}-options`);
-    optionsContainer.innerHTML = '';
-
-    question.options.forEach((option, index) => {
-        const optionBtn = document.createElement('button');
-        optionBtn.className = 'quiz-option';
-        optionBtn.textContent = option;
-        optionBtn.addEventListener('click', () => handleAnswer(level, index));
-        optionsContainer.appendChild(optionBtn);
+    const opts = document.getElementById(`${level}-options`);
+    opts.innerHTML = '';
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => handleAnswer(level, i));
+        opts.appendChild(btn);
     });
-
-    // Reset state
     state.answered = false;
     document.getElementById(`${level}-feedback`).classList.remove('show', 'correct', 'incorrect');
     document.getElementById(`${level}-next-btn`).style.display = 'none';
@@ -323,215 +544,37 @@ function loadQuestion(level) {
     document.querySelector(`#quiz-${level}-game .quiz-question-container`).style.display = 'block';
 }
 
-function handleAnswer(level, selectedIndex) {
+function handleAnswer(level, idx) {
     const state = quizState[level];
     if (state.answered) return;
-
     state.answered = true;
-    const question = quizData[level][state.currentQuestion];
-    const options = document.querySelectorAll(`#${level}-options .quiz-option`);
-    const feedback = document.getElementById(`${level}-feedback`);
-
-    // Disable all options
-    options.forEach(opt => opt.classList.add('disabled'));
-
-    // Mark correct/incorrect
-    options[question.correct].classList.add('correct');
-
-    if (selectedIndex === question.correct) {
-        state.score++;
-        document.getElementById(`${level}-score`).textContent = state.score;
-        feedback.textContent = `✅ Saktë! ${question.explanation}`;
-        feedback.classList.add('correct');
-    } else {
-        options[selectedIndex].classList.add('incorrect');
-        feedback.textContent = `❌ Gabim! ${question.explanation}`;
-        feedback.classList.add('incorrect');
-    }
-
-    feedback.classList.add('show');
+    const q = quizData[level][state.currentQuestion];
+    const opts = document.querySelectorAll(`#${level}-options .quiz-option`);
+    opts.forEach(o => o.classList.add('disabled'));
+    opts[q.correct].classList.add('correct');
+    const fb = document.getElementById(`${level}-feedback`);
+    if (idx === q.correct) { state.score++; document.getElementById(`${level}-score`).textContent = state.score; fb.textContent = `✅ Saktë! ${q.explanation}`; fb.classList.add('correct'); }
+    else { opts[idx].classList.add('incorrect'); fb.textContent = `❌ Gabim! ${q.explanation}`; fb.classList.add('incorrect'); }
+    fb.classList.add('show');
     document.getElementById(`${level}-next-btn`).style.display = 'inline-block';
-
-    // Update progress
     updateProgress();
-}
-
-function setupQuizControls(level) {
-    const nextBtn = document.getElementById(`${level}-next-btn`);
-    const restartBtn = document.getElementById(`${level}-restart-btn`);
-
-    nextBtn.addEventListener('click', () => {
-        quizState[level].currentQuestion++;
-        loadQuestion(level);
-    });
-
-    restartBtn.addEventListener('click', () => {
-        quizState[level].currentQuestion = 0;
-        quizState[level].score = 0;
-        quizState[level].answered = false;
-        document.getElementById(`${level}-restart-btn`).style.display = 'none';
-        loadQuestion(level);
-    });
 }
 
 function showResults(level) {
     const state = quizState[level];
-    const questions = quizData[level];
-    const percentage = Math.round((state.score / questions.length) * 100);
-
-    // Hide question container, show results
+    const pct = Math.round((state.score / quizData[level].length) * 100);
     document.querySelector(`#quiz-${level}-game .quiz-question-container`).style.display = 'none';
     document.getElementById(`${level}-feedback`).classList.remove('show');
     document.getElementById(`${level}-next-btn`).style.display = 'none';
-
-    const results = document.getElementById(`${level}-results`);
-    results.style.display = 'block';
-
-    document.getElementById(`${level}-final-score`).textContent = percentage;
-
-    const message = document.getElementById(`${level}-results-message`);
-    if (percentage >= 80) {
-        message.textContent = '🎉 Shkëlqyeshëm! Je gati për nivelin tjetër!';
-    } else if (percentage >= 60) {
-        message.textContent = '👍 Mirë! Vazhdo të praktikosh!';
-    } else if (percentage >= 40) {
-        message.textContent = '📚 Duhet më shumë praktikë. Mos u dorëzo!';
-    } else {
-        message.textContent = '💪 Kthehu dhe mëso përsëri materialet!';
-    }
-
+    document.getElementById(`${level}-results`).style.display = 'block';
+    document.getElementById(`${level}-final-score`).textContent = pct;
+    document.getElementById(`${level}-results-message`).textContent = pct >= 80 ? '🎉 Shkëlqyeshëm!' : pct >= 60 ? '👍 Mirë!' : pct >= 40 ? '📚 Praktiko!' : '💪 Mëso përsëri!';
     document.getElementById(`${level}-restart-btn`).style.display = 'inline-block';
 }
 
-// ===== Progress Tracking =====
 function updateProgress() {
     ['a1', 'a2', 'b1'].forEach(level => {
-        const state = quizState[level];
-        const questions = quizData[level];
-        const progress = (state.currentQuestion / questions.length) * 100;
-
-        const progressBar = document.getElementById(`${level}-progress`);
-        if (progressBar) {
-            progressBar.style.width = `${progress}%`;
-        }
+        const bar = document.getElementById(`${level}-progress`);
+        if (bar) bar.style.width = `${(quizState[level].currentQuestion / quizData[level].length) * 100}%`;
     });
 }
-
-// ===== Utility Functions =====
-
-// Shuffle array (Fisher-Yates algorithm)
-function shuffleArray(array) {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-}
-
-// Save progress to localStorage
-function saveProgress() {
-    const progress = {
-        a1: quizState.a1,
-        a2: quizState.a2,
-        b1: quizState.b1
-    };
-    localStorage.setItem('mesoGjermanisht_progress', JSON.stringify(progress));
-}
-
-// Load progress from localStorage
-function loadProgress() {
-    const saved = localStorage.getItem('mesoGjermanisht_progress');
-    if (saved) {
-        const progress = JSON.parse(saved);
-        Object.assign(quizState, progress);
-    }
-}
-
-// ===== Word Card Interactions =====
-document.querySelectorAll('.word-card').forEach(card => {
-    card.addEventListener('click', function() {
-        this.classList.toggle('flipped');
-    });
-});
-
-// ===== Smooth Scroll for Internal Links =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// ===== Keyboard Navigation =====
-document.addEventListener('keydown', function(e) {
-    // Check if quiz is active
-    const activeLevel = document.querySelector('.level-content.active');
-    if (!activeLevel) return;
-
-    const level = activeLevel.id;
-    const state = quizState[level];
-
-    // Number keys 1-4 for quiz answers
-    if (e.key >= '1' && e.key <= '4' && !state.answered) {
-        const index = parseInt(e.key) - 1;
-        const options = document.querySelectorAll(`#${level}-options .quiz-option`);
-        if (options[index]) {
-            handleAnswer(level, index);
-        }
-    }
-
-    // Enter or Space for next question
-    if ((e.key === 'Enter' || e.key === ' ') && state.answered) {
-        const nextBtn = document.getElementById(`${level}-next-btn`);
-        if (nextBtn.style.display !== 'none') {
-            quizState[level].currentQuestion++;
-            loadQuestion(level);
-        }
-    }
-
-    // Arrow keys for tab navigation
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-        const tabs = document.querySelectorAll('.tab-btn');
-        const activeTab = document.querySelector('.tab-btn.active');
-        const currentIndex = Array.from(tabs).indexOf(activeTab);
-
-        let newIndex;
-        if (e.key === 'ArrowLeft') {
-            newIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
-        } else {
-            newIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
-        }
-
-        tabs[newIndex].click();
-    }
-});
-
-// ===== Animation on Scroll =====
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-        }
-    });
-}, observerOptions);
-
-document.querySelectorAll('.word-card, .grammar-topic, .example-category').forEach(el => {
-    observer.observe(el);
-});
-
-// ===== Console Welcome Message =====
-console.log('%c🇩🇪 Mëso Gjermanisht 🇦🇱', 'font-size: 24px; font-weight: bold; color: #667eea;');
-console.log('%cPlatforma për të mësuar gjermanisht!', 'font-size: 14px; color: #a0aec0;');
-console.log('%cKrijuar me dashuri për komunitetin shqiptar.', 'font-size: 12px; color: #4fd1c5;');

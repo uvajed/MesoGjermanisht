@@ -15,6 +15,15 @@
         <div class="bg-circle bg-circle-3"></div>
     </div>
 
+    <!-- Deep Dive Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-breadcrumb" id="modal-breadcrumb"></div>
+            <div class="modal-content" id="modal-content"></div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="logo">
@@ -67,528 +76,185 @@
             <!-- A1 Vocabulary -->
             <div class="section-content active" id="vocabulary-a1">
                 <h3>📚 Fjalori Bazë - Grundwortschatz</h3>
+                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
 
-                <div class="vocabulary-category">
-                    <h4>👋 Përshëndetjet - Begrüßungen</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">Hallo</div>
-                            <div class="word-albanian">Përshëndetje</div>
-                            <div class="word-pronunciation">🔊 /ˈhalo/</div>
-                            <div class="word-example">"Hallo, wie geht's?" - Përshëndetje, si je?</div>
+                <!-- Topic Cards Grid -->
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card" data-topic="greetings-a1">
+                        <div class="topic-icon">👋</div>
+                        <div class="topic-info">
+                            <h4>Përshëndetjet</h4>
+                            <p class="topic-german">Begrüßungen</p>
+                            <span class="topic-count">6 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">Guten Morgen</div>
-                            <div class="word-albanian">Mirëmëngjes</div>
-                            <div class="word-pronunciation">🔊 /ˈɡuːtn̩ ˈmɔʁɡn̩/</div>
-                            <div class="word-example">"Guten Morgen, Herr Müller!" - Mirëmëngjes, zoti Müller!</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">Guten Tag</div>
-                            <div class="word-albanian">Mirëdita</div>
-                            <div class="word-pronunciation">🔊 /ˈɡuːtn̩ taːk/</div>
-                            <div class="word-example">"Guten Tag! Kann ich Ihnen helfen?" - Mirëdita! A mund t'ju ndihmoj?</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">Guten Abend</div>
-                            <div class="word-albanian">Mirëmbrëma</div>
-                            <div class="word-pronunciation">🔊 /ˈɡuːtn̩ ˈaːbn̩t/</div>
-                            <div class="word-example">"Guten Abend zusammen!" - Mirëmbrëma të gjithëve!</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">Auf Wiedersehen</div>
-                            <div class="word-albanian">Mirupafshim</div>
-                            <div class="word-pronunciation">🔊 /aʊ̯f ˈviːdɐˌzeːən/</div>
-                            <div class="word-example">"Auf Wiedersehen und bis bald!" - Mirupafshim dhe shihemi së shpejti!</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">Tschüss</div>
-                            <div class="word-albanian">Çao / Mirupafshim (joformal)</div>
-                            <div class="word-pronunciation">🔊 /tʃʏs/</div>
-                            <div class="word-example">"Tschüss, bis morgen!" - Çao, shihemi nesër!</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>🔢 Numrat - Zahlen (0-20)</h4>
-                    <div class="word-cards numbers">
-                        <div class="word-card small">
-                            <div class="word-german">null</div>
-                            <div class="word-albanian">zero</div>
+                    <a href="#" class="topic-card" data-topic="numbers-a1">
+                        <div class="topic-icon">🔢</div>
+                        <div class="topic-info">
+                            <h4>Numrat 0-20</h4>
+                            <p class="topic-german">Zahlen</p>
+                            <span class="topic-count">21 fjalë</span>
                         </div>
-                        <div class="word-card small">
-                            <div class="word-german">eins</div>
-                            <div class="word-albanian">një</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">zwei</div>
-                            <div class="word-albanian">dy</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">drei</div>
-                            <div class="word-albanian">tre</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">vier</div>
-                            <div class="word-albanian">katër</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">fünf</div>
-                            <div class="word-albanian">pesë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">sechs</div>
-                            <div class="word-albanian">gjashtë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">sieben</div>
-                            <div class="word-albanian">shtatë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">acht</div>
-                            <div class="word-albanian">tetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">neun</div>
-                            <div class="word-albanian">nëntë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">zehn</div>
-                            <div class="word-albanian">dhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">elf</div>
-                            <div class="word-albanian">njëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">zwölf</div>
-                            <div class="word-albanian">dymbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">dreizehn</div>
-                            <div class="word-albanian">trembëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">vierzehn</div>
-                            <div class="word-albanian">katërmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">fünfzehn</div>
-                            <div class="word-albanian">pesëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">sechzehn</div>
-                            <div class="word-albanian">gjashtëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">siebzehn</div>
-                            <div class="word-albanian">shtatëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">achtzehn</div>
-                            <div class="word-albanian">tetëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">neunzehn</div>
-                            <div class="word-albanian">nëntëmbëdhjetë</div>
-                        </div>
-                        <div class="word-card small">
-                            <div class="word-german">zwanzig</div>
-                            <div class="word-albanian">njëzet</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>👨‍👩‍👧‍👦 Familja - Die Familie</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">die Mutter</div>
-                            <div class="word-albanian">nëna</div>
-                            <div class="word-pronunciation">🔊 /ˈmʊtɐ/</div>
-                            <div class="word-example">"Meine Mutter kocht sehr gut." - Nëna ime gatuan shumë mirë.</div>
+                    <a href="#" class="topic-card" data-topic="family-a1">
+                        <div class="topic-icon">👨‍👩‍👧‍👦</div>
+                        <div class="topic-info">
+                            <h4>Familja</h4>
+                            <p class="topic-german">Die Familie</p>
+                            <span class="topic-count">6 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">der Vater</div>
-                            <div class="word-albanian">babai</div>
-                            <div class="word-pronunciation">🔊 /ˈfaːtɐ/</div>
-                            <div class="word-example">"Mein Vater arbeitet viel." - Babai im punon shumë.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Bruder</div>
-                            <div class="word-albanian">vëllai</div>
-                            <div class="word-pronunciation">🔊 /ˈbʁuːdɐ/</div>
-                            <div class="word-example">"Ich habe einen Bruder." - Unë kam një vëlla.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die Schwester</div>
-                            <div class="word-albanian">motra</div>
-                            <div class="word-pronunciation">🔊 /ˈʃvɛstɐ/</div>
-                            <div class="word-example">"Meine Schwester ist älter als ich." - Motra ime është më e madhe se unë.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die Großmutter / Oma</div>
-                            <div class="word-albanian">gjyshja</div>
-                            <div class="word-pronunciation">🔊 /ˈɡʁoːsmʊtɐ/</div>
-                            <div class="word-example">"Die Oma erzählt Geschichten." - Gjyshja tregon histori.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Großvater / Opa</div>
-                            <div class="word-albanian">gjyshi</div>
-                            <div class="word-pronunciation">🔊 /ˈɡʁoːsfaːtɐ/</div>
-                            <div class="word-example">"Der Opa liest die Zeitung." - Gjyshi lexon gazetën.</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>🎨 Ngjyrat - Die Farben</h4>
-                    <div class="word-cards colors">
-                        <div class="word-card color-card" style="--card-color: #e74c3c;">
-                            <div class="word-german">rot</div>
-                            <div class="word-albanian">i kuq</div>
+                    <a href="#" class="topic-card" data-topic="colors-a1">
+                        <div class="topic-icon">🎨</div>
+                        <div class="topic-info">
+                            <h4>Ngjyrat</h4>
+                            <p class="topic-german">Die Farben</p>
+                            <span class="topic-count">8 fjalë</span>
                         </div>
-                        <div class="word-card color-card" style="--card-color: #3498db;">
-                            <div class="word-german">blau</div>
-                            <div class="word-albanian">blu</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="days-a1">
+                        <div class="topic-icon">📅</div>
+                        <div class="topic-info">
+                            <h4>Ditët e Javës</h4>
+                            <p class="topic-german">Die Wochentage</p>
+                            <span class="topic-count">7 fjalë</span>
                         </div>
-                        <div class="word-card color-card" style="--card-color: #2ecc71;">
-                            <div class="word-german">grün</div>
-                            <div class="word-albanian">jeshil</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="food-a1">
+                        <div class="topic-icon">🍎</div>
+                        <div class="topic-info">
+                            <h4>Ushqimi Bazë</h4>
+                            <p class="topic-german">Grundnahrungsmittel</p>
+                            <span class="topic-count">10 fjalë</span>
                         </div>
-                        <div class="word-card color-card" style="--card-color: #f1c40f;">
-                            <div class="word-german">gelb</div>
-                            <div class="word-albanian">verdhë</div>
-                        </div>
-                        <div class="word-card color-card" style="--card-color: #e67e22;">
-                            <div class="word-german">orange</div>
-                            <div class="word-albanian">portokalli</div>
-                        </div>
-                        <div class="word-card color-card" style="--card-color: #9b59b6;">
-                            <div class="word-german">lila</div>
-                            <div class="word-albanian">vjollcë</div>
-                        </div>
-                        <div class="word-card color-card" style="--card-color: #1a1a1a;">
-                            <div class="word-german">schwarz</div>
-                            <div class="word-albanian">i zi</div>
-                        </div>
-                        <div class="word-card color-card" style="--card-color: #ecf0f1; --text-color: #333;">
-                            <div class="word-german">weiß</div>
-                            <div class="word-albanian">i bardhë</div>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- A1 Grammar -->
             <div class="section-content" id="grammar-a1">
                 <h3>📖 Gramatika A1 - Grammatik</h3>
+                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
 
-                <div class="grammar-topic">
-                    <h4>🔤 Nyjet - Artikel (der, die, das)</h4>
-                    <div class="grammar-explanation">
-                        <p>Në gjermanisht, çdo emër ka një gjini: <strong>mashkullore (der)</strong>, <strong>femërore (die)</strong>, ose <strong>asnjëanëse (das)</strong>.</p>
-                        <p>Kjo është ndryshe nga shqipja ku kemi vetëm mashkullore dhe femërore!</p>
-                    </div>
-                    <div class="grammar-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Gjinia</th>
-                                    <th>Nyja</th>
-                                    <th>Shembull</th>
-                                    <th>Shqip</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mashkullore</td>
-                                    <td class="highlight-blue">der</td>
-                                    <td>der Mann</td>
-                                    <td>burri</td>
-                                </tr>
-                                <tr>
-                                    <td>Femërore</td>
-                                    <td class="highlight-pink">die</td>
-                                    <td>die Frau</td>
-                                    <td>gruaja</td>
-                                </tr>
-                                <tr>
-                                    <td>Asnjëanëse</td>
-                                    <td class="highlight-green">das</td>
-                                    <td>das Kind</td>
-                                    <td>fëmija</td>
-                                </tr>
-                                <tr>
-                                    <td>Shumës (të gjitha)</td>
-                                    <td class="highlight-purple">die</td>
-                                    <td>die Kinder</td>
-                                    <td>fëmijët</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tip-box">
-                        <span class="tip-icon">💡</span>
-                        <p><strong>Këshillë:</strong> Mësoni gjithmonë emrin me nyjen! Mos thoni "Tisch" por "der Tisch".</p>
-                    </div>
-                </div>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card grammar-card" data-topic="artikel-a1">
+                        <div class="topic-icon">🔤</div>
+                        <div class="topic-info">
+                            <h4>Nyjet</h4>
+                            <p class="topic-german">Artikel (der, die, das)</p>
+                            <span class="topic-count">Themë kryesore</span>
+                        </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>👤 Përemrat Vetorë - Personalpronomen</h4>
-                    <div class="grammar-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Gjermanisht</th>
-                                    <th>Shqip</th>
-                                    <th>Shembull</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="highlight-blue">ich</td>
-                                    <td>unë</td>
-                                    <td>Ich bin Student. - Unë jam student.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-blue">du</td>
-                                    <td>ti</td>
-                                    <td>Du bist nett. - Ti je i mirë.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-blue">er</td>
-                                    <td>ai</td>
-                                    <td>Er arbeitet viel. - Ai punon shumë.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-pink">sie</td>
-                                    <td>ajo</td>
-                                    <td>Sie ist Ärztin. - Ajo është doktoreshë.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-green">es</td>
-                                    <td>ajo (për sende)</td>
-                                    <td>Es ist kalt. - Është ftohtë.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-purple">wir</td>
-                                    <td>ne</td>
-                                    <td>Wir lernen Deutsch. - Ne mësojmë gjermanisht.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-purple">ihr</td>
-                                    <td>ju (joformal)</td>
-                                    <td>Ihr seid Freunde. - Ju jeni miq.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-purple">sie</td>
-                                    <td>ata/ato</td>
-                                    <td>Sie kommen aus Albanien. - Ata vijnë nga Shqipëria.</td>
-                                </tr>
-                                <tr>
-                                    <td class="highlight-gold">Sie</td>
-                                    <td>Ju (formal)</td>
-                                    <td>Sie sind sehr freundlich. - Ju jeni shumë i mirë.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                    <a href="#" class="topic-card grammar-card" data-topic="pronomen-a1">
+                        <div class="topic-icon">👤</div>
+                        <div class="topic-info">
+                            <h4>Përemrat Vetorë</h4>
+                            <p class="topic-german">Personalpronomen</p>
+                            <span class="topic-count">9 përemra</span>
+                        </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>🏃 Folja "sein" (të jesh) - Konjugimi</h4>
-                    <div class="grammar-explanation">
-                        <p>Folja "sein" është folja më e rëndësishme në gjermanisht. Është e parregullt!</p>
-                    </div>
-                    <div class="conjugation-box">
-                        <div class="conjugation-item">
-                            <span class="pronoun">ich</span>
-                            <span class="verb">bin</span>
-                            <span class="translation">unë jam</span>
+                    <a href="#" class="topic-card grammar-card" data-topic="sein-a1">
+                        <div class="topic-icon">🏃</div>
+                        <div class="topic-info">
+                            <h4>Folja "sein"</h4>
+                            <p class="topic-german">Das Verb "sein"</p>
+                            <span class="topic-count">Konjugim</span>
                         </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">du</span>
-                            <span class="verb">bist</span>
-                            <span class="translation">ti je</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">er/sie/es</span>
-                            <span class="verb">ist</span>
-                            <span class="translation">ai/ajo është</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">wir</span>
-                            <span class="verb">sind</span>
-                            <span class="translation">ne jemi</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">ihr</span>
-                            <span class="verb">seid</span>
-                            <span class="translation">ju jeni</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">sie/Sie</span>
-                            <span class="verb">sind</span>
-                            <span class="translation">ata janë / Ju jeni</span>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>📝 Folja "haben" (të kesh) - Konjugimi</h4>
-                    <div class="conjugation-box">
-                        <div class="conjugation-item">
-                            <span class="pronoun">ich</span>
-                            <span class="verb">habe</span>
-                            <span class="translation">unë kam</span>
+                    <a href="#" class="topic-card grammar-card" data-topic="haben-a1">
+                        <div class="topic-icon">📝</div>
+                        <div class="topic-info">
+                            <h4>Folja "haben"</h4>
+                            <p class="topic-german">Das Verb "haben"</p>
+                            <span class="topic-count">Konjugim</span>
                         </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">du</span>
-                            <span class="verb">hast</span>
-                            <span class="translation">ti ke</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="verben-a1">
+                        <div class="topic-icon">⚡</div>
+                        <div class="topic-info">
+                            <h4>Foljet e Rregullta</h4>
+                            <p class="topic-german">Regelmäßige Verben</p>
+                            <span class="topic-count">Konjugim bazë</span>
                         </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">er/sie/es</span>
-                            <span class="verb">hat</span>
-                            <span class="translation">ai/ajo ka</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="satzbau-a1">
+                        <div class="topic-icon">🧱</div>
+                        <div class="topic-info">
+                            <h4>Rendi i Fjalëve</h4>
+                            <p class="topic-german">Satzbau</p>
+                            <span class="topic-count">Strukturë fjalie</span>
                         </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">wir</span>
-                            <span class="verb">haben</span>
-                            <span class="translation">ne kemi</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">ihr</span>
-                            <span class="verb">habt</span>
-                            <span class="translation">ju keni</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">sie/Sie</span>
-                            <span class="verb">haben</span>
-                            <span class="translation">ata kanë / Ju keni</span>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- A1 Examples -->
             <div class="section-content" id="examples-a1">
                 <h3>💡 Shembuj Praktikë - Praktische Beispiele</h3>
+                <p class="section-intro">Kliko për të parë dialogë dhe situata të jetës së përditshme.</p>
 
-                <div class="example-category">
-                    <h4>🤝 Të prezantohesh - Sich vorstellen</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Anna:</span>
-                            <span class="german">Hallo! Ich heiße Anna. Wie heißt du?</span>
-                            <span class="albanian">Përshëndetje! Unë quhem Anna. Si quhesh ti?</span>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card example-card" data-topic="vorstellen-a1">
+                        <div class="topic-icon">🤝</div>
+                        <div class="topic-info">
+                            <h4>Të prezantohesh</h4>
+                            <p class="topic-german">Sich vorstellen</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Besnik:</span>
-                            <span class="german">Hallo Anna! Ich bin Besnik. Freut mich!</span>
-                            <span class="albanian">Përshëndetje Anna! Unë jam Besnik. Gëzohem!</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Anna:</span>
-                            <span class="german">Woher kommst du?</span>
-                            <span class="albanian">Nga vjen ti?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Besnik:</span>
-                            <span class="german">Ich komme aus Albanien, aus Tirana. Und du?</span>
-                            <span class="albanian">Unë vij nga Shqipëria, nga Tirana. Po ti?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Anna:</span>
-                            <span class="german">Ich komme aus Deutschland, aus Berlin.</span>
-                            <span class="albanian">Unë vij nga Gjermania, nga Berlini.</span>
-                        </div>
-                    </div>
-                    <div class="explanation-box">
-                        <h5>📌 Shpjegim:</h5>
-                        <ul>
-                            <li><strong>"Ich heiße..."</strong> - Përdoret për të thënë emrin (fjalë për fjalë: "Unë quhem...")</li>
-                            <li><strong>"Freut mich!"</strong> - Shprehje e zakonshme kur takohesh me dikë (= "Gëzohem!")</li>
-                            <li><strong>"Woher kommst du?"</strong> - Pyetje për prejardhjen. "Woher" = "Nga ku"</li>
-                            <li><strong>"Ich komme aus..."</strong> - Për të thënë nga vjen. "aus" = "nga"</li>
-                        </ul>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="example-category">
-                    <h4>🛒 Në dyqan - Im Geschäft</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Verkäufer:</span>
-                            <span class="german">Guten Tag! Kann ich Ihnen helfen?</span>
-                            <span class="albanian">Mirëdita! A mund t'ju ndihmoj?</span>
+                    <a href="#" class="topic-card example-card" data-topic="einkaufen-a1">
+                        <div class="topic-icon">🛒</div>
+                        <div class="topic-info">
+                            <h4>Në dyqan</h4>
+                            <p class="topic-german">Im Geschäft</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Kunde:</span>
-                            <span class="german">Ja, bitte. Was kostet das Brot?</span>
-                            <span class="albanian">Po, ju lutem. Sa kushton buka?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Verkäufer:</span>
-                            <span class="german">Das Brot kostet zwei Euro fünfzig.</span>
-                            <span class="albanian">Buka kushton dy euro e pesëdhjetë.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Kunde:</span>
-                            <span class="german">Gut, ich nehme es. Danke!</span>
-                            <span class="albanian">Mirë, e marr. Faleminderit!</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Verkäufer:</span>
-                            <span class="german">Bitte schön! Auf Wiedersehen!</span>
-                            <span class="albanian">Ju lutem! Mirupafshim!</span>
-                        </div>
-                    </div>
-                    <div class="explanation-box">
-                        <h5>📌 Shpjegim:</h5>
-                        <ul>
-                            <li><strong>"Kann ich Ihnen helfen?"</strong> - Formë e sjellshme për të ofruar ndihmë</li>
-                            <li><strong>"Was kostet...?"</strong> - Pyetje për çmimin = "Sa kushton...?"</li>
-                            <li><strong>"Ich nehme es"</strong> - "E marr" - përdoret kur vendos të blesh diçka</li>
-                            <li><strong>"Bitte schön!"</strong> - "Ju lutem!" ose "S'ka përse!" (kur dikush falënderon)</li>
-                        </ul>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="example-category">
-                    <h4>🏠 Në shtëpi - Zu Hause</h4>
-                    <div class="sentence-examples">
-                        <div class="sentence-item">
-                            <div class="german-sentence">Das ist mein Haus.</div>
-                            <div class="albanian-sentence">Kjo është shtëpia ime.</div>
-                            <div class="sentence-breakdown">
-                                <span class="word-breakdown"><strong>Das</strong> = Kjo</span>
-                                <span class="word-breakdown"><strong>ist</strong> = është</span>
-                                <span class="word-breakdown"><strong>mein</strong> = ime (për das)</span>
-                                <span class="word-breakdown"><strong>Haus</strong> = shtëpi</span>
-                            </div>
+                    <a href="#" class="topic-card example-card" data-topic="zuhause-a1">
+                        <div class="topic-icon">🏠</div>
+                        <div class="topic-info">
+                            <h4>Në shtëpi</h4>
+                            <p class="topic-german">Zu Hause</p>
+                            <span class="topic-count">Fjali + Analizë</span>
                         </div>
-                        <div class="sentence-item">
-                            <div class="german-sentence">Die Küche ist groß.</div>
-                            <div class="albanian-sentence">Kuzhina është e madhe.</div>
-                            <div class="sentence-breakdown">
-                                <span class="word-breakdown"><strong>Die Küche</strong> = Kuzhina (femërore)</span>
-                                <span class="word-breakdown"><strong>ist</strong> = është</span>
-                                <span class="word-breakdown"><strong>groß</strong> = e madhe</span>
-                            </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card example-card" data-topic="cafe-a1">
+                        <div class="topic-icon">☕</div>
+                        <div class="topic-info">
+                            <h4>Në kafene</h4>
+                            <p class="topic-german">Im Café</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="sentence-item">
-                            <div class="german-sentence">Ich wohne in einer Wohnung.</div>
-                            <div class="albanian-sentence">Unë banoj në një apartament.</div>
-                            <div class="sentence-breakdown">
-                                <span class="word-breakdown"><strong>Ich wohne</strong> = Unë banoj</span>
-                                <span class="word-breakdown"><strong>in</strong> = në</span>
-                                <span class="word-breakdown"><strong>einer Wohnung</strong> = një apartament</span>
-                            </div>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
@@ -654,371 +320,184 @@
             <!-- A2 Vocabulary -->
             <div class="section-content active" id="vocabulary-a2">
                 <h3>📚 Fjalori A2 - Erweiterter Wortschatz</h3>
+                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
 
-                <div class="vocabulary-category">
-                    <h4>💼 Profesionet - Die Berufe</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">der Arzt / die Ärztin</div>
-                            <div class="word-albanian">mjeku / mjekja</div>
-                            <div class="word-pronunciation">🔊 /aʁtst/</div>
-                            <div class="word-example">"Der Arzt untersucht den Patienten." - Mjeku ekzaminon pacientin.</div>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card" data-topic="berufe-a2">
+                        <div class="topic-icon">💼</div>
+                        <div class="topic-info">
+                            <h4>Profesionet</h4>
+                            <p class="topic-german">Die Berufe</p>
+                            <span class="topic-count">12 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">der Lehrer / die Lehrerin</div>
-                            <div class="word-albanian">mësuesi / mësuesja</div>
-                            <div class="word-pronunciation">🔊 /ˈleːʁɐ/</div>
-                            <div class="word-example">"Die Lehrerin erklärt die Grammatik." - Mësuesja shpjegon gramatikën.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Ingenieur / die Ingenieurin</div>
-                            <div class="word-albanian">inxhinieri / inxhinierja</div>
-                            <div class="word-pronunciation">🔊 /ɪnʒeˈni̯øːɐ̯/</div>
-                            <div class="word-example">"Der Ingenieur plant die Brücke." - Inxhinieri projekton urën.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Kellner / die Kellnerin</div>
-                            <div class="word-albanian">kamarieri / kamarierja</div>
-                            <div class="word-pronunciation">🔊 /ˈkɛlnɐ/</div>
-                            <div class="word-example">"Der Kellner bringt das Essen." - Kamarieri sjell ushqimin.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Polizist / die Polizistin</div>
-                            <div class="word-albanian">polici / policja</div>
-                            <div class="word-pronunciation">🔊 /poliˈtsɪst/</div>
-                            <div class="word-example">"Die Polizistin regelt den Verkehr." - Policja rregullon trafikun.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Koch / die Köchin</div>
-                            <div class="word-albanian">kuzhinieri / kuzhinierja</div>
-                            <div class="word-pronunciation">🔊 /kɔx/</div>
-                            <div class="word-example">"Der Koch bereitet das Menü vor." - Kuzhinieri përgatit menunë.</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>🚗 Transporti - Verkehrsmittel</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">das Auto</div>
-                            <div class="word-albanian">makina / vetura</div>
-                            <div class="word-pronunciation">🔊 /ˈaʊ̯to/</div>
-                            <div class="word-example">"Ich fahre mit dem Auto zur Arbeit." - Shkoj në punë me makinë.</div>
+                    <a href="#" class="topic-card" data-topic="verkehr-a2">
+                        <div class="topic-icon">🚗</div>
+                        <div class="topic-info">
+                            <h4>Transporti</h4>
+                            <p class="topic-german">Verkehrsmittel</p>
+                            <span class="topic-count">8 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">der Zug</div>
-                            <div class="word-albanian">treni</div>
-                            <div class="word-pronunciation">🔊 /tsuːk/</div>
-                            <div class="word-example">"Der Zug fährt um 8 Uhr ab." - Treni niset në orën 8.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">das Flugzeug</div>
-                            <div class="word-albanian">aeroplani</div>
-                            <div class="word-pronunciation">🔊 /ˈfluːkˌtsɔʏ̯k/</div>
-                            <div class="word-example">"Das Flugzeug landet in Berlin." - Aeroplani ulet në Berlin.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">das Fahrrad</div>
-                            <div class="word-albanian">biçikleta</div>
-                            <div class="word-pronunciation">🔊 /ˈfaːɐ̯ˌʁaːt/</div>
-                            <div class="word-example">"Ich fahre gern Fahrrad." - Më pëlqen të ngis biçikletë.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die U-Bahn</div>
-                            <div class="word-albanian">metroja</div>
-                            <div class="word-pronunciation">🔊 /ˈuːbaːn/</div>
-                            <div class="word-example">"Die U-Bahn ist schnell." - Metroja është e shpejtë.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">der Bus</div>
-                            <div class="word-albanian">autobusi</div>
-                            <div class="word-pronunciation">🔊 /bʊs/</div>
-                            <div class="word-example">"Der Bus kommt alle 10 Minuten." - Autobusi vjen çdo 10 minuta.</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>🍽️ Ushqimi - Das Essen</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">das Frühstück</div>
-                            <div class="word-albanian">mëngjesi</div>
-                            <div class="word-pronunciation">🔊 /ˈfʁyːˌʃtʏk/</div>
-                            <div class="word-example">"Zum Frühstück esse ich Brot mit Käse." - Për mëngjes ha bukë me djathë.</div>
+                    <a href="#" class="topic-card" data-topic="essen-a2">
+                        <div class="topic-icon">🍽️</div>
+                        <div class="topic-info">
+                            <h4>Ushqimi</h4>
+                            <p class="topic-german">Das Essen</p>
+                            <span class="topic-count">10 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">das Mittagessen</div>
-                            <div class="word-albanian">dreka</div>
-                            <div class="word-pronunciation">🔊 /ˈmɪtaːkˌʔɛsn̩/</div>
-                            <div class="word-example">"Das Mittagessen ist um 12 Uhr." - Dreka është në orën 12.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="korper-a2">
+                        <div class="topic-icon">🏃</div>
+                        <div class="topic-info">
+                            <h4>Trupi</h4>
+                            <p class="topic-german">Der Körper</p>
+                            <span class="topic-count">12 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">das Abendessen</div>
-                            <div class="word-albanian">darka</div>
-                            <div class="word-pronunciation">🔊 /ˈaːbn̩tˌʔɛsn̩/</div>
-                            <div class="word-example">"Wir essen das Abendessen zusammen." - E hamë darkën së bashku.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="wetter-a2">
+                        <div class="topic-icon">🌤️</div>
+                        <div class="topic-info">
+                            <h4>Moti</h4>
+                            <p class="topic-german">Das Wetter</p>
+                            <span class="topic-count">10 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">das Fleisch</div>
-                            <div class="word-albanian">mishi</div>
-                            <div class="word-pronunciation">🔊 /flaɪ̯ʃ/</div>
-                            <div class="word-example">"Ich esse gern Fleisch." - Më pëlqen të ha mish.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="kleidung-a2">
+                        <div class="topic-icon">👔</div>
+                        <div class="topic-info">
+                            <h4>Veshjet</h4>
+                            <p class="topic-german">Die Kleidung</p>
+                            <span class="topic-count">10 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">das Gemüse</div>
-                            <div class="word-albanian">perimet</div>
-                            <div class="word-pronunciation">🔊 /ɡəˈmyːzə/</div>
-                            <div class="word-example">"Gemüse ist gesund." - Perimet janë të shëndetshme.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">das Obst</div>
-                            <div class="word-albanian">frutat</div>
-                            <div class="word-pronunciation">🔊 /oːpst/</div>
-                            <div class="word-example">"Ich kaufe frisches Obst." - Blej fruta të freskëta.</div>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- A2 Grammar -->
             <div class="section-content" id="grammar-a2">
                 <h3>📖 Gramatika A2 - Erweiterte Grammatik</h3>
+                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
 
-                <div class="grammar-topic">
-                    <h4>📍 Rasat - Die Fälle (Nominativ, Akkusativ, Dativ)</h4>
-                    <div class="grammar-explanation">
-                        <p>Gjermanishtja ka 4 rasa. Në nivelin A2 fokusohemi në tre të parat:</p>
-                    </div>
-                    <div class="cases-overview">
-                        <div class="case-card nominativ">
-                            <h5>Nominativ (Emëror)</h5>
-                            <p>Kryefjala - Kush? Çfarë?</p>
-                            <div class="case-example">
-                                <span class="german"><strong>Der Mann</strong> liest.</span>
-                                <span class="albanian">Burri lexon.</span>
-                            </div>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card grammar-card" data-topic="falle-a2">
+                        <div class="topic-icon">📍</div>
+                        <div class="topic-info">
+                            <h4>Rasat</h4>
+                            <p class="topic-german">Die Fälle (Nom, Akk, Dat)</p>
+                            <span class="topic-count">Themë kryesore</span>
                         </div>
-                        <div class="case-card akkusativ">
-                            <h5>Akkusativ (Kallëzor)</h5>
-                            <p>Kundrina e drejtë - Kë? Çfarë?</p>
-                            <div class="case-example">
-                                <span class="german">Ich sehe <strong>den Mann</strong>.</span>
-                                <span class="albanian">Unë shoh burrin.</span>
-                            </div>
-                        </div>
-                        <div class="case-card dativ">
-                            <h5>Dativ (Dhanor)</h5>
-                            <p>Kundrina e zhdrejtë - Kujt?</p>
-                            <div class="case-example">
-                                <span class="german">Ich gebe <strong>dem Mann</strong> das Buch.</span>
-                                <span class="albanian">I jap librin burrit.</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grammar-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Rasa</th>
-                                    <th>Mashkullore</th>
-                                    <th>Femërore</th>
-                                    <th>Asnjëanëse</th>
-                                    <th>Shumës</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Nominativ</strong></td>
-                                    <td>der</td>
-                                    <td>die</td>
-                                    <td>das</td>
-                                    <td>die</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Akkusativ</strong></td>
-                                    <td class="highlight-change">den</td>
-                                    <td>die</td>
-                                    <td>das</td>
-                                    <td>die</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Dativ</strong></td>
-                                    <td class="highlight-change">dem</td>
-                                    <td class="highlight-change">der</td>
-                                    <td class="highlight-change">dem</td>
-                                    <td class="highlight-change">den (+n)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tip-box">
-                        <span class="tip-icon">💡</span>
-                        <p><strong>Këshillë:</strong> Vetëm mashkullorja ndryshon në Akkusativ (der → den). Në Dativ ndryshojnë të gjitha!</p>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>⏰ E kaluara - Perfekt (E shkuara e afërt)</h4>
-                    <div class="grammar-explanation">
-                        <p>Perfekt formohet me: <strong>haben/sein + Partizip II</strong></p>
-                        <p>Përdoret në biseda të përditshme për të folur për të kaluarën.</p>
-                    </div>
-                    <div class="perfekt-structure">
-                        <div class="structure-box">
-                            <span class="structure-part">Subjekt</span>
-                            <span class="structure-plus">+</span>
-                            <span class="structure-part highlight">haben/sein</span>
-                            <span class="structure-plus">+</span>
-                            <span class="structure-part">...</span>
-                            <span class="structure-plus">+</span>
-                            <span class="structure-part highlight">Partizip II</span>
+                    <a href="#" class="topic-card grammar-card" data-topic="perfekt-a2">
+                        <div class="topic-icon">⏰</div>
+                        <div class="topic-info">
+                            <h4>E kaluara (Perfekt)</h4>
+                            <p class="topic-german">Das Perfekt</p>
+                            <span class="topic-count">haben/sein + Partizip II</span>
                         </div>
-                    </div>
-                    <div class="examples-grid">
-                        <div class="example-item">
-                            <div class="german">Ich <span class="verb-highlight">habe</span> Deutsch <span class="verb-highlight">gelernt</span>.</div>
-                            <div class="albanian">Unë kam mësuar gjermanisht.</div>
-                        </div>
-                        <div class="example-item">
-                            <div class="german">Er <span class="verb-highlight">hat</span> das Buch <span class="verb-highlight">gelesen</span>.</div>
-                            <div class="albanian">Ai ka lexuar librin.</div>
-                        </div>
-                        <div class="example-item">
-                            <div class="german">Sie <span class="verb-highlight">ist</span> nach Berlin <span class="verb-highlight">gefahren</span>.</div>
-                            <div class="albanian">Ajo ka shkuar në Berlin.</div>
-                        </div>
-                        <div class="example-item">
-                            <div class="german">Wir <span class="verb-highlight">sind</span> spät <span class="verb-highlight">gekommen</span>.</div>
-                            <div class="albanian">Ne kemi ardhur vonë.</div>
-                        </div>
-                    </div>
-                    <div class="tip-box">
-                        <span class="tip-icon">💡</span>
-                        <p><strong>Kur përdorim "sein"?</strong> Me folje lëvizjeje (gehen, fahren, kommen, fliegen) dhe ndryshimi gjendjeje (werden, sterben).</p>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>🔗 Foljet Modale - Modalverben</h4>
-                    <div class="grammar-explanation">
-                        <p>Foljet modale shprehin mundësi, dëshirë, detyrim, etj.</p>
-                    </div>
-                    <div class="modal-verbs-grid">
-                        <div class="modal-card">
-                            <div class="modal-verb">können</div>
-                            <div class="modal-meaning">mund</div>
-                            <div class="modal-example">Ich <strong>kann</strong> Deutsch sprechen.</div>
-                            <div class="modal-translation">Unë mund të flas gjermanisht.</div>
+                    <a href="#" class="topic-card grammar-card" data-topic="modalverben-a2">
+                        <div class="topic-icon">🔗</div>
+                        <div class="topic-info">
+                            <h4>Foljet Modale</h4>
+                            <p class="topic-german">Modalverben</p>
+                            <span class="topic-count">6 folje</span>
                         </div>
-                        <div class="modal-card">
-                            <div class="modal-verb">müssen</div>
-                            <div class="modal-meaning">duhet</div>
-                            <div class="modal-example">Du <strong>musst</strong> lernen.</div>
-                            <div class="modal-translation">Ti duhet të mësosh.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="prapositionen-a2">
+                        <div class="topic-icon">📌</div>
+                        <div class="topic-info">
+                            <h4>Parafjalët</h4>
+                            <p class="topic-german">Präpositionen</p>
+                            <span class="topic-count">Akk/Dat/Wechsel</span>
                         </div>
-                        <div class="modal-card">
-                            <div class="modal-verb">wollen</div>
-                            <div class="modal-meaning">dua</div>
-                            <div class="modal-example">Er <strong>will</strong> Arzt werden.</div>
-                            <div class="modal-translation">Ai do të bëhet mjek.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="nebensatze-a2">
+                        <div class="topic-icon">🔀</div>
+                        <div class="topic-info">
+                            <h4>Fjali Dytësore</h4>
+                            <p class="topic-german">Nebensätze</p>
+                            <span class="topic-count">weil, dass, wenn</span>
                         </div>
-                        <div class="modal-card">
-                            <div class="modal-verb">sollen</div>
-                            <div class="modal-meaning">duhet (rekomandim)</div>
-                            <div class="modal-example">Sie <strong>soll</strong> mehr schlafen.</div>
-                            <div class="modal-translation">Ajo duhet të flejë më shumë.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="komparativ-a2">
+                        <div class="topic-icon">📊</div>
+                        <div class="topic-info">
+                            <h4>Krahasimi</h4>
+                            <p class="topic-german">Komparativ & Superlativ</p>
+                            <span class="topic-count">Shkallët</span>
                         </div>
-                        <div class="modal-card">
-                            <div class="modal-verb">dürfen</div>
-                            <div class="modal-meaning">lejohet / guxon</div>
-                            <div class="modal-example">Hier <strong>darf</strong> man nicht rauchen.</div>
-                            <div class="modal-translation">Këtu nuk lejohet të pish duhan.</div>
-                        </div>
-                        <div class="modal-card">
-                            <div class="modal-verb">möchten</div>
-                            <div class="modal-meaning">do të doja</div>
-                            <div class="modal-example">Ich <strong>möchte</strong> einen Kaffee.</div>
-                            <div class="modal-translation">Do të doja një kafe.</div>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- A2 Examples -->
             <div class="section-content" id="examples-a2">
                 <h3>💡 Shembuj A2 - Praktische Beispiele</h3>
+                <p class="section-intro">Kliko për të parë dialogë dhe situata të jetës së përditshme.</p>
 
-                <div class="example-category">
-                    <h4>🏥 Tek mjeku - Beim Arzt</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Arzt:</span>
-                            <span class="german">Guten Tag! Was fehlt Ihnen?</span>
-                            <span class="albanian">Mirëdita! Çfarë keni?</span>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card example-card" data-topic="arzt-a2">
+                        <div class="topic-icon">🏥</div>
+                        <div class="topic-info">
+                            <h4>Tek mjeku</h4>
+                            <p class="topic-german">Beim Arzt</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Patient:</span>
-                            <span class="german">Ich habe seit drei Tagen Kopfschmerzen und Fieber.</span>
-                            <span class="albanian">Kam tre ditë që kam dhimbje koke dhe temperaturë.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Arzt:</span>
-                            <span class="german">Haben Sie auch Husten oder Halsschmerzen?</span>
-                            <span class="albanian">A keni edhe kollë ose dhimbje fyti?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Patient:</span>
-                            <span class="german">Ja, ich habe auch Halsschmerzen.</span>
-                            <span class="albanian">Po, kam edhe dhimbje fyti.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Arzt:</span>
-                            <span class="german">Ich verschreibe Ihnen Medikamente. Sie müssen viel trinken und sich ausruhen.</span>
-                            <span class="albanian">Ju shkruaj ilaçe. Duhet të pini shumë lëngje dhe të pushoni.</span>
-                        </div>
-                    </div>
-                    <div class="explanation-box">
-                        <h5>📌 Shpjegim:</h5>
-                        <ul>
-                            <li><strong>"Was fehlt Ihnen?"</strong> - Pyetje e zakonshme e mjekut = "Çfarë keni?" / "Ku e keni?"</li>
-                            <li><strong>"seit drei Tagen"</strong> - "seit" + Dativ për kohëzgjatje = "që tre ditë"</li>
-                            <li><strong>"Kopfschmerzen"</strong> - Fjala e përbërë: Kopf (kokë) + Schmerzen (dhimbje)</li>
-                            <li><strong>"Sie müssen..."</strong> - Folja modale "müssen" për detyrim</li>
-                        </ul>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="example-category">
-                    <h4>🚉 Në stacion - Am Bahnhof</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Reisender:</span>
-                            <span class="german">Entschuldigung, wann fährt der nächste Zug nach München?</span>
-                            <span class="albanian">Më falni, kur niset treni i radhës për në Mynih?</span>
+                    <a href="#" class="topic-card example-card" data-topic="bahnhof-a2">
+                        <div class="topic-icon">🚉</div>
+                        <div class="topic-info">
+                            <h4>Në stacion</h4>
+                            <p class="topic-german">Am Bahnhof</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Beamter:</span>
-                            <span class="german">Der nächste Zug fährt um 14:30 Uhr von Gleis 5.</span>
-                            <span class="albanian">Treni i radhës niset në orën 14:30 nga binarët 5.</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card example-card" data-topic="restaurant-a2">
+                        <div class="topic-icon">🍴</div>
+                        <div class="topic-info">
+                            <h4>Në restorant</h4>
+                            <p class="topic-german">Im Restaurant</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Reisender:</span>
-                            <span class="german">Muss ich umsteigen?</span>
-                            <span class="albanian">A duhet të ndërroj tren?</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card example-card" data-topic="telefon-a2">
+                        <div class="topic-icon">📞</div>
+                        <div class="topic-info">
+                            <h4>Në telefon</h4>
+                            <p class="topic-german">Am Telefon</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Beamter:</span>
-                            <span class="german">Nein, es ist ein direkter Zug. Die Fahrt dauert etwa 4 Stunden.</span>
-                            <span class="albanian">Jo, është tren direkt. Udhëtimi zgjat rreth 4 orë.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Reisender:</span>
-                            <span class="german">Was kostet eine Fahrkarte hin und zurück?</span>
-                            <span class="albanian">Sa kushton një biletë vajtje-ardhje?</span>
-                        </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
@@ -1084,410 +563,184 @@
             <!-- B1 Vocabulary -->
             <div class="section-content active" id="vocabulary-b1">
                 <h3>📚 Fjalori B1 - Fortgeschrittener Wortschatz</h3>
+                <p class="section-intro">Kliko mbi një temë për të parë më shumë detaje dhe shembuj.</p>
 
-                <div class="vocabulary-category">
-                    <h4>💭 Shprehje të Opinionit - Meinungsäußerung</h4>
-                    <div class="word-cards expressions">
-                        <div class="word-card expression">
-                            <div class="word-german">Ich bin der Meinung, dass...</div>
-                            <div class="word-albanian">Jam i mendimit që...</div>
-                            <div class="word-example">"Ich bin der Meinung, dass Sport wichtig ist."</div>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card" data-topic="meinung-b1">
+                        <div class="topic-icon">💭</div>
+                        <div class="topic-info">
+                            <h4>Shprehje Opinioni</h4>
+                            <p class="topic-german">Meinungsäußerung</p>
+                            <span class="topic-count">8 shprehje</span>
                         </div>
-                        <div class="word-card expression">
-                            <div class="word-german">Meiner Meinung nach...</div>
-                            <div class="word-albanian">Sipas mendimit tim...</div>
-                            <div class="word-example">"Meiner Meinung nach ist das eine gute Idee."</div>
-                        </div>
-                        <div class="word-card expression">
-                            <div class="word-german">Ich finde, dass...</div>
-                            <div class="word-albanian">Mendoj që...</div>
-                            <div class="word-example">"Ich finde, dass wir mehr tun müssen."</div>
-                        </div>
-                        <div class="word-card expression">
-                            <div class="word-german">Ich stimme zu / Ich stimme nicht zu</div>
-                            <div class="word-albanian">Pajtohem / Nuk pajtohem</div>
-                            <div class="word-example">"Ich stimme dir zu, das ist richtig."</div>
-                        </div>
-                        <div class="word-card expression">
-                            <div class="word-german">Einerseits... andererseits...</div>
-                            <div class="word-albanian">Nga njëra anë... nga ana tjetër...</div>
-                            <div class="word-example">"Einerseits ist es teuer, andererseits ist die Qualität gut."</div>
-                        </div>
-                        <div class="word-card expression">
-                            <div class="word-german">Es ist offensichtlich, dass...</div>
-                            <div class="word-albanian">Është e qartë që...</div>
-                            <div class="word-example">"Es ist offensichtlich, dass sich das Klima ändert."</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>🌍 Mjedisi dhe Shoqëria - Umwelt und Gesellschaft</h4>
-                    <div class="word-cards">
-                        <div class="word-card">
-                            <div class="word-german">die Umwelt</div>
-                            <div class="word-albanian">mjedisi</div>
-                            <div class="word-pronunciation">🔊 /ˈʊmvɛlt/</div>
-                            <div class="word-example">"Wir müssen die Umwelt schützen." - Duhet ta mbrojmë mjedisin.</div>
+                    <a href="#" class="topic-card" data-topic="umwelt-b1">
+                        <div class="topic-icon">🌍</div>
+                        <div class="topic-info">
+                            <h4>Mjedisi & Shoqëria</h4>
+                            <p class="topic-german">Umwelt & Gesellschaft</p>
+                            <span class="topic-count">12 fjalë</span>
                         </div>
-                        <div class="word-card">
-                            <div class="word-german">der Klimawandel</div>
-                            <div class="word-albanian">ndryshimet klimatike</div>
-                            <div class="word-pronunciation">🔊 /ˈkliːmaˌvandl̩/</div>
-                            <div class="word-example">"Der Klimawandel ist eine große Herausforderung." - Ndryshimet klimatike janë sfidë e madhe.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die Gleichberechtigung</div>
-                            <div class="word-albanian">barazia</div>
-                            <div class="word-pronunciation">🔊 /ˈɡlaɪ̯çbəˌʁɛçtɪɡʊŋ/</div>
-                            <div class="word-example">"Gleichberechtigung ist wichtig." - Barazia është e rëndësishme.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die Arbeitslosigkeit</div>
-                            <div class="word-albanian">papunësia</div>
-                            <div class="word-pronunciation">🔊 /ˈaʁbaɪ̯tsˌloːzɪçkaɪ̯t/</div>
-                            <div class="word-example">"Die Arbeitslosigkeit sinkt." - Papunësia po bie.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">nachhaltig</div>
-                            <div class="word-albanian">i qëndrueshëm</div>
-                            <div class="word-pronunciation">🔊 /ˈnaːxˌhaltɪç/</div>
-                            <div class="word-example">"Wir brauchen nachhaltige Lösungen." - Na duhen zgjidhje të qëndrueshme.</div>
-                        </div>
-                        <div class="word-card">
-                            <div class="word-german">die Demokratie</div>
-                            <div class="word-albanian">demokracia</div>
-                            <div class="word-pronunciation">🔊 /demoˈkʁaːtiː/</div>
-                            <div class="word-example">"Die Demokratie muss verteidigt werden." - Demokracia duhet mbrojtur.</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="vocabulary-category">
-                    <h4>📊 Fjalë Lidhëse - Konnektoren</h4>
-                    <div class="connector-grid">
-                        <div class="connector-card">
-                            <div class="connector-type">Shkak</div>
-                            <div class="connector-words">
-                                <span class="connector">weil</span>
-                                <span class="connector">da</span>
-                                <span class="connector">deshalb</span>
-                                <span class="connector">deswegen</span>
-                            </div>
-                            <div class="connector-example">"Ich lerne Deutsch, <strong>weil</strong> ich in Deutschland arbeiten möchte."</div>
+                    <a href="#" class="topic-card" data-topic="konnektoren-b1">
+                        <div class="topic-icon">📊</div>
+                        <div class="topic-info">
+                            <h4>Fjalë Lidhëse</h4>
+                            <p class="topic-german">Konnektoren</p>
+                            <span class="topic-count">16 lidhëza</span>
                         </div>
-                        <div class="connector-card">
-                            <div class="connector-type">Kundërshtim</div>
-                            <div class="connector-words">
-                                <span class="connector">obwohl</span>
-                                <span class="connector">trotzdem</span>
-                                <span class="connector">jedoch</span>
-                            </div>
-                            <div class="connector-example">"<strong>Obwohl</strong> es regnet, gehe ich spazieren."</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="arbeit-b1">
+                        <div class="topic-icon">💼</div>
+                        <div class="topic-info">
+                            <h4>Puna & Karriera</h4>
+                            <p class="topic-german">Arbeit & Karriere</p>
+                            <span class="topic-count">15 fjalë</span>
                         </div>
-                        <div class="connector-card">
-                            <div class="connector-type">Kushti</div>
-                            <div class="connector-words">
-                                <span class="connector">wenn</span>
-                                <span class="connector">falls</span>
-                                <span class="connector">sofern</span>
-                            </div>
-                            <div class="connector-example">"<strong>Wenn</strong> ich Zeit habe, besuche ich dich."</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="medien-b1">
+                        <div class="topic-icon">📱</div>
+                        <div class="topic-info">
+                            <h4>Media & Teknologjia</h4>
+                            <p class="topic-german">Medien & Technologie</p>
+                            <span class="topic-count">12 fjalë</span>
                         </div>
-                        <div class="connector-card">
-                            <div class="connector-type">Qëllimi</div>
-                            <div class="connector-words">
-                                <span class="connector">damit</span>
-                                <span class="connector">um...zu</span>
-                            </div>
-                            <div class="connector-example">"Ich spare, <strong>um</strong> ein Auto <strong>zu</strong> kaufen."</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card" data-topic="redewendungen-b1">
+                        <div class="topic-icon">💬</div>
+                        <div class="topic-info">
+                            <h4>Shprehje Idiomatike</h4>
+                            <p class="topic-german">Redewendungen</p>
+                            <span class="topic-count">10 shprehje</span>
                         </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- B1 Grammar -->
             <div class="section-content" id="grammar-b1">
                 <h3>📖 Gramatika B1 - Fortgeschrittene Grammatik</h3>
+                <p class="section-intro">Kliko mbi një temë gramatikore për shpjegime të hollësishme.</p>
 
-                <div class="grammar-topic">
-                    <h4>📍 Rasa Gjinore - Genitiv</h4>
-                    <div class="grammar-explanation">
-                        <p>Genitiv tregon pronësi dhe përgjigjet pyetjes "Wessen?" (I/E kujt?)</p>
-                    </div>
-                    <div class="grammar-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Gjinia</th>
-                                    <th>Nyja</th>
-                                    <th>Shembull</th>
-                                    <th>Shqip</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mashkullore</td>
-                                    <td class="highlight-blue">des</td>
-                                    <td>das Auto <strong>des Mannes</strong></td>
-                                    <td>makina e burrit</td>
-                                </tr>
-                                <tr>
-                                    <td>Femërore</td>
-                                    <td class="highlight-pink">der</td>
-                                    <td>die Tasche <strong>der Frau</strong></td>
-                                    <td>çanta e gruas</td>
-                                </tr>
-                                <tr>
-                                    <td>Asnjëanëse</td>
-                                    <td class="highlight-green">des</td>
-                                    <td>das Spielzeug <strong>des Kindes</strong></td>
-                                    <td>lodra e fëmijës</td>
-                                </tr>
-                                <tr>
-                                    <td>Shumës</td>
-                                    <td class="highlight-purple">der</td>
-                                    <td>die Rechte <strong>der Bürger</strong></td>
-                                    <td>të drejtat e qytetarëve</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tip-box">
-                        <span class="tip-icon">💡</span>
-                        <p><strong>Kujdes:</strong> Në Genitiv, emrat mashkullorë dhe asnjëanës marrin prapashtesën <strong>-(e)s</strong>: Mann → des Mann<strong>es</strong></p>
-                    </div>
-                </div>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card grammar-card" data-topic="genitiv-b1">
+                        <div class="topic-icon">📍</div>
+                        <div class="topic-info">
+                            <h4>Rasa Gjinore</h4>
+                            <p class="topic-german">Der Genitiv</p>
+                            <span class="topic-count">Rasa e 4-të</span>
+                        </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>🔄 Pësore - Passiv</h4>
-                    <div class="grammar-explanation">
-                        <p>Pësore formohet me <strong>werden + Partizip II</strong> dhe thekson veprimin, jo vepruesin.</p>
-                    </div>
-                    <div class="passive-comparison">
-                        <div class="passive-box aktiv">
-                            <h5>Aktiv (Veprore)</h5>
-                            <div class="german">Der Koch kocht das Essen.</div>
-                            <div class="albanian">Kuzhinieri gatuan ushqimin.</div>
-                            <div class="structure">Kush? + Vepron + Çfarë?</div>
+                    <a href="#" class="topic-card grammar-card" data-topic="passiv-b1">
+                        <div class="topic-icon">🔄</div>
+                        <div class="topic-info">
+                            <h4>Pësore</h4>
+                            <p class="topic-german">Das Passiv</p>
+                            <span class="topic-count">werden + Partizip II</span>
                         </div>
-                        <div class="passive-arrow">→</div>
-                        <div class="passive-box passiv">
-                            <h5>Passiv (Pësore)</h5>
-                            <div class="german">Das Essen <strong>wird</strong> (vom Koch) <strong>gekocht</strong>.</div>
-                            <div class="albanian">Ushqimi gatuhet (nga kuzhinieri).</div>
-                            <div class="structure">Çfarë? + wird + (nga kush?) + Partizip II</div>
-                        </div>
-                    </div>
-                    <div class="examples-grid">
-                        <div class="example-item">
-                            <div class="german">Das Haus <strong>wird</strong> gebaut.</div>
-                            <div class="albanian">Shtëpia po ndërtohet.</div>
-                        </div>
-                        <div class="example-item">
-                            <div class="german">Die E-Mail <strong>wurde</strong> gesendet.</div>
-                            <div class="albanian">E-maili u dërgua.</div>
-                        </div>
-                        <div class="example-item">
-                            <div class="german">Das Problem <strong>ist</strong> gelöst <strong>worden</strong>.</div>
-                            <div class="albanian">Problemi është zgjidhur.</div>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>🌀 Konjunktiv II - Mënyra dëshirore</h4>
-                    <div class="grammar-explanation">
-                        <p>Përdoret për dëshira, situata hipotetike, dhe sjellshmëri.</p>
-                    </div>
-                    <div class="konjunktiv-grid">
-                        <div class="konj-card">
-                            <h5>📌 Dëshira</h5>
-                            <div class="german">Ich <strong>wäre</strong> gern reich.</div>
-                            <div class="albanian">Do të doja të isha i pasur.</div>
+                    <a href="#" class="topic-card grammar-card" data-topic="konjunktiv-b1">
+                        <div class="topic-icon">🌀</div>
+                        <div class="topic-info">
+                            <h4>Konjunktiv II</h4>
+                            <p class="topic-german">Der Konjunktiv II</p>
+                            <span class="topic-count">Mënyra dëshirore</span>
                         </div>
-                        <div class="konj-card">
-                            <h5>📌 Situatë hipotetike</h5>
-                            <div class="german"><strong>Wenn</strong> ich Zeit <strong>hätte</strong>, <strong>würde</strong> ich reisen.</div>
-                            <div class="albanian">Sikur të kisha kohë, do të udhëtoja.</div>
-                        </div>
-                        <div class="konj-card">
-                            <h5>📌 Sjellshmëri</h5>
-                            <div class="german"><strong>Könnten</strong> Sie mir bitte helfen?</div>
-                            <div class="albanian">A do të mundeshe të më ndihmonit, ju lutem?</div>
-                        </div>
-                        <div class="konj-card">
-                            <h5>📌 Këshillë</h5>
-                            <div class="german">Du <strong>solltest</strong> mehr schlafen.</div>
-                            <div class="albanian">Duhet të flesh më shumë.</div>
-                        </div>
-                    </div>
-                    <div class="conjugation-box konjunktiv">
-                        <h5>Foljet e rëndësishme në Konjunktiv II:</h5>
-                        <div class="conjugation-item">
-                            <span class="pronoun">sein →</span>
-                            <span class="verb">wäre</span>
-                            <span class="translation">do të isha</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">haben →</span>
-                            <span class="verb">hätte</span>
-                            <span class="translation">do të kisha</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">können →</span>
-                            <span class="verb">könnte</span>
-                            <span class="translation">do të mundja</span>
-                        </div>
-                        <div class="conjugation-item">
-                            <span class="pronoun">müssen →</span>
-                            <span class="verb">müsste</span>
-                            <span class="translation">do të duhej</span>
-                        </div>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="grammar-topic">
-                    <h4>📝 Fjali Relative - Relativsätze</h4>
-                    <div class="grammar-explanation">
-                        <p>Fjalitë relative japin më shumë informacion për një emër duke përdorur përemra relativë.</p>
-                    </div>
-                    <div class="grammar-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Rasa</th>
-                                    <th>Mashkullore</th>
-                                    <th>Femërore</th>
-                                    <th>Asnjëanëse</th>
-                                    <th>Shumës</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Nominativ</td>
-                                    <td>der</td>
-                                    <td>die</td>
-                                    <td>das</td>
-                                    <td>die</td>
-                                </tr>
-                                <tr>
-                                    <td>Akkusativ</td>
-                                    <td>den</td>
-                                    <td>die</td>
-                                    <td>das</td>
-                                    <td>die</td>
-                                </tr>
-                                <tr>
-                                    <td>Dativ</td>
-                                    <td>dem</td>
-                                    <td>der</td>
-                                    <td>dem</td>
-                                    <td>denen</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="examples-grid">
-                        <div class="example-item">
-                            <div class="german">Der Mann, <strong>der</strong> dort steht, ist mein Lehrer.</div>
-                            <div class="albanian">Burri, <strong>i cili</strong> qëndron atje, është mësuesi im.</div>
+                    <a href="#" class="topic-card grammar-card" data-topic="relativsatze-b1">
+                        <div class="topic-icon">📝</div>
+                        <div class="topic-info">
+                            <h4>Fjali Relative</h4>
+                            <p class="topic-german">Relativsätze</p>
+                            <span class="topic-count">der, die, das...</span>
                         </div>
-                        <div class="example-item">
-                            <div class="german">Die Frau, <strong>die</strong> ich kenne, arbeitet hier.</div>
-                            <div class="albanian">Gruaja, <strong>të cilën</strong> e njoh, punon këtu.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="indirekte-b1">
+                        <div class="topic-icon">💬</div>
+                        <div class="topic-info">
+                            <h4>Ligjërata e Zhdrejtë</h4>
+                            <p class="topic-german">Indirekte Rede</p>
+                            <span class="topic-count">Konjunktiv I</span>
                         </div>
-                        <div class="example-item">
-                            <div class="german">Das Buch, <strong>das</strong> ich lese, ist interessant.</div>
-                            <div class="albanian">Libri, <strong>të cilin</strong> po lexoj, është interesant.</div>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card grammar-card" data-topic="plusquamperfekt-b1">
+                        <div class="topic-icon">⏪</div>
+                        <div class="topic-info">
+                            <h4>E kryera e tejshkuar</h4>
+                            <p class="topic-german">Das Plusquamperfekt</p>
+                            <span class="topic-count">hatte/war + Partizip II</span>
                         </div>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
             <!-- B1 Examples -->
             <div class="section-content" id="examples-b1">
                 <h3>💡 Shembuj B1 - Fortgeschrittene Beispiele</h3>
+                <p class="section-intro">Kliko për të parë dialogë dhe situata të avancuara.</p>
 
-                <div class="example-category">
-                    <h4>💼 Intervistë pune - Bewerbungsgespräch</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Personalchef:</span>
-                            <span class="german">Guten Tag, Herr Hoxha. Erzählen Sie uns bitte etwas über sich selbst.</span>
-                            <span class="albanian">Mirëdita, zoti Hoxha. Na tregoni pak për veten tuaj, ju lutem.</span>
+                <div class="topic-cards-grid">
+                    <a href="#" class="topic-card example-card" data-topic="bewerbung-b1">
+                        <div class="topic-icon">💼</div>
+                        <div class="topic-info">
+                            <h4>Intervistë pune</h4>
+                            <p class="topic-german">Bewerbungsgespräch</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Bewerber:</span>
-                            <span class="german">Guten Tag. Ich bin 28 Jahre alt und habe Informatik an der Universität Tirana studiert. Nach meinem Abschluss habe ich drei Jahre als Softwareentwickler gearbeitet.</span>
-                            <span class="albanian">Mirëdita. Jam 28 vjeç dhe kam studiuar informatikë në Universitetin e Tiranës. Pas diplomimit kam punuar tre vjet si zhvillues softueri.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Personalchef:</span>
-                            <span class="german">Was sind Ihre Stärken und Schwächen?</span>
-                            <span class="albanian">Cilat janë pikat tuaja të forta dhe të dobëta?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Bewerber:</span>
-                            <span class="german">Zu meinen Stärken gehört, dass ich gut im Team arbeiten kann und schnell lerne. Als Schwäche würde ich sagen, dass ich manchmal zu perfektionistisch bin.</span>
-                            <span class="albanian">Ndër pikat e mia të forta është se punoj mirë në grup dhe mësoj shpejt. Si pikë të dobët do të thoja se ndonjëherë jam shumë perfeksionist.</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Personalchef:</span>
-                            <span class="german">Warum möchten Sie bei uns arbeiten?</span>
-                            <span class="albanian">Pse dëshironi të punoni tek ne?</span>
-                        </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Bewerber:</span>
-                            <span class="german">Ich bin von Ihrem Unternehmen beeindruckt, weil Sie innovative Projekte entwickeln. Außerdem bieten Sie gute Möglichkeiten zur Weiterbildung, was mir sehr wichtig ist.</span>
-                            <span class="albanian">Jam i impresionuar nga kompania juaj sepse zhvilloni projekte inovative. Përveç kësaj, ofroni mundësi të mira për zhvillim profesional, gjë që është shumë e rëndësishme për mua.</span>
-                        </div>
-                    </div>
-                    <div class="explanation-box">
-                        <h5>📌 Shpjegim i Strukturave:</h5>
-                        <ul>
-                            <li><strong>"Zu meinen Stärken gehört, dass..."</strong> - Strukturë formale për të listuar cilësitë</li>
-                            <li><strong>"Als Schwäche würde ich sagen..."</strong> - Konjunktiv II për të qenë më diplomatik</li>
-                            <li><strong>"Ich bin... beeindruckt, weil..."</strong> - Fjali me "weil" për arsyetim</li>
-                            <li><strong>"was mir sehr wichtig ist"</strong> - Fjali relative me "was" për të gjithë fjalinë</li>
-                        </ul>
-                    </div>
-                </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
 
-                <div class="example-category">
-                    <h4>📰 Diskutim - Diskussion über ein Thema</h4>
-                    <div class="dialogue-box">
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Anna:</span>
-                            <span class="german">Meiner Meinung nach sollten wir mehr für den Umweltschutz tun.</span>
-                            <span class="albanian">Sipas mendimit tim, duhet të bëjmë më shumë për mbrojtjen e mjedisit.</span>
+                    <a href="#" class="topic-card example-card" data-topic="diskussion-b1">
+                        <div class="topic-icon">📰</div>
+                        <div class="topic-info">
+                            <h4>Diskutim</h4>
+                            <p class="topic-german">Diskussion</p>
+                            <span class="topic-count">Dialog + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Besnik:</span>
-                            <span class="german">Da stimme ich dir zu. Obwohl es schwierig ist, müssen wir nachhaltiger leben.</span>
-                            <span class="albanian">Pajtohem me ty. Edhe pse është e vështirë, duhet të jetojmë në mënyrë më të qëndrueshme.</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card example-card" data-topic="beschwerde-b1">
+                        <div class="topic-icon">📝</div>
+                        <div class="topic-info">
+                            <h4>Ankesë formale</h4>
+                            <p class="topic-german">Formelle Beschwerde</p>
+                            <span class="topic-count">Letër + Shpjegim</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-a">Anna:</span>
-                            <span class="german">Einerseits ist es wichtig, weniger zu fliegen, andererseits brauchen viele Menschen Flugzeuge für die Arbeit.</span>
-                            <span class="albanian">Nga njëra anë është e rëndësishme të fluturojmë më pak, nga ana tjetër shumë njerëz kanë nevojë për aeroplan për punën.</span>
+                        <span class="topic-arrow">→</span>
+                    </a>
+
+                    <a href="#" class="topic-card example-card" data-topic="praesentation-b1">
+                        <div class="topic-icon">🎤</div>
+                        <div class="topic-info">
+                            <h4>Prezantim</h4>
+                            <p class="topic-german">Präsentation</p>
+                            <span class="topic-count">Struktura + Fraza</span>
                         </div>
-                        <div class="dialogue-line">
-                            <span class="speaker speaker-b">Besnik:</span>
-                            <span class="german">Das stimmt. Wenn die Regierungen mehr in Züge investieren würden, könnten wir viele Flüge ersetzen.</span>
-                            <span class="albanian">Kjo është e vërtetë. Sikur qeveritë të investonin më shumë në trena, do të mundeshim të zëvendësonim shumë fluturime.</span>
-                        </div>
-                    </div>
-                    <div class="explanation-box">
-                        <h5>📌 Frazat e dobishme për diskutim:</h5>
-                        <ul>
-                            <li><strong>"Meiner Meinung nach..."</strong> - Për të shprehur opinionin</li>
-                            <li><strong>"Da stimme ich dir zu"</strong> - Për të pajtuar</li>
-                            <li><strong>"Obwohl..."</strong> - Për kundërshtim/koncesion</li>
-                            <li><strong>"Einerseits... andererseits..."</strong> - Për të paraqitur dy anë</li>
-                            <li><strong>"Wenn... würden..., könnten..."</strong> - Konjunktiv II për situata hipotetike</li>
-                        </ul>
-                    </div>
+                        <span class="topic-arrow">→</span>
+                    </a>
                 </div>
             </div>
 
