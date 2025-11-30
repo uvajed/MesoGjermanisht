@@ -997,3 +997,630 @@ function updateProgress() {
         if (bar) bar.style.width = `${(quizState[level].currentQuestion / quizData[level].length) * 100}%`;
     });
 }
+
+// ============================================
+// GAMES SYSTEM - Multiple Game Types
+// ============================================
+
+// Game vocabulary data for different games
+const gameVocab = {
+    a1: [
+        { de: 'Hallo', sq: 'Përshëndetje' },
+        { de: 'Guten Morgen', sq: 'Mirëmëngjes' },
+        { de: 'Danke', sq: 'Faleminderit' },
+        { de: 'Bitte', sq: 'Ju lutem' },
+        { de: 'Ja', sq: 'Po' },
+        { de: 'Nein', sq: 'Jo' },
+        { de: 'Eins', sq: 'Një' },
+        { de: 'Zwei', sq: 'Dy' },
+        { de: 'Drei', sq: 'Tre' },
+        { de: 'Rot', sq: 'E kuqe' },
+        { de: 'Blau', sq: 'Blu' },
+        { de: 'Grün', sq: 'E gjelbër' },
+        { de: 'Mutter', sq: 'Nëna' },
+        { de: 'Vater', sq: 'Babai' },
+        { de: 'Wasser', sq: 'Ujë' },
+        { de: 'Brot', sq: 'Bukë' }
+    ],
+    a2: [
+        { de: 'Arzt', sq: 'Mjek' },
+        { de: 'Lehrer', sq: 'Mësues' },
+        { de: 'Zug', sq: 'Tren' },
+        { de: 'Flugzeug', sq: 'Aeroplan' },
+        { de: 'Frühstück', sq: 'Mëngjes' },
+        { de: 'Mittagessen', sq: 'Drekë' },
+        { de: 'Kopf', sq: 'Kokë' },
+        { de: 'Hand', sq: 'Dorë' },
+        { de: 'Sonne', sq: 'Diell' },
+        { de: 'Regen', sq: 'Shi' },
+        { de: 'Hemd', sq: 'Këmishë' },
+        { de: 'Hose', sq: 'Pantallona' },
+        { de: 'Schule', sq: 'Shkollë' },
+        { de: 'Arbeit', sq: 'Punë' },
+        { de: 'Geld', sq: 'Para' },
+        { de: 'Zeit', sq: 'Kohë' }
+    ],
+    b1: [
+        { de: 'Meinung', sq: 'Mendim' },
+        { de: 'Umwelt', sq: 'Mjedis' },
+        { de: 'Gesellschaft', sq: 'Shoqëri' },
+        { de: 'Erfahrung', sq: 'Përvojë' },
+        { de: 'Entscheidung', sq: 'Vendim' },
+        { de: 'Verantwortung', sq: 'Përgjegjësi' },
+        { de: 'Entwicklung', sq: 'Zhvillim' },
+        { de: 'Vorschlag', sq: 'Propozim' },
+        { de: 'Zusammenhang', sq: 'Lidhje' },
+        { de: 'Unterschied', sq: 'Dallim' },
+        { de: 'Vergleich', sq: 'Krahasim' },
+        { de: 'Bedeutung', sq: 'Kuptim' },
+        { de: 'Lösung', sq: 'Zgjidhje' },
+        { de: 'Vorteil', sq: 'Përparësi' },
+        { de: 'Nachteil', sq: 'Disavantazh' },
+        { de: 'Ziel', sq: 'Qëllim' }
+    ]
+};
+
+// Fill in the blank data
+const fillBlankData = {
+    a1: [
+        { sentence: 'Ich ___ Student.', answer: 'bin', hint: 'folja "sein" për ich' },
+        { sentence: 'Er ___ Lehrer.', answer: 'ist', hint: 'folja "sein" për er' },
+        { sentence: 'Wir ___ aus Albanien.', answer: 'sind', hint: 'folja "sein" për wir' },
+        { sentence: 'Du ___ ein Buch.', answer: 'hast', hint: 'folja "haben" për du' },
+        { sentence: 'Ich ___ Wasser.', answer: 'trinke', hint: 'folja "trinken" për ich' },
+        { sentence: 'Sie ___ Deutsch.', answer: 'spricht', hint: 'folja "sprechen" për sie' },
+        { sentence: 'Das ist ___ Buch.', answer: 'ein', hint: 'nyja e pacaktuar' },
+        { sentence: '___ Frau ist nett.', answer: 'Die', hint: 'nyja për femërore' }
+    ],
+    a2: [
+        { sentence: 'Ich habe das Buch ___.', answer: 'gelesen', hint: 'Partizip II i "lesen"' },
+        { sentence: 'Er ist nach Berlin ___.', answer: 'gefahren', hint: 'Partizip II i "fahren"' },
+        { sentence: 'Ich ___ Deutsch lernen.', answer: 'möchte', hint: 'folje modale - dëshirë' },
+        { sentence: 'Du ___ das machen.', answer: 'musst', hint: 'folje modale - detyrë' },
+        { sentence: 'Ich gebe ___ Frau das Buch.', answer: 'der', hint: 'Dativ femërore' },
+        { sentence: 'Ich sehe ___ Mann.', answer: 'den', hint: 'Akkusativ mashkullore' },
+        { sentence: 'Ich lerne, ___ ich eine Prüfung habe.', answer: 'weil', hint: 'lidhëz shkaku' },
+        { sentence: 'Ich weiß, ___ er kommt.', answer: 'dass', hint: 'lidhëz deklarative' }
+    ],
+    b1: [
+        { sentence: 'Das Buch ___ Mannes ist interessant.', answer: 'des', hint: 'Genitiv mashkullore' },
+        { sentence: 'Wenn ich reich ___, würde ich reisen.', answer: 'wäre', hint: 'Konjunktiv II i "sein"' },
+        { sentence: 'Das Essen ___ gekocht.', answer: 'wird', hint: 'Passiv - "werden"' },
+        { sentence: 'Der Mann, ___ dort steht, ist mein Vater.', answer: 'der', hint: 'Përemër relativ' },
+        { sentence: 'Meiner Meinung ___ ist das richtig.', answer: 'nach', hint: 'parafjalë për opinion' },
+        { sentence: 'Er sagte, er ___ krank.', answer: 'sei', hint: 'Konjunktiv I' },
+        { sentence: 'Obwohl es regnet, ___ ich spazieren.', answer: 'gehe', hint: 'folja në fjali kryesore' },
+        { sentence: 'Je mehr ich lerne, ___ besser verstehe ich.', answer: 'desto', hint: 'je... desto' }
+    ]
+};
+
+// Initialize Games System
+function initializeGames() {
+    // Game card click handlers
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const game = card.dataset.game;
+            const level = card.dataset.level;
+            startGame(game, level);
+        });
+    });
+
+    // Back to games buttons
+    document.querySelectorAll('.back-to-games-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const level = btn.dataset.level;
+            document.getElementById(`game-container-${level}`).style.display = 'none';
+            document.getElementById(`games-grid-${level}`).style.display = 'grid';
+            // Hide all game areas
+            document.querySelectorAll(`#game-container-${level} .game-area`).forEach(area => {
+                area.style.display = 'none';
+            });
+        });
+    });
+}
+
+function startGame(game, level) {
+    // Hide games grid, show game container
+    document.getElementById(`games-grid-${level}`).style.display = 'none';
+    document.getElementById(`game-container-${level}`).style.display = 'block';
+
+    // Hide all game areas first
+    document.querySelectorAll(`#game-container-${level} .game-area`).forEach(area => {
+        area.style.display = 'none';
+    });
+
+    // Show and initialize the selected game
+    switch(game) {
+        case 'quiz':
+            document.getElementById(`quiz-${level}-game`).style.display = 'block';
+            quizState[level] = { currentQuestion: 0, score: 0, answered: false };
+            loadQuestion(level);
+            break;
+        case 'matching':
+            document.getElementById(`matching-${level}-game`).style.display = 'block';
+            initMatchingGame(level);
+            break;
+        case 'memory':
+            document.getElementById(`memory-${level}-game`).style.display = 'block';
+            initMemoryGame(level);
+            break;
+        case 'fillblank':
+            document.getElementById(`fillblank-${level}-game`).style.display = 'block';
+            initFillBlankGame(level);
+            break;
+        case 'hangman':
+            document.getElementById(`hangman-${level}-game`).style.display = 'block';
+            initHangmanGame(level);
+            break;
+        case 'scramble':
+            document.getElementById(`scramble-${level}-game`).style.display = 'block';
+            initScrambleGame(level);
+            break;
+    }
+}
+
+// ============================================
+// MATCHING GAME
+// ============================================
+const matchingState = {};
+
+function initMatchingGame(level) {
+    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 8);
+    matchingState[level] = {
+        pairs: vocab,
+        selected: null,
+        matched: 0,
+        startTime: Date.now()
+    };
+
+    const leftCol = document.getElementById(`${level}-match-left`);
+    const rightCol = document.getElementById(`${level}-match-right`);
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+
+    // Shuffle arrays separately
+    const leftItems = vocab.map((v, i) => ({ text: v.de, idx: i, type: 'de' })).sort(() => Math.random() - 0.5);
+    const rightItems = vocab.map((v, i) => ({ text: v.sq, idx: i, type: 'sq' })).sort(() => Math.random() - 0.5);
+
+    leftItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'match-item';
+        div.textContent = item.text;
+        div.dataset.idx = item.idx;
+        div.dataset.type = item.type;
+        div.addEventListener('click', () => handleMatchClick(level, div));
+        leftCol.appendChild(div);
+    });
+
+    rightItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'match-item';
+        div.textContent = item.text;
+        div.dataset.idx = item.idx;
+        div.dataset.type = item.type;
+        div.addEventListener('click', () => handleMatchClick(level, div));
+        rightCol.appendChild(div);
+    });
+
+    document.getElementById(`${level}-match-score`).textContent = '0';
+    document.getElementById(`${level}-match-result`).style.display = 'none';
+
+    // Start timer
+    if (matchingState[level].timer) clearInterval(matchingState[level].timer);
+    matchingState[level].timer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - matchingState[level].startTime) / 1000);
+        document.getElementById(`${level}-match-time`).textContent = elapsed;
+    }, 1000);
+}
+
+function handleMatchClick(level, element) {
+    if (element.classList.contains('matched')) return;
+
+    const state = matchingState[level];
+
+    if (state.selected && state.selected !== element) {
+        // Check for match
+        if (state.selected.dataset.idx === element.dataset.idx && state.selected.dataset.type !== element.dataset.type) {
+            // Match!
+            state.selected.classList.add('matched');
+            element.classList.add('matched');
+            state.matched++;
+            document.getElementById(`${level}-match-score`).textContent = state.matched;
+
+            if (state.matched === state.pairs.length) {
+                clearInterval(state.timer);
+                const time = Math.floor((Date.now() - state.startTime) / 1000);
+                document.getElementById(`${level}-match-result`).innerHTML = `
+                    <h4>🎉 Shkëlqyeshëm!</h4>
+                    <p>I gjete të gjithë çiftet në ${time} sekonda!</p>
+                    <button class="quiz-btn" onclick="initMatchingGame('${level}')">🔄 Luaj Përsëri</button>
+                `;
+                document.getElementById(`${level}-match-result`).style.display = 'block';
+            }
+        } else {
+            // No match
+            state.selected.classList.add('wrong');
+            element.classList.add('wrong');
+            setTimeout(() => {
+                state.selected.classList.remove('wrong', 'selected');
+                element.classList.remove('wrong');
+                state.selected = null;
+            }, 500);
+            return;
+        }
+        state.selected.classList.remove('selected');
+        state.selected = null;
+    } else {
+        if (state.selected) state.selected.classList.remove('selected');
+        state.selected = element;
+        element.classList.add('selected');
+    }
+}
+
+// ============================================
+// MEMORY GAME
+// ============================================
+const memoryState = {};
+
+function initMemoryGame(level) {
+    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 6);
+    const cards = [];
+    vocab.forEach((v, i) => {
+        cards.push({ text: v.de, pairId: i, type: 'de' });
+        cards.push({ text: v.sq, pairId: i, type: 'sq' });
+    });
+    cards.sort(() => Math.random() - 0.5);
+
+    memoryState[level] = {
+        cards: cards,
+        flipped: [],
+        matched: 0,
+        moves: 0,
+        locked: false
+    };
+
+    const grid = document.getElementById(`${level}-memory-grid`);
+    grid.innerHTML = '';
+
+    cards.forEach((card, idx) => {
+        const div = document.createElement('div');
+        div.className = 'memory-card';
+        div.innerHTML = `<div class="memory-card-inner"><div class="memory-card-front">?</div><div class="memory-card-back">${card.text}</div></div>`;
+        div.dataset.idx = idx;
+        div.addEventListener('click', () => handleMemoryClick(level, div, idx));
+        grid.appendChild(div);
+    });
+
+    document.getElementById(`${level}-memory-moves`).textContent = '0';
+    document.getElementById(`${level}-memory-pairs`).textContent = '0';
+    document.getElementById(`${level}-memory-result`).style.display = 'none';
+}
+
+function handleMemoryClick(level, element, idx) {
+    const state = memoryState[level];
+    if (state.locked || element.classList.contains('flipped') || element.classList.contains('matched')) return;
+
+    element.classList.add('flipped');
+    state.flipped.push({ element, idx, card: state.cards[idx] });
+
+    if (state.flipped.length === 2) {
+        state.moves++;
+        document.getElementById(`${level}-memory-moves`).textContent = state.moves;
+        state.locked = true;
+
+        const [first, second] = state.flipped;
+        if (first.card.pairId === second.card.pairId && first.card.type !== second.card.type) {
+            // Match!
+            first.element.classList.add('matched');
+            second.element.classList.add('matched');
+            state.matched++;
+            document.getElementById(`${level}-memory-pairs`).textContent = state.matched;
+            state.flipped = [];
+            state.locked = false;
+
+            if (state.matched === 6) {
+                document.getElementById(`${level}-memory-result`).innerHTML = `
+                    <h4>🎉 Bravo!</h4>
+                    <p>I gjete të gjitha çiftet me ${state.moves} lëvizje!</p>
+                    <button class="quiz-btn" onclick="initMemoryGame('${level}')">🔄 Luaj Përsëri</button>
+                `;
+                document.getElementById(`${level}-memory-result`).style.display = 'block';
+            }
+        } else {
+            // No match
+            setTimeout(() => {
+                first.element.classList.remove('flipped');
+                second.element.classList.remove('flipped');
+                state.flipped = [];
+                state.locked = false;
+            }, 1000);
+        }
+    }
+}
+
+// ============================================
+// FILL IN THE BLANK GAME
+// ============================================
+const fillState = {};
+
+function initFillBlankGame(level) {
+    fillState[level] = {
+        questions: [...fillBlankData[level]].sort(() => Math.random() - 0.5),
+        current: 0,
+        score: 0
+    };
+    loadFillQuestion(level);
+
+    document.getElementById(`${level}-fill-submit`).onclick = () => checkFillAnswer(level);
+    document.getElementById(`${level}-fill-input`).onkeypress = (e) => {
+        if (e.key === 'Enter') checkFillAnswer(level);
+    };
+}
+
+function loadFillQuestion(level) {
+    const state = fillState[level];
+    if (state.current >= state.questions.length) {
+        showFillResults(level);
+        return;
+    }
+
+    const q = state.questions[state.current];
+    document.getElementById(`${level}-fill-question`).innerHTML = `<span class="fill-sentence">${q.sentence.replace('___', '<span class="fill-blank">______</span>')}</span>`;
+    document.getElementById(`${level}-fill-hint`).textContent = `💡 ${q.hint}`;
+    document.getElementById(`${level}-fill-input`).value = '';
+    document.getElementById(`${level}-fill-input`).focus();
+    document.getElementById(`${level}-fill-feedback`).textContent = '';
+    document.getElementById(`${level}-fill-feedback`).className = 'fillblank-feedback';
+    document.getElementById(`${level}-fill-num`).textContent = state.current + 1;
+    document.getElementById(`${level}-fill-score`).textContent = state.score;
+    document.getElementById(`${level}-fill-result`).style.display = 'none';
+}
+
+function checkFillAnswer(level) {
+    const state = fillState[level];
+    const q = state.questions[state.current];
+    const input = document.getElementById(`${level}-fill-input`).value.trim().toLowerCase();
+    const feedback = document.getElementById(`${level}-fill-feedback`);
+
+    if (input === q.answer.toLowerCase()) {
+        state.score++;
+        feedback.textContent = '✅ Saktë!';
+        feedback.className = 'fillblank-feedback correct show';
+    } else {
+        feedback.textContent = `❌ Gabim! Përgjigja: ${q.answer}`;
+        feedback.className = 'fillblank-feedback wrong show';
+    }
+
+    setTimeout(() => {
+        state.current++;
+        loadFillQuestion(level);
+    }, 1500);
+}
+
+function showFillResults(level) {
+    const state = fillState[level];
+    const pct = Math.round((state.score / state.questions.length) * 100);
+    document.getElementById(`${level}-fill-result`).innerHTML = `
+        <h4>🎉 Rezultati!</h4>
+        <div class="results-circle"><span class="results-score">${pct}</span><span class="results-percent">%</span></div>
+        <p>${pct >= 80 ? 'Shkëlqyeshëm!' : pct >= 60 ? 'Mirë!' : 'Praktiko më shumë!'}</p>
+        <button class="quiz-btn" onclick="initFillBlankGame('${level}')">🔄 Luaj Përsëri</button>
+    `;
+    document.getElementById(`${level}-fill-result`).style.display = 'block';
+}
+
+// ============================================
+// HANGMAN GAME
+// ============================================
+const hangmanState = {};
+
+function initHangmanGame(level) {
+    const vocab = [...gameVocab[level]].sort(() => Math.random() - 0.5);
+    const word = vocab[0];
+
+    hangmanState[level] = {
+        word: word.de.toUpperCase(),
+        hint: word.sq,
+        guessed: [],
+        lives: 6,
+        score: 0,
+        wordIndex: 0,
+        vocab: vocab
+    };
+
+    renderHangman(level);
+    renderKeyboard(level);
+}
+
+function renderHangman(level) {
+    const state = hangmanState[level];
+    let display = '';
+    for (let char of state.word) {
+        if (char === ' ') display += '  ';
+        else if (state.guessed.includes(char)) display += char + ' ';
+        else display += '_ ';
+    }
+    document.getElementById(`${level}-hang-word`).textContent = display;
+    document.getElementById(`${level}-hang-hint`).textContent = `💡 ${state.hint}`;
+    document.getElementById(`${level}-hang-lives`).textContent = '❤️'.repeat(state.lives) + '🖤'.repeat(6 - state.lives);
+    document.getElementById(`${level}-hang-score`).textContent = state.score;
+    document.getElementById(`${level}-hang-result`).style.display = 'none';
+}
+
+function renderKeyboard(level) {
+    const keyboard = document.getElementById(`${level}-hang-keyboard`);
+    keyboard.innerHTML = '';
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß'.split('');
+    letters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.className = 'keyboard-key';
+        btn.textContent = letter;
+        btn.addEventListener('click', () => guessLetter(level, letter, btn));
+        keyboard.appendChild(btn);
+    });
+}
+
+function guessLetter(level, letter, btn) {
+    const state = hangmanState[level];
+    if (state.guessed.includes(letter) || state.lives <= 0) return;
+
+    state.guessed.push(letter);
+    btn.disabled = true;
+
+    if (state.word.includes(letter)) {
+        btn.classList.add('correct');
+        // Check if word is complete
+        const wordComplete = state.word.split('').every(c => c === ' ' || state.guessed.includes(c));
+        if (wordComplete) {
+            state.score++;
+            state.wordIndex++;
+            if (state.wordIndex < state.vocab.length) {
+                setTimeout(() => nextHangmanWord(level), 1000);
+            } else {
+                document.getElementById(`${level}-hang-result`).innerHTML = `
+                    <h4>🎉 Fitove!</h4>
+                    <p>Pikët: ${state.score}</p>
+                    <button class="quiz-btn" onclick="initHangmanGame('${level}')">🔄 Luaj Përsëri</button>
+                `;
+                document.getElementById(`${level}-hang-result`).style.display = 'block';
+            }
+        }
+    } else {
+        btn.classList.add('wrong');
+        state.lives--;
+        if (state.lives <= 0) {
+            document.getElementById(`${level}-hang-result`).innerHTML = `
+                <h4>😔 Humbje!</h4>
+                <p>Fjala ishte: ${state.word}</p>
+                <p>Pikët: ${state.score}</p>
+                <button class="quiz-btn" onclick="initHangmanGame('${level}')">🔄 Luaj Përsëri</button>
+            `;
+            document.getElementById(`${level}-hang-result`).style.display = 'block';
+        }
+    }
+    renderHangman(level);
+}
+
+function nextHangmanWord(level) {
+    const state = hangmanState[level];
+    const word = state.vocab[state.wordIndex];
+    state.word = word.de.toUpperCase();
+    state.hint = word.sq;
+    state.guessed = [];
+    state.lives = 6;
+    renderHangman(level);
+    renderKeyboard(level);
+}
+
+// ============================================
+// WORD SCRAMBLE GAME
+// ============================================
+const scrambleState = {};
+
+function initScrambleGame(level) {
+    scrambleState[level] = {
+        vocab: [...gameVocab[level]].sort(() => Math.random() - 0.5).slice(0, 8),
+        current: 0,
+        score: 0,
+        answer: ''
+    };
+    loadScrambleWord(level);
+
+    document.getElementById(`${level}-scramble-clear`).onclick = () => clearScramble(level);
+    document.getElementById(`${level}-scramble-submit`).onclick = () => checkScramble(level);
+}
+
+function loadScrambleWord(level) {
+    const state = scrambleState[level];
+    if (state.current >= state.vocab.length) {
+        showScrambleResults(level);
+        return;
+    }
+
+    const word = state.vocab[state.current];
+    state.answer = '';
+    state.correctWord = word.de;
+
+    // Scramble the word
+    let letters = word.de.split('');
+    for (let i = letters.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [letters[i], letters[j]] = [letters[j], letters[i]];
+    }
+
+    document.getElementById(`${level}-scramble-hint`).textContent = `💡 ${word.sq}`;
+    document.getElementById(`${level}-scramble-num`).textContent = state.current + 1;
+    document.getElementById(`${level}-scramble-score`).textContent = state.score;
+    document.getElementById(`${level}-scramble-feedback`).textContent = '';
+    document.getElementById(`${level}-scramble-feedback`).className = 'scramble-feedback';
+    document.getElementById(`${level}-scramble-result`).style.display = 'none';
+
+    renderScrambleLetters(level, letters);
+    renderScrambleAnswer(level);
+}
+
+function renderScrambleLetters(level, letters) {
+    const container = document.getElementById(`${level}-scramble-letters`);
+    container.innerHTML = '';
+    letters.forEach((letter, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'scramble-letter';
+        btn.textContent = letter;
+        btn.dataset.idx = idx;
+        btn.addEventListener('click', () => selectScrambleLetter(level, letter, btn));
+        container.appendChild(btn);
+    });
+}
+
+function renderScrambleAnswer(level) {
+    document.getElementById(`${level}-scramble-answer`).textContent = scrambleState[level].answer || '_';
+}
+
+function selectScrambleLetter(level, letter, btn) {
+    if (btn.classList.contains('used')) return;
+    btn.classList.add('used');
+    scrambleState[level].answer += letter;
+    renderScrambleAnswer(level);
+}
+
+function clearScramble(level) {
+    scrambleState[level].answer = '';
+    document.querySelectorAll(`#${level}-scramble-letters .scramble-letter`).forEach(btn => {
+        btn.classList.remove('used');
+    });
+    renderScrambleAnswer(level);
+}
+
+function checkScramble(level) {
+    const state = scrambleState[level];
+    const feedback = document.getElementById(`${level}-scramble-feedback`);
+
+    if (state.answer.toLowerCase() === state.correctWord.toLowerCase()) {
+        state.score++;
+        feedback.textContent = '✅ Saktë!';
+        feedback.className = 'scramble-feedback correct show';
+    } else {
+        feedback.textContent = `❌ Gabim! Fjala: ${state.correctWord}`;
+        feedback.className = 'scramble-feedback wrong show';
+    }
+
+    setTimeout(() => {
+        state.current++;
+        loadScrambleWord(level);
+    }, 1500);
+}
+
+function showScrambleResults(level) {
+    const state = scrambleState[level];
+    const pct = Math.round((state.score / state.vocab.length) * 100);
+    document.getElementById(`${level}-scramble-result`).innerHTML = `
+        <h4>🎉 Rezultati!</h4>
+        <div class="results-circle"><span class="results-score">${pct}</span><span class="results-percent">%</span></div>
+        <p>${pct >= 80 ? 'Shkëlqyeshëm!' : pct >= 60 ? 'Mirë!' : 'Praktiko më shumë!'}</p>
+        <button class="quiz-btn" onclick="initScrambleGame('${level}')">🔄 Luaj Përsëri</button>
+    `;
+    document.getElementById(`${level}-scramble-result`).style.display = 'block';
+}
+
+// Initialize games when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeGames);

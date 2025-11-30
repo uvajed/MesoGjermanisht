@@ -267,43 +267,160 @@
                 </div>
             </div>
 
-            <!-- A1 Quiz -->
+            <!-- A1 Games -->
             <div class="section-content" id="quiz-a1">
-                <h3>🎮 Loja A1 - Testo njohuritë e tua!</h3>
+                <h3>🎮 Lojërat A1 - Testo njohuritë e tua!</h3>
+                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
 
-                <div class="quiz-container" id="quiz-a1-game">
-                    <div class="quiz-header">
-                        <div class="quiz-score">
-                            <span class="score-label">Pikët:</span>
-                            <span class="score-value" id="a1-score">0</span>
-                            <span class="score-total">/ 10</span>
+                <!-- Game Selection -->
+                <div class="games-grid" id="games-grid-a1">
+                    <div class="game-card" data-game="quiz" data-level="a1">
+                        <div class="game-icon">❓</div>
+                        <div class="game-info">
+                            <h4>Kuiz</h4>
+                            <p>Testo njohuritë me pyetje me shumë zgjedhje</p>
                         </div>
-                        <div class="quiz-progress">
-                            <span class="progress-label">Pyetja:</span>
-                            <span class="progress-value" id="a1-question-num">1</span>
-                            <span class="progress-total">/ 10</span>
+                    </div>
+                    <div class="game-card" data-game="matching" data-level="a1">
+                        <div class="game-icon">🔗</div>
+                        <div class="game-info">
+                            <h4>Përputhje</h4>
+                            <p>Lidh fjalët gjermanisht me shqip</p>
+                        </div>
+                    </div>
+                    <div class="game-card" data-game="memory" data-level="a1">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-info">
+                            <h4>Memorie</h4>
+                            <p>Gjej çiftet e fjalëve të fshehura</p>
+                        </div>
+                    </div>
+                    <div class="game-card" data-game="fillblank" data-level="a1">
+                        <div class="game-icon">✏️</div>
+                        <div class="game-info">
+                            <h4>Plotëso</h4>
+                            <p>Shkruaj fjalën që mungon</p>
+                        </div>
+                    </div>
+                    <div class="game-card" data-game="hangman" data-level="a1">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-info">
+                            <h4>Varëse</h4>
+                            <p>Qëllo shkronjat për të gjetur fjalën</p>
+                        </div>
+                    </div>
+                    <div class="game-card" data-game="scramble" data-level="a1">
+                        <div class="game-icon">🔀</div>
+                        <div class="game-info">
+                            <h4>Rirregullim</h4>
+                            <p>Rirregulloji shkronjat për të bërë fjalën</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Container (hidden by default) -->
+                <div class="game-container" id="game-container-a1" style="display: none;">
+                    <button class="back-to-games-btn" data-level="a1">← Kthehu tek Lojërat</button>
+
+                    <!-- Quiz Game -->
+                    <div class="quiz-container game-area" id="quiz-a1-game" style="display: none;">
+                        <div class="quiz-header">
+                            <div class="quiz-score">
+                                <span class="score-label">Pikët:</span>
+                                <span class="score-value" id="a1-score">0</span>
+                                <span class="score-total">/ 10</span>
+                            </div>
+                            <div class="quiz-progress">
+                                <span class="progress-label">Pyetja:</span>
+                                <span class="progress-value" id="a1-question-num">1</span>
+                                <span class="progress-total">/ 10</span>
+                            </div>
+                        </div>
+                        <div class="quiz-question-container">
+                            <div class="quiz-question" id="a1-question"></div>
+                            <div class="quiz-options" id="a1-options"></div>
+                        </div>
+                        <div class="quiz-feedback" id="a1-feedback"></div>
+                        <div class="quiz-controls">
+                            <button class="quiz-btn" id="a1-next-btn" style="display: none;">Pyetja Tjetër →</button>
+                            <button class="quiz-btn restart-btn" id="a1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                        </div>
+                        <div class="quiz-results" id="a1-results" style="display: none;">
+                            <h4>🎉 Rezultati Juaj!</h4>
+                            <div class="results-circle">
+                                <span class="results-score" id="a1-final-score">0</span>
+                                <span class="results-percent">%</span>
+                            </div>
+                            <p class="results-message" id="a1-results-message"></p>
                         </div>
                     </div>
 
-                    <div class="quiz-question-container">
-                        <div class="quiz-question" id="a1-question"></div>
-                        <div class="quiz-options" id="a1-options"></div>
-                    </div>
-
-                    <div class="quiz-feedback" id="a1-feedback"></div>
-
-                    <div class="quiz-controls">
-                        <button class="quiz-btn" id="a1-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                        <button class="quiz-btn restart-btn" id="a1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
-                    </div>
-
-                    <div class="quiz-results" id="a1-results" style="display: none;">
-                        <h4>🎉 Rezultati Juaj!</h4>
-                        <div class="results-circle">
-                            <span class="results-score" id="a1-final-score">0</span>
-                            <span class="results-percent">%</span>
+                    <!-- Matching Game -->
+                    <div class="matching-container game-area" id="matching-a1-game" style="display: none;">
+                        <div class="matching-header">
+                            <div class="matching-score">Çiftet: <span id="a1-match-score">0</span>/8</div>
+                            <div class="matching-timer">Koha: <span id="a1-match-time">0</span>s</div>
                         </div>
-                        <p class="results-message" id="a1-results-message"></p>
+                        <div class="matching-columns">
+                            <div class="matching-column" id="a1-match-left"></div>
+                            <div class="matching-column" id="a1-match-right"></div>
+                        </div>
+                        <div class="matching-result" id="a1-match-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Memory Game -->
+                    <div class="memory-container game-area" id="memory-a1-game" style="display: none;">
+                        <div class="memory-header">
+                            <div class="memory-moves">Lëvizje: <span id="a1-memory-moves">0</span></div>
+                            <div class="memory-pairs">Çiftet: <span id="a1-memory-pairs">0</span>/6</div>
+                        </div>
+                        <div class="memory-grid" id="a1-memory-grid"></div>
+                        <div class="memory-result" id="a1-memory-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Fill in the Blank Game -->
+                    <div class="fillblank-container game-area" id="fillblank-a1-game" style="display: none;">
+                        <div class="fillblank-header">
+                            <div class="fillblank-score">Pikët: <span id="a1-fill-score">0</span>/8</div>
+                            <div class="fillblank-progress">Pyetja: <span id="a1-fill-num">1</span>/8</div>
+                        </div>
+                        <div class="fillblank-question" id="a1-fill-question"></div>
+                        <div class="fillblank-input-area">
+                            <input type="text" class="fillblank-input" id="a1-fill-input" placeholder="Shkruaj përgjigjen...">
+                            <button class="fillblank-submit" id="a1-fill-submit">Kontrollo</button>
+                        </div>
+                        <div class="fillblank-hint" id="a1-fill-hint"></div>
+                        <div class="fillblank-feedback" id="a1-fill-feedback"></div>
+                        <div class="fillblank-result" id="a1-fill-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Hangman Game -->
+                    <div class="hangman-container game-area" id="hangman-a1-game" style="display: none;">
+                        <div class="hangman-header">
+                            <div class="hangman-lives">Jetë: <span id="a1-hang-lives">❤️❤️❤️❤️❤️❤️</span></div>
+                            <div class="hangman-score">Pikët: <span id="a1-hang-score">0</span></div>
+                        </div>
+                        <div class="hangman-hint" id="a1-hang-hint"></div>
+                        <div class="hangman-word" id="a1-hang-word"></div>
+                        <div class="hangman-keyboard" id="a1-hang-keyboard"></div>
+                        <div class="hangman-result" id="a1-hang-result" style="display: none;"></div>
+                    </div>
+
+                    <!-- Word Scramble Game -->
+                    <div class="scramble-container game-area" id="scramble-a1-game" style="display: none;">
+                        <div class="scramble-header">
+                            <div class="scramble-score">Pikët: <span id="a1-scramble-score">0</span>/8</div>
+                            <div class="scramble-progress">Fjala: <span id="a1-scramble-num">1</span>/8</div>
+                        </div>
+                        <div class="scramble-hint" id="a1-scramble-hint"></div>
+                        <div class="scramble-letters" id="a1-scramble-letters"></div>
+                        <div class="scramble-answer" id="a1-scramble-answer"></div>
+                        <div class="scramble-controls">
+                            <button class="scramble-clear" id="a1-scramble-clear">Fshi</button>
+                            <button class="scramble-submit" id="a1-scramble-submit">Kontrollo</button>
+                        </div>
+                        <div class="scramble-feedback" id="a1-scramble-feedback"></div>
+                        <div class="scramble-result" id="a1-scramble-result" style="display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -510,43 +627,93 @@
                 </div>
             </div>
 
-            <!-- A2 Quiz -->
+            <!-- A2 Games -->
             <div class="section-content" id="quiz-a2">
-                <h3>🎮 Loja A2 - Testo njohuritë e tua!</h3>
+                <h3>🎮 Lojërat A2 - Testo njohuritë e tua!</h3>
+                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
 
-                <div class="quiz-container" id="quiz-a2-game">
-                    <div class="quiz-header">
-                        <div class="quiz-score">
-                            <span class="score-label">Pikët:</span>
-                            <span class="score-value" id="a2-score">0</span>
-                            <span class="score-total">/ 10</span>
+                <div class="games-grid" id="games-grid-a2">
+                    <div class="game-card" data-game="quiz" data-level="a2">
+                        <div class="game-icon">❓</div>
+                        <div class="game-info"><h4>Kuiz</h4><p>Testo njohuritë me pyetje me shumë zgjedhje</p></div>
+                    </div>
+                    <div class="game-card" data-game="matching" data-level="a2">
+                        <div class="game-icon">🔗</div>
+                        <div class="game-info"><h4>Përputhje</h4><p>Lidh fjalët gjermanisht me shqip</p></div>
+                    </div>
+                    <div class="game-card" data-game="memory" data-level="a2">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-info"><h4>Memorie</h4><p>Gjej çiftet e fjalëve të fshehura</p></div>
+                    </div>
+                    <div class="game-card" data-game="fillblank" data-level="a2">
+                        <div class="game-icon">✏️</div>
+                        <div class="game-info"><h4>Plotëso</h4><p>Shkruaj fjalën që mungon</p></div>
+                    </div>
+                    <div class="game-card" data-game="hangman" data-level="a2">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-info"><h4>Varëse</h4><p>Qëllo shkronjat për të gjetur fjalën</p></div>
+                    </div>
+                    <div class="game-card" data-game="scramble" data-level="a2">
+                        <div class="game-icon">🔀</div>
+                        <div class="game-info"><h4>Rirregullim</h4><p>Rirregulloji shkronjat për të bërë fjalën</p></div>
+                    </div>
+                </div>
+
+                <div class="game-container" id="game-container-a2" style="display: none;">
+                    <button class="back-to-games-btn" data-level="a2">← Kthehu tek Lojërat</button>
+                    <div class="quiz-container game-area" id="quiz-a2-game" style="display: none;">
+                        <div class="quiz-header">
+                            <div class="quiz-score"><span class="score-label">Pikët:</span><span class="score-value" id="a2-score">0</span><span class="score-total">/ 10</span></div>
+                            <div class="quiz-progress"><span class="progress-label">Pyetja:</span><span class="progress-value" id="a2-question-num">1</span><span class="progress-total">/ 10</span></div>
                         </div>
-                        <div class="quiz-progress">
-                            <span class="progress-label">Pyetja:</span>
-                            <span class="progress-value" id="a2-question-num">1</span>
-                            <span class="progress-total">/ 10</span>
+                        <div class="quiz-question-container">
+                            <div class="quiz-question" id="a2-question"></div>
+                            <div class="quiz-options" id="a2-options"></div>
+                        </div>
+                        <div class="quiz-feedback" id="a2-feedback"></div>
+                        <div class="quiz-controls">
+                            <button class="quiz-btn" id="a2-next-btn" style="display: none;">Pyetja Tjetër →</button>
+                            <button class="quiz-btn restart-btn" id="a2-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                        </div>
+                        <div class="quiz-results" id="a2-results" style="display: none;">
+                            <h4>🎉 Rezultati Juaj!</h4>
+                            <div class="results-circle"><span class="results-score" id="a2-final-score">0</span><span class="results-percent">%</span></div>
+                            <p class="results-message" id="a2-results-message"></p>
                         </div>
                     </div>
-
-                    <div class="quiz-question-container">
-                        <div class="quiz-question" id="a2-question"></div>
-                        <div class="quiz-options" id="a2-options"></div>
+                    <div class="matching-container game-area" id="matching-a2-game" style="display: none;">
+                        <div class="matching-header"><div class="matching-score">Çiftet: <span id="a2-match-score">0</span>/8</div><div class="matching-timer">Koha: <span id="a2-match-time">0</span>s</div></div>
+                        <div class="matching-columns"><div class="matching-column" id="a2-match-left"></div><div class="matching-column" id="a2-match-right"></div></div>
+                        <div class="matching-result" id="a2-match-result" style="display: none;"></div>
                     </div>
-
-                    <div class="quiz-feedback" id="a2-feedback"></div>
-
-                    <div class="quiz-controls">
-                        <button class="quiz-btn" id="a2-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                        <button class="quiz-btn restart-btn" id="a2-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                    <div class="memory-container game-area" id="memory-a2-game" style="display: none;">
+                        <div class="memory-header"><div class="memory-moves">Lëvizje: <span id="a2-memory-moves">0</span></div><div class="memory-pairs">Çiftet: <span id="a2-memory-pairs">0</span>/6</div></div>
+                        <div class="memory-grid" id="a2-memory-grid"></div>
+                        <div class="memory-result" id="a2-memory-result" style="display: none;"></div>
                     </div>
-
-                    <div class="quiz-results" id="a2-results" style="display: none;">
-                        <h4>🎉 Rezultati Juaj!</h4>
-                        <div class="results-circle">
-                            <span class="results-score" id="a2-final-score">0</span>
-                            <span class="results-percent">%</span>
-                        </div>
-                        <p class="results-message" id="a2-results-message"></p>
+                    <div class="fillblank-container game-area" id="fillblank-a2-game" style="display: none;">
+                        <div class="fillblank-header"><div class="fillblank-score">Pikët: <span id="a2-fill-score">0</span>/8</div><div class="fillblank-progress">Pyetja: <span id="a2-fill-num">1</span>/8</div></div>
+                        <div class="fillblank-question" id="a2-fill-question"></div>
+                        <div class="fillblank-input-area"><input type="text" class="fillblank-input" id="a2-fill-input" placeholder="Shkruaj përgjigjen..."><button class="fillblank-submit" id="a2-fill-submit">Kontrollo</button></div>
+                        <div class="fillblank-hint" id="a2-fill-hint"></div>
+                        <div class="fillblank-feedback" id="a2-fill-feedback"></div>
+                        <div class="fillblank-result" id="a2-fill-result" style="display: none;"></div>
+                    </div>
+                    <div class="hangman-container game-area" id="hangman-a2-game" style="display: none;">
+                        <div class="hangman-header"><div class="hangman-lives">Jetë: <span id="a2-hang-lives">❤️❤️❤️❤️❤️❤️</span></div><div class="hangman-score">Pikët: <span id="a2-hang-score">0</span></div></div>
+                        <div class="hangman-hint" id="a2-hang-hint"></div>
+                        <div class="hangman-word" id="a2-hang-word"></div>
+                        <div class="hangman-keyboard" id="a2-hang-keyboard"></div>
+                        <div class="hangman-result" id="a2-hang-result" style="display: none;"></div>
+                    </div>
+                    <div class="scramble-container game-area" id="scramble-a2-game" style="display: none;">
+                        <div class="scramble-header"><div class="scramble-score">Pikët: <span id="a2-scramble-score">0</span>/8</div><div class="scramble-progress">Fjala: <span id="a2-scramble-num">1</span>/8</div></div>
+                        <div class="scramble-hint" id="a2-scramble-hint"></div>
+                        <div class="scramble-letters" id="a2-scramble-letters"></div>
+                        <div class="scramble-answer" id="a2-scramble-answer"></div>
+                        <div class="scramble-controls"><button class="scramble-clear" id="a2-scramble-clear">Fshi</button><button class="scramble-submit" id="a2-scramble-submit">Kontrollo</button></div>
+                        <div class="scramble-feedback" id="a2-scramble-feedback"></div>
+                        <div class="scramble-result" id="a2-scramble-result" style="display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -753,43 +920,93 @@
                 </div>
             </div>
 
-            <!-- B1 Quiz -->
+            <!-- B1 Games -->
             <div class="section-content" id="quiz-b1">
-                <h3>🎮 Loja B1 - Testo njohuritë e tua!</h3>
+                <h3>🎮 Lojërat B1 - Testo njohuritë e tua!</h3>
+                <p class="section-intro">Zgjidh një lojë për të praktikuar gjermanishten!</p>
 
-                <div class="quiz-container" id="quiz-b1-game">
-                    <div class="quiz-header">
-                        <div class="quiz-score">
-                            <span class="score-label">Pikët:</span>
-                            <span class="score-value" id="b1-score">0</span>
-                            <span class="score-total">/ 10</span>
+                <div class="games-grid" id="games-grid-b1">
+                    <div class="game-card" data-game="quiz" data-level="b1">
+                        <div class="game-icon">❓</div>
+                        <div class="game-info"><h4>Kuiz</h4><p>Testo njohuritë me pyetje me shumë zgjedhje</p></div>
+                    </div>
+                    <div class="game-card" data-game="matching" data-level="b1">
+                        <div class="game-icon">🔗</div>
+                        <div class="game-info"><h4>Përputhje</h4><p>Lidh fjalët gjermanisht me shqip</p></div>
+                    </div>
+                    <div class="game-card" data-game="memory" data-level="b1">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-info"><h4>Memorie</h4><p>Gjej çiftet e fjalëve të fshehura</p></div>
+                    </div>
+                    <div class="game-card" data-game="fillblank" data-level="b1">
+                        <div class="game-icon">✏️</div>
+                        <div class="game-info"><h4>Plotëso</h4><p>Shkruaj fjalën që mungon</p></div>
+                    </div>
+                    <div class="game-card" data-game="hangman" data-level="b1">
+                        <div class="game-icon">🎯</div>
+                        <div class="game-info"><h4>Varëse</h4><p>Qëllo shkronjat për të gjetur fjalën</p></div>
+                    </div>
+                    <div class="game-card" data-game="scramble" data-level="b1">
+                        <div class="game-icon">🔀</div>
+                        <div class="game-info"><h4>Rirregullim</h4><p>Rirregulloji shkronjat për të bërë fjalën</p></div>
+                    </div>
+                </div>
+
+                <div class="game-container" id="game-container-b1" style="display: none;">
+                    <button class="back-to-games-btn" data-level="b1">← Kthehu tek Lojërat</button>
+                    <div class="quiz-container game-area" id="quiz-b1-game" style="display: none;">
+                        <div class="quiz-header">
+                            <div class="quiz-score"><span class="score-label">Pikët:</span><span class="score-value" id="b1-score">0</span><span class="score-total">/ 10</span></div>
+                            <div class="quiz-progress"><span class="progress-label">Pyetja:</span><span class="progress-value" id="b1-question-num">1</span><span class="progress-total">/ 10</span></div>
                         </div>
-                        <div class="quiz-progress">
-                            <span class="progress-label">Pyetja:</span>
-                            <span class="progress-value" id="b1-question-num">1</span>
-                            <span class="progress-total">/ 10</span>
+                        <div class="quiz-question-container">
+                            <div class="quiz-question" id="b1-question"></div>
+                            <div class="quiz-options" id="b1-options"></div>
+                        </div>
+                        <div class="quiz-feedback" id="b1-feedback"></div>
+                        <div class="quiz-controls">
+                            <button class="quiz-btn" id="b1-next-btn" style="display: none;">Pyetja Tjetër →</button>
+                            <button class="quiz-btn restart-btn" id="b1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                        </div>
+                        <div class="quiz-results" id="b1-results" style="display: none;">
+                            <h4>🎉 Rezultati Juaj!</h4>
+                            <div class="results-circle"><span class="results-score" id="b1-final-score">0</span><span class="results-percent">%</span></div>
+                            <p class="results-message" id="b1-results-message"></p>
                         </div>
                     </div>
-
-                    <div class="quiz-question-container">
-                        <div class="quiz-question" id="b1-question"></div>
-                        <div class="quiz-options" id="b1-options"></div>
+                    <div class="matching-container game-area" id="matching-b1-game" style="display: none;">
+                        <div class="matching-header"><div class="matching-score">Çiftet: <span id="b1-match-score">0</span>/8</div><div class="matching-timer">Koha: <span id="b1-match-time">0</span>s</div></div>
+                        <div class="matching-columns"><div class="matching-column" id="b1-match-left"></div><div class="matching-column" id="b1-match-right"></div></div>
+                        <div class="matching-result" id="b1-match-result" style="display: none;"></div>
                     </div>
-
-                    <div class="quiz-feedback" id="b1-feedback"></div>
-
-                    <div class="quiz-controls">
-                        <button class="quiz-btn" id="b1-next-btn" style="display: none;">Pyetja Tjetër →</button>
-                        <button class="quiz-btn restart-btn" id="b1-restart-btn" style="display: none;">🔄 Fillo Përsëri</button>
+                    <div class="memory-container game-area" id="memory-b1-game" style="display: none;">
+                        <div class="memory-header"><div class="memory-moves">Lëvizje: <span id="b1-memory-moves">0</span></div><div class="memory-pairs">Çiftet: <span id="b1-memory-pairs">0</span>/6</div></div>
+                        <div class="memory-grid" id="b1-memory-grid"></div>
+                        <div class="memory-result" id="b1-memory-result" style="display: none;"></div>
                     </div>
-
-                    <div class="quiz-results" id="b1-results" style="display: none;">
-                        <h4>🎉 Rezultati Juaj!</h4>
-                        <div class="results-circle">
-                            <span class="results-score" id="b1-final-score">0</span>
-                            <span class="results-percent">%</span>
-                        </div>
-                        <p class="results-message" id="b1-results-message"></p>
+                    <div class="fillblank-container game-area" id="fillblank-b1-game" style="display: none;">
+                        <div class="fillblank-header"><div class="fillblank-score">Pikët: <span id="b1-fill-score">0</span>/8</div><div class="fillblank-progress">Pyetja: <span id="b1-fill-num">1</span>/8</div></div>
+                        <div class="fillblank-question" id="b1-fill-question"></div>
+                        <div class="fillblank-input-area"><input type="text" class="fillblank-input" id="b1-fill-input" placeholder="Shkruaj përgjigjen..."><button class="fillblank-submit" id="b1-fill-submit">Kontrollo</button></div>
+                        <div class="fillblank-hint" id="b1-fill-hint"></div>
+                        <div class="fillblank-feedback" id="b1-fill-feedback"></div>
+                        <div class="fillblank-result" id="b1-fill-result" style="display: none;"></div>
+                    </div>
+                    <div class="hangman-container game-area" id="hangman-b1-game" style="display: none;">
+                        <div class="hangman-header"><div class="hangman-lives">Jetë: <span id="b1-hang-lives">❤️❤️❤️❤️❤️❤️</span></div><div class="hangman-score">Pikët: <span id="b1-hang-score">0</span></div></div>
+                        <div class="hangman-hint" id="b1-hang-hint"></div>
+                        <div class="hangman-word" id="b1-hang-word"></div>
+                        <div class="hangman-keyboard" id="b1-hang-keyboard"></div>
+                        <div class="hangman-result" id="b1-hang-result" style="display: none;"></div>
+                    </div>
+                    <div class="scramble-container game-area" id="scramble-b1-game" style="display: none;">
+                        <div class="scramble-header"><div class="scramble-score">Pikët: <span id="b1-scramble-score">0</span>/8</div><div class="scramble-progress">Fjala: <span id="b1-scramble-num">1</span>/8</div></div>
+                        <div class="scramble-hint" id="b1-scramble-hint"></div>
+                        <div class="scramble-letters" id="b1-scramble-letters"></div>
+                        <div class="scramble-answer" id="b1-scramble-answer"></div>
+                        <div class="scramble-controls"><button class="scramble-clear" id="b1-scramble-clear">Fshi</button><button class="scramble-submit" id="b1-scramble-submit">Kontrollo</button></div>
+                        <div class="scramble-feedback" id="b1-scramble-feedback"></div>
+                        <div class="scramble-result" id="b1-scramble-result" style="display: none;"></div>
                     </div>
                 </div>
             </div>
