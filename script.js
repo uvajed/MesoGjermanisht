@@ -458,6 +458,365 @@ const topicContent = {
                 <div class="dialogue-line"><span class="speaker speaker-b">Bewerber:</span><span class="german">Ich arbeite gut im Team.</span><span class="albanian">Punoj mirë në grup.</span></div>
             </div>
             <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p>"Zu meinen Stärken gehört..." = Ndër pikat e mia të forta...</p></div>`
+    },
+    // A2 Vocabulary - Essen
+    'essen-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ushqimi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🍽️</span><div class="modal-header-text"><h2>Ushqimi - Das Essen</h2><p>Fjalor i zgjeruar për ushqimin</p></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Frühstück</div><div class="albanian">mëngjesi</div><div class="example">"Zum Frühstück esse ich Brot."</div></div>
+                <div class="modal-word-card"><div class="german">das Mittagessen</div><div class="albanian">dreka</div><div class="example">"Das Mittagessen ist um 12 Uhr."</div></div>
+                <div class="modal-word-card"><div class="german">das Abendessen</div><div class="albanian">darka</div><div class="example">"Was gibt es zum Abendessen?"</div></div>
+                <div class="modal-word-card"><div class="german">die Suppe</div><div class="albanian">supa</div><div class="example">"Die Suppe ist heiß."</div></div>
+                <div class="modal-word-card"><div class="german">der Salat</div><div class="albanian">sallata</div><div class="example">"Ich möchte einen Salat."</div></div>
+                <div class="modal-word-card"><div class="german">das Hähnchen</div><div class="albanian">pula</div><div class="example">"Das Hähnchen schmeckt gut."</div></div>
+                <div class="modal-word-card"><div class="german">die Kartoffel</div><div class="albanian">patatja</div><div class="example">"Kartoffeln mit Soße."</div></div>
+                <div class="modal-word-card"><div class="german">der Reis</div><div class="albanian">orizi</div><div class="example">"Reis oder Nudeln?"</div></div>
+                <div class="modal-word-card"><div class="german">die Nudeln</div><div class="albanian">makaronat</div><div class="example">"Nudeln mit Tomatensoße."</div></div>
+                <div class="modal-word-card"><div class="german">der Kuchen</div><div class="albanian">torta</div><div class="example">"Zum Nachtisch gibt es Kuchen."</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Shprehje të dobishme</h4><p><strong>Guten Appetit!</strong> = Të bëftë mirë!</p><p><strong>Es schmeckt gut!</strong> = Ka shije të mirë!</p></div>`
+    },
+    // A2 Vocabulary - Körper
+    'korper-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Trupi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🏃</span><div class="modal-header-text"><h2>Trupi - Der Körper</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">der Kopf</div><div class="albanian">koka</div></div>
+                <div class="modal-word-card"><div class="german">das Auge</div><div class="albanian">syri</div></div>
+                <div class="modal-word-card"><div class="german">die Nase</div><div class="albanian">hunda</div></div>
+                <div class="modal-word-card"><div class="german">der Mund</div><div class="albanian">goja</div></div>
+                <div class="modal-word-card"><div class="german">das Ohr</div><div class="albanian">veshi</div></div>
+                <div class="modal-word-card"><div class="german">die Hand</div><div class="albanian">dora</div></div>
+                <div class="modal-word-card"><div class="german">der Arm</div><div class="albanian">krahu</div></div>
+                <div class="modal-word-card"><div class="german">das Bein</div><div class="albanian">këmba</div></div>
+                <div class="modal-word-card"><div class="german">der Fuß</div><div class="albanian">këmba (shputa)</div></div>
+                <div class="modal-word-card"><div class="german">der Bauch</div><div class="albanian">barku</div></div>
+                <div class="modal-word-card"><div class="german">der Rücken</div><div class="albanian">shpina</div></div>
+                <div class="modal-word-card"><div class="german">das Herz</div><div class="albanian">zemra</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Për dhimbje</h4><p><strong>Ich habe Kopfschmerzen</strong> = Kam dhimbje koke</p><p><strong>Mein Arm tut weh</strong> = Më dhemb krahu</p></div>`
+    },
+    // A2 Vocabulary - Wetter
+    'wetter-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Moti</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🌤️</span><div class="modal-header-text"><h2>Moti - Das Wetter</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">die Sonne</div><div class="albanian">dielli</div><div class="example">"Die Sonne scheint."</div></div>
+                <div class="modal-word-card"><div class="german">der Regen</div><div class="albanian">shiu</div><div class="example">"Es regnet."</div></div>
+                <div class="modal-word-card"><div class="german">der Schnee</div><div class="albanian">bora</div><div class="example">"Es schneit."</div></div>
+                <div class="modal-word-card"><div class="german">der Wind</div><div class="albanian">era</div><div class="example">"Der Wind ist stark."</div></div>
+                <div class="modal-word-card"><div class="german">die Wolke</div><div class="albanian">reja</div><div class="example">"Viele Wolken am Himmel."</div></div>
+                <div class="modal-word-card"><div class="german">heiß</div><div class="albanian">nxehtë</div><div class="example">"Es ist heiß."</div></div>
+                <div class="modal-word-card"><div class="german">kalt</div><div class="albanian">ftohtë</div><div class="example">"Es ist kalt."</div></div>
+                <div class="modal-word-card"><div class="german">warm</div><div class="albanian">ngrohtë</div><div class="example">"Es ist warm."</div></div>
+                <div class="modal-word-card"><div class="german">das Gewitter</div><div class="albanian">stuhia</div><div class="example">"Ein Gewitter kommt."</div></div>
+                <div class="modal-word-card"><div class="german">der Nebel</div><div class="albanian">mjegulla</div><div class="example">"Heute ist Nebel."</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Pyetje për motin</h4><p><strong>Wie ist das Wetter?</strong> = Si është moti?</p><p><strong>Wie wird das Wetter morgen?</strong> = Si do të jetë moti nesër?</p></div>`
+    },
+    // A2 Vocabulary - Kleidung
+    'kleidung-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Veshjet</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">👔</span><div class="modal-header-text"><h2>Veshjet - Die Kleidung</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Hemd</div><div class="albanian">këmisha</div></div>
+                <div class="modal-word-card"><div class="german">die Hose</div><div class="albanian">pantallona</div></div>
+                <div class="modal-word-card"><div class="german">das Kleid</div><div class="albanian">fustani</div></div>
+                <div class="modal-word-card"><div class="german">der Rock</div><div class="albanian">fundi</div></div>
+                <div class="modal-word-card"><div class="german">die Jacke</div><div class="albanian">xhaketa</div></div>
+                <div class="modal-word-card"><div class="german">der Mantel</div><div class="albanian">pallto</div></div>
+                <div class="modal-word-card"><div class="german">die Schuhe</div><div class="albanian">këpucët</div></div>
+                <div class="modal-word-card"><div class="german">die Socken</div><div class="albanian">çorapet</div></div>
+                <div class="modal-word-card"><div class="german">der Pullover</div><div class="albanian">triko</div></div>
+                <div class="modal-word-card"><div class="german">die Mütze</div><div class="albanian">kapela</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Në dyqan</h4><p><strong>Kann ich das anprobieren?</strong> = A mund ta provoj?</p><p><strong>Das passt mir gut.</strong> = Më shkon mirë.</p></div>`
+    },
+    // A2 Grammar - Präpositionen
+    'prapositionen-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Parafjalët</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📌</span><div class="modal-header-text"><h2>Parafjalët - Präpositionen</h2></div></div>
+            <div class="grammar-deep-section"><h3>📌 Akkusativ Präpositionen</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>für</strong></span><span class="al">për - Das ist für dich.</span></li>
+                <li><span class="de"><strong>gegen</strong></span><span class="al">kundër - gegen die Wand</span></li>
+                <li><span class="de"><strong>ohne</strong></span><span class="al">pa - ohne mich</span></li>
+                <li><span class="de"><strong>durch</strong></span><span class="al">përmes - durch die Stadt</span></li>
+                <li><span class="de"><strong>um</strong></span><span class="al">rreth - um den Tisch</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Dativ Präpositionen</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>mit</strong></span><span class="al">me - mit dem Auto</span></li>
+                <li><span class="de"><strong>bei</strong></span><span class="al">tek - bei mir</span></li>
+                <li><span class="de"><strong>nach</strong></span><span class="al">pas, drejt - nach Hause</span></li>
+                <li><span class="de"><strong>von</strong></span><span class="al">nga - von der Arbeit</span></li>
+                <li><span class="de"><strong>zu</strong></span><span class="al">te, drejt - zum Arzt</span></li>
+                <li><span class="de"><strong>aus</strong></span><span class="al">nga - aus Albanien</span></li>
+                <li><span class="de"><strong>seit</strong></span><span class="al">që nga - seit zwei Jahren</span></li>
+            </ul></div>
+            <div class="grammar-rule-box"><h4>💡 Këshillë</h4><p>Mëso: <strong>für, gegen, ohne, durch, um</strong> = Akkusativ</p><p><strong>mit, bei, nach, von, zu, aus, seit</strong> = Dativ</p></div>`
+    },
+    // A2 Grammar - Nebensätze
+    'nebensatze-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Fjali Dytësore</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🔀</span><div class="modal-header-text"><h2>Fjali Dytësore - Nebensätze</h2><p>Folja shkon në fund!</p></div></div>
+            <div class="grammar-rule-box"><h4>🎯 Rregulli kryesor</h4><p>Në fjalitë dytësore, folja shkon në <strong>FUND</strong> të fjalisë!</p></div>
+            <div class="grammar-deep-section"><h3>📌 weil (sepse)</h3><ul class="grammar-examples-list">
+                <li><span class="de">Ich lerne Deutsch, <strong>weil</strong> ich in Deutschland arbeiten <strong>will</strong>.</span><span class="al">Mësoj gjermanisht sepse dua të punoj në Gjermani.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 dass (që)</h3><ul class="grammar-examples-list">
+                <li><span class="de">Ich denke, <strong>dass</strong> er nett <strong>ist</strong>.</span><span class="al">Mendoj që ai është i mirë.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 wenn (kur, nëse)</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Wenn</strong> ich Zeit <strong>habe</strong>, gehe ich ins Kino.</span><span class="al">Kur kam kohë, shkoj në kinema.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 obwohl (megjithëse)</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Obwohl</strong> es regnet, gehe ich <strong>spazieren</strong>.</span><span class="al">Megjithëse bie shi, shkoj në shëtitje.</span></li>
+            </ul></div>`
+    },
+    // A2 Grammar - Komparativ
+    'komparativ-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Krahasimi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📊</span><div class="modal-header-text"><h2>Krahasimi - Komparativ & Superlativ</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>Komparativ:</strong> + er (schneller, größer)</p><p><strong>Superlativ:</strong> am + sten (am schnellsten)</p></div>
+            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
+                <li><span class="de">schnell → schnell<strong>er</strong> → am schnell<strong>sten</strong></span><span class="al">shpejt → më shpejt → më i shpejti</span></li>
+                <li><span class="de">groß → größ<strong>er</strong> → am größ<strong>ten</strong></span><span class="al">i madh → më i madh → më i madhi</span></li>
+                <li><span class="de">alt →ält<strong>er</strong> → amält<strong>esten</strong></span><span class="al">i vjetër → më i vjetër → më i vjetri</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>⚠️ Të parregullt</h3><ul class="grammar-examples-list">
+                <li><span class="de">gut → besser → am besten</span><span class="al">mirë → më mirë → më i miri</span></li>
+                <li><span class="de">viel → mehr → am meisten</span><span class="al">shumë → më shumë → më së shumti</span></li>
+                <li><span class="de">gern → lieber → am liebsten</span><span class="al">me qejf → më me qejf → më së shumti</span></li>
+            </ul></div>
+            <div class="grammar-rule-box"><h4>📌 Krahasim me "als" dhe "wie"</h4><p><strong>so ... wie</strong> = aq ... sa (barazim)</p><p><strong>...er als</strong> = më ... se (ndryshim)</p></div>`
+    },
+    // A2 Examples - Restaurant
+    'restaurant-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Restorant</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🍴</span><div class="modal-header-text"><h2>Në restorant - Im Restaurant</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Haben Sie reserviert?</span><span class="albanian">Keni rezervuar?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ja, auf den Namen Müller.</span><span class="albanian">Po, me emrin Müller.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Was möchten Sie bestellen?</span><span class="albanian">Çfarë dëshironi të porosisni?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ich hätte gern das Schnitzel mit Pommes.</span><span class="albanian">Do të doja shnicëllin me patate.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Kellner:</span><span class="german">Und zu trinken?</span><span class="albanian">Dhe për të pirë?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Gast:</span><span class="german">Ein Glas Wasser, bitte.</span><span class="albanian">Një gotë ujë, ju lutem.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Die Rechnung, bitte!</strong> = Faturën, ju lutem!</p><p><strong>Stimmt so.</strong> = Mbaje kushurin (bakshishin).</p></div>`
+    },
+    // A2 Examples - Telefon
+    'telefon-a2': {
+        breadcrumb: '<span class="breadcrumb-item">A2</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Telefon</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📞</span><div class="modal-header-text"><h2>Në telefon - Am Telefon</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Hallo, hier ist Anna Meier.</span><span class="albanian">Alo, këtu është Anna Meier.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Sekretärin:</span><span class="german">Guten Tag, wie kann ich Ihnen helfen?</span><span class="albanian">Mirëdita, si mund t'ju ndihmoj?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Ich möchte einen Termin machen.</span><span class="albanian">Dua të caktoj një takim.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Sekretärin:</span><span class="german">Einen Moment, bitte. Ich verbinde Sie.</span><span class="albanian">Një moment, ju lutem. Po ju lidh.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Anna:</span><span class="german">Danke, ich warte.</span><span class="albanian">Faleminderit, pres.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Kann ich eine Nachricht hinterlassen?</strong> = A mund të lë një mesazh?</p><p><strong>Können Sie das buchstabieren?</strong> = A mund ta shkruani shkronjë për shkronjë?</p></div>`
+    },
+    // B1 Vocabulary - Meinung
+    'meinung-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Opinioni</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💭</span><div class="modal-header-text"><h2>Shprehje Opinioni - Meinungsäußerung</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">Meiner Meinung nach...</div><div class="albanian">Sipas mendimit tim...</div></div>
+                <div class="modal-word-card"><div class="german">Ich denke, dass...</div><div class="albanian">Mendoj që...</div></div>
+                <div class="modal-word-card"><div class="german">Ich bin der Meinung...</div><div class="albanian">Jam i mendimit...</div></div>
+                <div class="modal-word-card"><div class="german">Ich finde...</div><div class="albanian">Gjej/Mendoj...</div></div>
+                <div class="modal-word-card"><div class="german">Ich glaube...</div><div class="albanian">Besoj...</div></div>
+                <div class="modal-word-card"><div class="german">Es scheint mir...</div><div class="albanian">Më duket...</div></div>
+                <div class="modal-word-card"><div class="german">Ich stimme zu.</div><div class="albanian">Pajtohem.</div></div>
+                <div class="modal-word-card"><div class="german">Ich bin dagegen.</div><div class="albanian">Jam kundër.</div></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Për të kundërshtuar</h4><p><strong>Das sehe ich anders.</strong> = E shoh ndryshe.</p><p><strong>Da bin ich anderer Meinung.</strong> = Kam mendim tjetër.</p></div>`
+    },
+    // B1 Vocabulary - Umwelt
+    'umwelt-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Mjedisi</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🌍</span><div class="modal-header-text"><h2>Mjedisi & Shoqëria - Umwelt & Gesellschaft</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">die Umwelt</div><div class="albanian">mjedisi</div></div>
+                <div class="modal-word-card"><div class="german">der Klimawandel</div><div class="albanian">ndryshimet klimatike</div></div>
+                <div class="modal-word-card"><div class="german">die Verschmutzung</div><div class="albanian">ndotja</div></div>
+                <div class="modal-word-card"><div class="german">recyceln</div><div class="albanian">ricikloj</div></div>
+                <div class="modal-word-card"><div class="german">die Energie</div><div class="albanian">energjia</div></div>
+                <div class="modal-word-card"><div class="german">erneuerbar</div><div class="albanian">i rinovueshëm</div></div>
+                <div class="modal-word-card"><div class="german">die Gesellschaft</div><div class="albanian">shoqëria</div></div>
+                <div class="modal-word-card"><div class="german">die Arbeitslosigkeit</div><div class="albanian">papunësia</div></div>
+                <div class="modal-word-card"><div class="german">die Gleichberechtigung</div><div class="albanian">barazia</div></div>
+                <div class="modal-word-card"><div class="german">nachhaltig</div><div class="albanian">i qëndrueshëm</div></div>
+            </div>`
+    },
+    // B1 Vocabulary - Konnektoren
+    'konnektoren-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Lidhëzat</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📊</span><div class="modal-header-text"><h2>Fjalë Lidhëse - Konnektoren</h2></div></div>
+            <div class="grammar-deep-section"><h3>📌 Shkak & Pasojë</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>deshalb / deswegen</strong></span><span class="al">prandaj</span></li>
+                <li><span class="de"><strong>darum / daher</strong></span><span class="al">për këtë arsye</span></li>
+                <li><span class="de"><strong>trotzdem</strong></span><span class="al">megjithatë</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Shtim & Kundërshtim</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>außerdem</strong></span><span class="al">përveç kësaj</span></li>
+                <li><span class="de"><strong>jedoch / allerdings</strong></span><span class="al">megjithatë</span></li>
+                <li><span class="de"><strong>einerseits ... andererseits</strong></span><span class="al">nga njëra anë ... nga ana tjetër</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Kohë</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>bevor</strong></span><span class="al">para se</span></li>
+                <li><span class="de"><strong>nachdem</strong></span><span class="al">pasi</span></li>
+                <li><span class="de"><strong>während</strong></span><span class="al">ndërsa</span></li>
+                <li><span class="de"><strong>sobald</strong></span><span class="al">sapo</span></li>
+            </ul></div>`
+    },
+    // B1 Vocabulary - Arbeit
+    'arbeit-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Puna</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💼</span><div class="modal-header-text"><h2>Puna & Karriera - Arbeit & Karriere</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">die Bewerbung</div><div class="albanian">aplikimi</div></div>
+                <div class="modal-word-card"><div class="german">der Lebenslauf</div><div class="albanian">CV-ja</div></div>
+                <div class="modal-word-card"><div class="german">das Vorstellungsgespräch</div><div class="albanian">intervista</div></div>
+                <div class="modal-word-card"><div class="german">der Vertrag</div><div class="albanian">kontrata</div></div>
+                <div class="modal-word-card"><div class="german">das Gehalt</div><div class="albanian">paga</div></div>
+                <div class="modal-word-card"><div class="german">die Überstunden</div><div class="albanian">orët shtesë</div></div>
+                <div class="modal-word-card"><div class="german">der Urlaub</div><div class="albanian">pushimet</div></div>
+                <div class="modal-word-card"><div class="german">kündigen</div><div class="albanian">jap dorëheqjen</div></div>
+                <div class="modal-word-card"><div class="german">befördern</div><div class="albanian">promovoj</div></div>
+                <div class="modal-word-card"><div class="german">die Erfahrung</div><div class="albanian">përvoja</div></div>
+            </div>`
+    },
+    // B1 Vocabulary - Medien
+    'medien-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Media</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📱</span><div class="modal-header-text"><h2>Media & Teknologjia - Medien & Technologie</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">das Internet</div><div class="albanian">interneti</div></div>
+                <div class="modal-word-card"><div class="german">die sozialen Medien</div><div class="albanian">rrjetet sociale</div></div>
+                <div class="modal-word-card"><div class="german">die Nachricht</div><div class="albanian">lajmi</div></div>
+                <div class="modal-word-card"><div class="german">die Werbung</div><div class="albanian">reklama</div></div>
+                <div class="modal-word-card"><div class="german">herunterladen</div><div class="albanian">shkarkoj</div></div>
+                <div class="modal-word-card"><div class="german">hochladen</div><div class="albanian">ngarkoj</div></div>
+                <div class="modal-word-card"><div class="german">teilen</div><div class="albanian">ndaj</div></div>
+                <div class="modal-word-card"><div class="german">die App</div><div class="albanian">aplikacioni</div></div>
+                <div class="modal-word-card"><div class="german">das Passwort</div><div class="albanian">fjalëkalimi</div></div>
+                <div class="modal-word-card"><div class="german">der Datenschutz</div><div class="albanian">mbrojtja e të dhënave</div></div>
+            </div>`
+    },
+    // B1 Vocabulary - Redewendungen
+    'redewendungen-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Fjalor</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Shprehje</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💬</span><div class="modal-header-text"><h2>Shprehje Idiomatike - Redewendungen</h2></div></div>
+            <div class="modal-word-grid">
+                <div class="modal-word-card"><div class="german">Daumen drücken</div><div class="albanian">Të uroj fat (fjalë për fjalë: shtyp gishtin)</div><div class="example">"Ich drücke dir die Daumen!"</div></div>
+                <div class="modal-word-card"><div class="german">ins Fettnäpfchen treten</div><div class="albanian">Bëj gafë</div><div class="example">"Er ist ins Fettnäpfchen getreten."</div></div>
+                <div class="modal-word-card"><div class="german">Schwein haben</div><div class="albanian">Kam fat</div><div class="example">"Da hast du Schwein gehabt!"</div></div>
+                <div class="modal-word-card"><div class="german">die Nase voll haben</div><div class="albanian">Më ka ardhur në majë të hundës</div><div class="example">"Ich habe die Nase voll!"</div></div>
+                <div class="modal-word-card"><div class="german">unter vier Augen</div><div class="albanian">Sy më sy (privatisht)</div><div class="example">"Lass uns unter vier Augen reden."</div></div>
+                <div class="modal-word-card"><div class="german">jemanden auf den Arm nehmen</div><div class="albanian">Tall dikë</div><div class="example">"Du nimmst mich auf den Arm!"</div></div>
+            </div>`
+    },
+    // B1 Grammar - Genitiv
+    'genitiv-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Genitiv</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📍</span><div class="modal-header-text"><h2>Rasa Gjinore - Der Genitiv</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>der/das</strong> → des + (e)s | <strong>die</strong> → der</p></div>
+            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
+                <li><span class="de">Das Auto <strong>des Mannes</strong></span><span class="al">Makina e burrit</span></li>
+                <li><span class="de">Die Tasche <strong>der Frau</strong></span><span class="al">Çanta e gruas</span></li>
+                <li><span class="de">Das Spielzeug <strong>des Kindes</strong></span><span class="al">Lodra e fëmijës</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Parafjalë me Genitiv</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>wegen</strong></span><span class="al">për shkak të - wegen des Wetters</span></li>
+                <li><span class="de"><strong>trotz</strong></span><span class="al">pavarësisht - trotz des Regens</span></li>
+                <li><span class="de"><strong>während</strong></span><span class="al">gjatë - während der Arbeit</span></li>
+                <li><span class="de"><strong>statt</strong></span><span class="al">në vend të - statt des Autos</span></li>
+            </ul></div>`
+    },
+    // B1 Grammar - Relativsätze
+    'relativsatze-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Fjali Relative</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📝</span><div class="modal-header-text"><h2>Fjali Relative - Relativsätze</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Përemrat relativë</h4><p>Nominativ: der, die, das | Akkusativ: den, die, das | Dativ: dem, der, dem</p></div>
+            <div class="grammar-deep-section"><h3>📌 Shembuj Nominativ</h3><ul class="grammar-examples-list">
+                <li><span class="de">Der Mann, <strong>der</strong> dort steht, ist mein Bruder.</span><span class="al">Burri që qëndron atje është vëllai im.</span></li>
+                <li><span class="de">Die Frau, <strong>die</strong> singt, ist Lehrerin.</span><span class="al">Gruaja që këndon është mësuese.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Shembuj Akkusativ</h3><ul class="grammar-examples-list">
+                <li><span class="de">Das Buch, <strong>das</strong> ich lese, ist interessant.</span><span class="al">Libri që po lexoj është interesant.</span></li>
+                <li><span class="de">Der Film, <strong>den</strong> wir gesehen haben, war gut.</span><span class="al">Filmi që pamë ishte i mirë.</span></li>
+            </ul></div>`
+    },
+    // B1 Grammar - Indirekte Rede
+    'indirekte-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ligjërata e Zhdrejtë</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">💬</span><div class="modal-header-text"><h2>Ligjërata e Zhdrejtë - Indirekte Rede</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p>Përdor <strong>Konjunktiv I</strong> ose <strong>würde + Infinitiv</strong></p></div>
+            <div class="grammar-deep-section"><h3>📌 Direkte → Indirekte</h3><ul class="grammar-examples-list">
+                <li><span class="de">Er sagt: "Ich <strong>bin</strong> müde."</span><span class="al">Ai thotë: "Jam i lodhur."</span></li>
+                <li><span class="de">Er sagt, er <strong>sei</strong> müde.</span><span class="al">Ai thotë që është i lodhur.</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Me würde (më e thjeshtë)</h3><ul class="grammar-examples-list">
+                <li><span class="de">Sie sagt, sie <strong>würde</strong> morgen kommen.</span><span class="al">Ajo thotë që do të vinte nesër.</span></li>
+            </ul></div>`
+    },
+    // B1 Grammar - Plusquamperfekt
+    'plusquamperfekt-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Gramatikë</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Plusquamperfekt</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">⏪</span><div class="modal-header-text"><h2>E kryera e tejshkuar - Das Plusquamperfekt</h2></div></div>
+            <div class="grammar-rule-box"><h4>📐 Formimi</h4><p><strong>hatte/war</strong> + Partizip II</p></div>
+            <div class="grammar-deep-section"><h3>📌 Përdorimi</h3><p>Për veprime që ndodhën <strong>para</strong> një veprimi tjetër në të kaluarën.</p></div>
+            <div class="grammar-deep-section"><h3>📌 Shembuj</h3><ul class="grammar-examples-list">
+                <li><span class="de">Nachdem ich gegessen <strong>hatte</strong>, ging ich spazieren.</span><span class="al">Pasi kisha ngrënë, shkova në shëtitje.</span></li>
+                <li><span class="de">Als er ankam, <strong>waren</strong> wir schon gegangen.</span><span class="al">Kur mbërriti, ne kishim ikur tashmë.</span></li>
+                <li><span class="de">Sie <strong>hatte</strong> das Buch schon gelesen.</span><span class="al">Ajo e kishte lexuar tashmë librin.</span></li>
+            </ul></div>`
+    },
+    // B1 Examples - Diskussion
+    'diskussion-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Diskutim</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📰</span><div class="modal-header-text"><h2>Diskutim - Diskussion</h2></div></div>
+            <div class="dialogue-box">
+                <div class="dialogue-line"><span class="speaker speaker-a">Maria:</span><span class="german">Meiner Meinung nach sollten wir mehr recyceln.</span><span class="albanian">Sipas mendimit tim duhet të riciklojmë më shumë.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Peter:</span><span class="german">Da stimme ich dir zu, aber es ist nicht so einfach.</span><span class="albanian">Pajtohem, por nuk është aq e thjeshtë.</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-a">Maria:</span><span class="german">Warum denkst du das?</span><span class="albanian">Pse mendon kështu?</span></div>
+                <div class="dialogue-line"><span class="speaker speaker-b">Peter:</span><span class="german">Einerseits fehlt die Infrastruktur, andererseits sind viele Leute nicht informiert.</span><span class="albanian">Nga njëra anë mungon infrastruktura, nga ana tjetër shumë njerëz nuk janë të informuar.</span></div>
+            </div>
+            <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p><strong>Ich bin der Meinung, dass...</strong> = Jam i mendimit që...</p><p><strong>Das sehe ich anders.</strong> = E shoh ndryshe.</p></div>`
+    },
+    // B1 Examples - Beschwerde
+    'beschwerde-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Ankesë</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">📝</span><div class="modal-header-text"><h2>Ankesë formale - Formelle Beschwerde</h2></div></div>
+            <div class="grammar-deep-section"><h3>📌 Struktura e letrës</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Sehr geehrte Damen und Herren,</strong></span><span class="al">Të nderuar zonja dhe zotërinj,</span></li>
+                <li><span class="de"><strong>ich schreibe Ihnen, weil...</strong></span><span class="al">Ju shkruaj sepse...</span></li>
+                <li><span class="de"><strong>Ich möchte mich beschweren über...</strong></span><span class="al">Dua të ankohem për...</span></li>
+                <li><span class="de"><strong>Ich erwarte eine baldige Antwort.</strong></span><span class="al">Pres një përgjigje të shpejtë.</span></li>
+                <li><span class="de"><strong>Mit freundlichen Grüßen</strong></span><span class="al">Me respekt</span></li>
+            </ul></div>
+            <div class="grammar-rule-box"><h4>📌 Frazat e dobishme</h4><p><strong>Das ist inakzeptabel.</strong> = Kjo është e papranueshme.</p><p><strong>Ich fordere eine Erstattung.</strong> = Kërkoj rimbursim.</p></div>`
+    },
+    // B1 Examples - Präsentation
+    'praesentation-b1': {
+        breadcrumb: '<span class="breadcrumb-item">B1</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item">Shembuj</span><span class="breadcrumb-separator">→</span><span class="breadcrumb-item current">Prezantim</span>',
+        html: `<div class="modal-header"><span class="modal-header-icon">🎤</span><div class="modal-header-text"><h2>Prezantim - Präsentation</h2></div></div>
+            <div class="grammar-deep-section"><h3>📌 Hyrja</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Heute möchte ich über... sprechen.</strong></span><span class="al">Sot dua të flas për...</span></li>
+                <li><span class="de"><strong>Mein Thema heute ist...</strong></span><span class="al">Tema ime sot është...</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Struktura</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Zuerst werde ich... erklären.</strong></span><span class="al">Së pari do të shpjegoj...</span></li>
+                <li><span class="de"><strong>Dann möchte ich... zeigen.</strong></span><span class="al">Pastaj dua të tregoj...</span></li>
+                <li><span class="de"><strong>Zum Schluss...</strong></span><span class="al">Në fund...</span></li>
+            </ul></div>
+            <div class="grammar-deep-section"><h3>📌 Përfundimi</h3><ul class="grammar-examples-list">
+                <li><span class="de"><strong>Zusammenfassend kann man sagen...</strong></span><span class="al">Duke përmbledhur mund të thuhet...</span></li>
+                <li><span class="de"><strong>Haben Sie noch Fragen?</strong></span><span class="al">Keni pyetje?</span></li>
+                <li><span class="de"><strong>Vielen Dank für Ihre Aufmerksamkeit!</strong></span><span class="al">Faleminderit për vëmendjen tuaj!</span></li>
+            </ul></div>`
     }
 };
 
@@ -521,17 +880,6 @@ function initializeDictionary() {
         if (e.key === 'Enter') performSearch();
     });
 }
-
-// Add remaining topics as empty placeholders
-['essen-a2','korper-a2','wetter-a2','kleidung-a2','prapositionen-a2','nebensatze-a2','komparativ-a2','restaurant-a2','telefon-a2',
-'meinung-b1','umwelt-b1','konnektoren-b1','arbeit-b1','medien-b1','redewendungen-b1','genitiv-b1','relativsatze-b1','indirekte-b1','plusquamperfekt-b1','diskussion-b1','beschwerde-b1','praesentation-b1'].forEach(id => {
-    if (!topicContent[id]) {
-        topicContent[id] = {
-            breadcrumb: '<span class="breadcrumb-item current">Duke u zhvilluar...</span>',
-            html: '<div class="modal-header"><span class="modal-header-icon">🚧</span><div class="modal-header-text"><h2>Duke u zhvilluar</h2><p>Kjo temë do të shtohet së shpejti!</p></div></div>'
-        };
-    }
-});
 
 // Quiz System
 const quizData = {
