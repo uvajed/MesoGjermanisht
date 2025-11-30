@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const levelContents = document.querySelectorAll('.level-content');
+
+    // Set initial theme based on active tab
+    const activeTab = document.querySelector('.tab-btn.active');
+    if (activeTab) {
+        document.body.setAttribute('data-theme', activeTab.dataset.level);
+    }
+
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const level = button.dataset.level;
@@ -21,6 +28,8 @@ function initializeTabs() {
                 content.classList.remove('active');
                 if (content.id === level) content.classList.add('active');
             });
+            // Update page theme based on selected level
+            document.body.setAttribute('data-theme', level);
             resetSectionNavigation(level);
         });
     });
