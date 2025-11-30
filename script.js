@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeSectionNavigation();
     initializeQuizzes();
     initializeTopicCards();
+    initializeDictionary();
     updateProgress();
 });
 
@@ -459,6 +460,67 @@ const topicContent = {
             <div class="grammar-rule-box"><h4>📌 Frazat kyçe</h4><p>"Zu meinen Stärken gehört..." = Ndër pikat e mia të forta...</p></div>`
     }
 };
+
+// Dictionary Functionality
+function initializeDictionary() {
+    const input = document.getElementById('dictionary-input');
+    const searchBtn = document.getElementById('dictionary-search-btn');
+    const resultsDiv = document.getElementById('dictionary-results');
+    const directionBtns = document.querySelectorAll('.direction-btn');
+
+    let currentDirection = 'de-sq';
+
+    // Direction toggle
+    directionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            directionBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentDirection = btn.dataset.direction;
+            input.placeholder = currentDirection === 'de-sq'
+                ? 'Shkruaj fjalën në gjermanisht...'
+                : 'Shkruaj fjalën në shqip...';
+        });
+    });
+
+    // Search function
+    function performSearch() {
+        const term = input.value.trim();
+        if (!term) return;
+
+        const dictUrl = currentDirection === 'de-sq'
+            ? `https://de-sq.dict.cc/?s=${encodeURIComponent(term)}`
+            : `https://sq-de.dict.cc/?s=${encodeURIComponent(term)}`;
+
+        const glosbeUrl = currentDirection === 'de-sq'
+            ? `https://glosbe.com/de/sq/${encodeURIComponent(term)}`
+            : `https://glosbe.com/sq/de/${encodeURIComponent(term)}`;
+
+        resultsDiv.innerHTML = `
+            <div class="dictionary-external-link">
+                <div class="search-term-display">"${term}"</div>
+                <h3>Kërko në fjalorët e jashtëm:</h3>
+                <p>Për shkak të kufizimeve teknike, rezultatet hapen në një dritare të re.</p>
+                <div class="dict-buttons">
+                    <a href="${dictUrl}" target="_blank" rel="noopener" class="dict-link-btn">
+                        <span>📖</span> Hap në dict.cc
+                    </a>
+                    <a href="${glosbeUrl}" target="_blank" rel="noopener" class="dict-link-btn" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                        <span>🌐</span> Hap në Glosbe
+                    </a>
+                </div>
+                <div class="recent-searches" style="margin-top: 30px;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Këshillë: Mbaj Ctrl (ose Cmd) kur klikoni për ta hapur në sfondi.</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Event listeners
+    searchBtn.addEventListener('click', performSearch);
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') performSearch();
+    });
+}
 
 // Add remaining topics as empty placeholders
 ['essen-a2','korper-a2','wetter-a2','kleidung-a2','prapositionen-a2','nebensatze-a2','komparativ-a2','restaurant-a2','telefon-a2',

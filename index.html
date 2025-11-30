@@ -55,6 +55,11 @@
             <span class="tab-text">B1</span>
             <span class="tab-subtitle">Mesatar</span>
         </button>
+        <button class="tab-btn" data-level="dictionary">
+            <span class="tab-icon">📖</span>
+            <span class="tab-text">Fjalor</span>
+            <span class="tab-subtitle">Dictionary</span>
+        </button>
     </nav>
 
     <!-- Main Content -->
@@ -785,6 +790,73 @@
                             <span class="results-percent">%</span>
                         </div>
                         <p class="results-message" id="b1-results-message"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dictionary Section -->
+        <section class="level-content" id="dictionary">
+            <div class="level-header">
+                <h2>📖 Fjalor Gjermanisht-Shqip</h2>
+                <p>Kërko fjalë në gjermanisht ose shqip</p>
+            </div>
+
+            <div class="dictionary-container">
+                <div class="dictionary-search-box">
+                    <div class="search-direction">
+                        <button class="direction-btn active" data-direction="de-sq">
+                            <span>🇩🇪 Gjermanisht → Shqip 🇦🇱</span>
+                        </button>
+                        <button class="direction-btn" data-direction="sq-de">
+                            <span>🇦🇱 Shqip → Gjermanisht 🇩🇪</span>
+                        </button>
+                    </div>
+
+                    <div class="search-input-wrapper">
+                        <input type="text" id="dictionary-input" class="dictionary-input" placeholder="Shkruaj fjalën këtu..." autocomplete="off">
+                        <button id="dictionary-search-btn" class="dictionary-search-btn">
+                            <span>🔍</span> Kërko
+                        </button>
+                    </div>
+
+                    <p class="dictionary-hint">Shtyp Enter ose kliko "Kërko" për të parë rezultatet</p>
+                </div>
+
+                <div class="dictionary-results" id="dictionary-results">
+                    <div class="dictionary-welcome">
+                        <div class="welcome-icon">📚</div>
+                        <h3>Mirë se vini në Fjalor!</h3>
+                        <p>Ky fjalor përdor <a href="https://de-sq.dict.cc/" target="_blank" rel="noopener">dict.cc</a> - një nga fjalorët më të mëdhenj falas në internet.</p>
+                        <div class="dictionary-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span>Mijëra fjalë gjermanisht-shqip</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span>Shembuj përdorimi</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✓</span>
+                                <span>Falas dhe pa reklama</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dictionary-sources">
+                    <p>Burimet e fjalorit:</p>
+                    <div class="source-links">
+                        <a href="https://de-sq.dict.cc/" target="_blank" rel="noopener" class="source-link">
+                            <span>📖</span> dict.cc (DE-SQ)
+                        </a>
+                        <a href="https://glosbe.com/de/sq" target="_blank" rel="noopener" class="source-link">
+                            <span>🌐</span> Glosbe
+                        </a>
+                        <a href="https://translate.google.com/?sl=de&tl=sq" target="_blank" rel="noopener" class="source-link">
+                            <span>🔄</span> Google Translate
+                        </a>
                     </div>
                 </div>
             </div>
